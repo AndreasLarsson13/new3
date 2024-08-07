@@ -1,0 +1,10 @@
+{
+	"env": {
+		"NEXT_PUBLIC_REST_API_ENDPOINT": "https://localhost:4000/"
+	},
+	"build": {
+		"env": {
+			"NEXT_PUBLIC_REST_API_ENDPOINT": "https://natbutiken.lm.r.appspot.com/"
+		}
+	}
+}
