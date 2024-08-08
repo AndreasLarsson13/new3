@@ -11,6 +11,8 @@ export const fetchProduct = async (_slug: string) => {
 	console.log("fetch currency", currency)
 	console.log(_slug)
 	const { data } = await http.get(`${API_ENDPOINTS.PRODUCT}${_slug}?currency=${currency}`);
+	console.log(data)
+
 	return data;
 };
 
