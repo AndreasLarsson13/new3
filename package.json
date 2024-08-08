@@ -45,6 +45,7 @@
     "react-sticky-box": "2.0.5",
     "react-toastify": "10.0.5",
     "react-use": "17.5.1",
+    "sharp": "^0.33.4",
     "swiper": "11.1.9"
   },
   "devDependencies": {
