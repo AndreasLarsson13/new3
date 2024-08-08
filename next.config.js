@@ -9,7 +9,9 @@ const withPWA = require("next-pwa")({
 module.exports = withPWA({
   i18n,
   images: {
-    domains: ['localhost', 'scontent.cdninstagram.com', 'www.tapwell.fi'], // Add the localhost domain here
+    domains: ['*'], // Add the localhost domain here
+    formats: ['image/webp']
+
   },
   typescript: {
     ignoreBuildErrors: true,
