@@ -5,17 +5,20 @@ import { useQuery } from '@tanstack/react-query';
 
 export const fetchFlashSaleProducts = async () => {
 
-  /* const clickedLocation = "clickedLocation"
+  const clickedLocation = "clickedLocation"
   const location = JSON.parse(localStorage.getItem(clickedLocation));
 
 
-  const currency = location.value */
+  const currency = location.value
 
+  if (location) {
+    const { data } = await http.get(`${API_ENDPOINTS.FLASH_SALE_PRODUCTS}?currency=${currency}`);
+    return data;
+  } else {
+    const { data } = await http.get(`${API_ENDPOINTS.FLASH_SALE_PRODUCTS}?currency=se`);
+    return data;
+  }
 
-  const { data } = await http.get(`${API_ENDPOINTS.FLASH_SALE_PRODUCTS}?currency=se`);
-  console.log(data)
-
-  return data;
 };
 
 

@@ -51,15 +51,15 @@ export default function LanguageSwitcher() {
 
     const cartItems = JSON.parse(localStorage.getItem('chawkbazar-cart'))
 
-
-    if (old.id
-      !== option.id) {
-      if (!cartItems.isEmpty) {
-        openModal()
-        setModalView('LOCATION_WARNING')
-        localStorage.setItem('clickedLocation', JSON.stringify(option));
-      }
-    }
+    localStorage.setItem('clickedLocation', JSON.stringify(option))
+    /*   if (old.id
+        !== option.id) {
+        if (!cartItems.isEmpty) {
+          openModal()
+          setModalView('LOCATION_WARNING')
+          localStorage.setItem('clickedLocation', JSON.stringify(option));
+        }
+      } */
 
   };
 
