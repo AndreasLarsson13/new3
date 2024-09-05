@@ -16,7 +16,7 @@ module.exports = withPWA({
     ignoreBuildErrors: true,
   },
   async headers() {
-    const allowedOrigins = ["http://localhost:4000"];
+    const allowedOrigins = ["https://backendegnasidor.ue.r.appspot.com/"];
 
     return [
       {
