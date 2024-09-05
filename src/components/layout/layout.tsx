@@ -4,13 +4,25 @@ import Footer from '@components/layout/footer/footer';
 import MobileNavigation from '@components/layout/mobile-navigation/mobile-navigation';
 import Search from '@components/common/search';
 import CookieBar from '@components/common/cookie-bar';
+import LocationOption from '@components/common/location-option';
 import { useAcceptCookies } from '@utils/use-accept-cookies';
 import Button from '@components/ui/button';
 import { useTranslation } from 'next-i18next';
+import { useEffect } from 'react';
 
 export default function Layout({ children }: React.PropsWithChildren<{}>) {
+	useEffect(() => {
+		const checkLocation = localStorage.getItem('clickedLocation')
+		if (!checkLocation) {
+			document.getElementById("locationContainerStart")?.classList.remove("hidden");
+		}
+
+	}, [])
 	const { acceptedCookies, onAcceptCookies } = useAcceptCookies();
 	const { t } = useTranslation('common');
+
+
+
 	return (
 		<div className="flex flex-col min-h-screen">
 			<NextSeo
@@ -20,12 +32,12 @@ export default function Layout({ children }: React.PropsWithChildren<{}>) {
 						content: 'width=device-width, initial-scale=1.0',
 					},
 				]}
-				title="ChawkBazar React - React Next E-commerce Template"
-				description="Fastest E-commerce template built with React, NextJS, TypeScript, @tanstack/react-query and Tailwind CSS."
+				title="Nätbutiken - Ålands nya handelsplats"
+				description="Är du trött på skattegränsen? Vi hjälper dig med enkel handen över gräsen"
 				canonical="https://chawkbazar.vercel.app/"
 				openGraph={{
-					url: 'https://chawkbazar.vercel.app',
-					title: 'ChawkBazar React - React Next E-commerce Template',
+					url: 'https://www.nätbutiken.ax',
+					title: 'Nätbutiken - ',
 					description:
 						'Fastest E-commerce template built with React, NextJS, TypeScript, @tanstack/react-query and Tailwind CSS.',
 					images: [
@@ -45,6 +57,9 @@ export default function Layout({ children }: React.PropsWithChildren<{}>) {
 				}}
 			/>
 			<Header />
+			<LocationOption
+				title={t('text-cookies-title')}
+			/>
 			<main
 				className="relative flex-grow"
 				style={{
@@ -57,6 +72,7 @@ export default function Layout({ children }: React.PropsWithChildren<{}>) {
 			<Footer />
 			<MobileNavigation />
 			<Search />
+
 			<CookieBar
 				title={t('text-cookies-title')}
 				hide={acceptedCookies}

@@ -1,4 +1,4 @@
-import ContentLoader from "react-content-loader";
+/* import ContentLoader from "react-content-loader";
 
 const BrandCardLoader = (props: any) => (
 	<ContentLoader
@@ -15,4 +15,4 @@ const BrandCardLoader = (props: any) => (
 	</ContentLoader>
 );
 
-export default BrandCardLoader;
+export default BrandCardLoader; */

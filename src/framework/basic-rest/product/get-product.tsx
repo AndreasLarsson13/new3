@@ -6,12 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 
 export const fetchProduct = async (_slug: string) => {
 	const storedLocation = JSON.parse(localStorage.getItem('clickedLocation'));
-	console.log(storedLocation.value)
 	const currency = storedLocation.value
-	console.log("fetch currency", currency)
-	console.log(_slug)
 	const { data } = await http.get(`${API_ENDPOINTS.PRODUCT}${_slug}?currency=${currency}`);
-	console.log(data)
 
 	return data;
 };

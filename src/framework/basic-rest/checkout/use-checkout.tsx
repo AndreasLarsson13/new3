@@ -16,7 +16,6 @@ export interface CheckoutInputType {
 
 
 async function checkout(input: CheckoutInputType) {
-  console.log(input)
   // return http.post(API_ENDPOINTS.ChangeEmail, input);
   return input;
 }

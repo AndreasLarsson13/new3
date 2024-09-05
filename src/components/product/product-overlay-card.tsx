@@ -58,13 +58,13 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
 
   const filterProduct = _.cloneDeep(product);
 
-
-  filterProduct.variations.forEach(items => {
-    items.value = items.value[i18n.language]
-    items.attribute.name = items.attribute.name[i18n.language]
-    items.attribute.slug = items.attribute.slug[i18n.language]
-  })
-
+  /* 
+    filterProduct.variations.forEach(items => {
+      items.value = items.value
+      items.attribute.name = items.attribute.name[i18n.language]
+      items.attribute.slug = items.attribute.slug
+    })
+   */
 
   function handlePopupView() {
     setModalData({ data: filterProduct });
@@ -101,7 +101,7 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
         />
       </div>
 
-      {variant === 'modern' && (
+      {/* {variant === 'modern' && (
         <span
           className={cn(
             'absolute top-3.5 md:top-5 3xl:top-7 ltr:left-3.5 rtl:right-3.5 ltr:md:left-5 rtl:md:right-5 ltr:3xl:left-7 rtl:3xl:right-7 bg-[#B26788] text-white text-10px md:text-sm leading-5 inline-block px-2 xl:px-3 pt-0.5 pb-1',
@@ -113,7 +113,7 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
         >
           Featured
         </span>
-      )}
+      )} */}
 
       {discount && (
         <span
@@ -138,7 +138,7 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
             {filterProduct?.name}
           </h2>
 
-          {variant !== 'modern' ? (
+          {true ? (
             <p className="text-body text-xs xl:text-sm leading-normal xl:leading-relaxed truncate max-w-[250px]">
               {filterProduct.description}
             </p>

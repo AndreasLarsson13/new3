@@ -1,95 +1,51 @@
-/* import { QueryOptionsType, Product } from "@framework/types";
-import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
-import http from "@framework/utils/http";
-import shuffle from "lodash/shuffle";
-import { useInfiniteQuery } from "@tanstack/react-query";
-type PaginatedProduct = {
-	data: Product[];
-	paginatorInfo: any;
-};
-const fetchProducts = async (options) => {
-
-	// Construct the query string from options, e.g., converting { limit: 10 } to "?limit=10"
-	const queryString = Object.keys(options)
-		.map(key => encodeURIComponent(key) + '=' + encodeURIComponent(options[key]))
-		.join('&');
-
-	const url = `${API_ENDPOINTS.PRODUCTS}?${queryString}`;
-
-	console.log(url)
-	
-	const { data } = await http.get(url);
-	return {
-		data: shuffle(data),
-		paginatorInfo: {
-			nextPageUrl: "",
-		},
-	};
-};
-
-const useProductsQuery = (options: QueryOptionsType) => {
-	return useInfiniteQuery<PaginatedProduct, Error>({
-		queryKey: [API_ENDPOINTS.PRODUCTS, options],
-		queryFn: ({ pageParam = 0 }) => fetchProducts({...options, page: pageParam}),
-		getNextPageParam: ({ paginatorInfo }) => paginatorInfo.nextPageUrl,
-	});
-};
-
-export { useProductsQuery, fetchProducts }; */
-
-
 import { QueryOptionsType, Product } from "@framework/types";
 import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
 import http from "@framework/utils/http";
 import shuffle from "lodash/shuffle";
 import { useInfiniteQuery } from "@tanstack/react-query";
+
 type PaginatedProduct = {
 	data: Product[];
 	paginatorInfo: any;
 };
-const fetchProducts = async (updateCurrency: boolean) => {
 
-	const clickedLocation = "clickedLocation"
-	const location = JSON.parse(localStorage.getItem(clickedLocation));
+const fetchProducts = async (updateCurrency: any) => {
+	// Extract the necessary query params from queryKey
+	const queryObject = updateCurrency.queryKey.find(
+		(item: any) => item.q || item.brand || item.limit
+	);
 
+	// Fetch currency from local storage or fallback to default
+	const clickedLocation = "clickedLocation";
+	const location = JSON.parse(localStorage.getItem(clickedLocation) || '{}');
+	const currency = location?.value || 'defaultCurrency'; // Handle default currency
 
-	const currency = location.value
+	const { q, limit = 10, brand } = queryObject || {}; // Set default limit if not provided
 
-	const storageKey = 'productsData';
-	if (updateCurrency) {
-		const { data } = await http.get(`${API_ENDPOINTS.PRODUCTS}?currency=${currency}`);
-		const processedData = {
-			data: shuffle(data),
-			paginatorInfo: {
-				nextPageUrl: "",
-			},
-		};
-		localStorage.setItem(storageKey, JSON.stringify(processedData));
-		return processedData;
+	// Extract the route and determine if it's a category page
+	const activeRoute = updateCurrency.queryKey[1]?.route;
+	const categoryPage = activeRoute?.split('/')[1];
+
+	console.log(categoryPage)
+	console.log(updateCurrency.queryKey[1].slug)
+	// Construct URL based on query parameters
+	let url = `${API_ENDPOINTS.PRODUCTS}?currency=${encodeURIComponent(currency)}&limit=${encodeURIComponent(limit)}`;
+	if (categoryPage === "category") {
+		url += `&category=${encodeURIComponent(updateCurrency.queryKey[1].slug || '')}`;
+	} else if (q || brand) {
+		url += `&${q ? `category=${encodeURIComponent(q)}` : `brand=${encodeURIComponent(brand)}`}`;
 	}
 
-	// Try to load the data from local storage first
-	/* const storedData = localStorage.getItem(storageKey);
-	if (storedData) {
-	  return JSON.parse(storedData);
-	} else {
-		const { data } = await http.get(`${API_ENDPOINTS.PRODUCTS}?currency=${currency}`);
-		const processedData = {
-		  data: shuffle(data),
-		  paginatorInfo: {
-			nextPageUrl: "",
-		  },
-		};
-			// Store the fetched data in local storage for future use
-			localStorage.setItem(storageKey, JSON.stringify(processedData));
-			return processedData;
-	} */
-
+	// Perform the HTTP request
+	const { data } = await http.get(url);
+	return {
+		data: shuffle(data),
+		paginatorInfo: { nextPageUrl: "" }, // Handle pagination if needed
+	};
 };
 
-
+// Use React Query to fetch products with infinite scrolling
 const useProductsQuery = (options: QueryOptionsType) => {
-
 	return useInfiniteQuery<PaginatedProduct, Error>({
 		queryKey: [API_ENDPOINTS.PRODUCTS, options],
 		queryFn: fetchProducts,

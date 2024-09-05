@@ -1,6 +1,6 @@
 import BannerCard from '@components/common/banner-card';
 import Container from '@components/ui/container';
-import BrandGridBlock from '@containers/brand-block';
+import BrandBlock from '@containers/brand-block';
 
 import CategoryBlock from '@containers/category-block';
 import Layout from '@components/layout/layout';
@@ -49,7 +49,7 @@ export default function Home() {
           href={`${ROUTES.COLLECTIONS}/${banner[0].slug}`}
           className="mb-12 lg:mb-14 xl:mb-16 pb-0.5 lg:pb-1 xl:pb-0"
         /> */}
-        <BrandGridBlock sectionHeading="text-top-brands" />
+        <BrandBlock sectionHeading="text-top-brands" />
 
         <BannerWithProducts
           sectionHeading="text-on-selling-products"

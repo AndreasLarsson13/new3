@@ -24,7 +24,7 @@ const CategoryBanner: React.FC<CategoryBannerProps> = ({
           src={
             dir === 'rtl'
               ? '/assets/images/category-banner-reverse.jpg'
-              : '/assets/images/category-banner.jpg'
+              : `/assets/images/categoryPage/${slug}.jpg`
           }
           alt="Category Banner"
           width={1800}

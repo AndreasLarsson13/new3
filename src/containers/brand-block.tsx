@@ -85,7 +85,7 @@ const BrandBlock: React.FC<BrandProps> = ({
                   variant="rounded"
                   size="medium"
                   href={{
-                    pathname: ROUTES.SEARCH,
+                    pathname: "/search",
                     query: { brand: brand.slug },
                   }}
                   imgSize="large"

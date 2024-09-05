@@ -46,7 +46,6 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
     input.orderData = productsCart;
     input.country = location.name
 
-    console.log(input)
 
     try {
       const response = await http.post('http://localhost:3500/open-payment-session', input);
@@ -76,7 +75,6 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
     }
   };
 
-  console.log(location)
 
   return (
     <>

@@ -28,6 +28,16 @@
   p>a:hover {
     @apply text-heading;
   }
+
+  .description-content p {
+    @apply text-gray-800 p-0 m-0;
+    /* Custom styles for description-content */
+  }
+
+  .description-content ul {
+    @apply list-disc list-inside;
+    /* Custom styles for description-content */
+  }
 }
 
 @layer components {

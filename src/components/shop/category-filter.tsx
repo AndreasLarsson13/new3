@@ -57,56 +57,35 @@ export const CategoryFilter = () => {
 	let arrayProduct = []
 
 
+
 	filteredData.forEach(item => {
 
+		item.category.forEach(categoryItem => {
 
-		/* 
-				item.category[0].child.forEach(child => {
-					if (child.slug === query.q) {
-						arrayProduct.push(child.slug)
+			// If the current item's slug doesn't match the query slug
+
+			console.log(categoryItem)
+			if (categoryItem.child) {
+				if (categoryItem.child[0].child) {
+					if (query.category?.includes(categoryItem.child[0].child[0].slug) || query.q === categoryItem.child[0].slug) {
+						arrayProduct.push(categoryItem.child[0].child[0].slug)
+					} else {
+						arrayProduct.push(categoryItem.child[0].slug)
+						arrayProduct.push(categoryItem.child[0].child[0].slug)
 					}
-				}) */
-
-		console.log(query.q)
-
-		item.category.forEach(item => {
-			if (item.slug === query.q) {
-				item.child.forEach(child1 => {
-					arrayProduct.push(child1.slug)
-					if (child1.child) {
-						child1.child.forEach(child2 => {
-							arrayProduct.push(child2.slug)
-						})
-					}
-				})
-				return
+				} else {
+					arrayProduct.push(categoryItem.child[0].slug)
+				}
 			}
-			if (item.child) {
-				item.child.forEach(child1 => {
-					if (child1.slug === query.q && child1.child) {
-						child1.child.forEach(child => {
-							console.log(child)
-							arrayProduct.push(child.slug)
-						})
-					}
-				})
-			}
-
-
 
 
 		})
 
-		console.log(arrayProduct)
-		/* 	if (item.category[0].slug === query.q) {
-				arrayProduct.push(item.category[0].slug)
-			} */
-
 	})
 
+	console.log(arrayProduct)
 
 	const items = data?.categories.data; //test
-
 	const finalFilteredItems = items.filter((item) => {
 		if (true) {
 			return arrayProduct.includes(item.slug)
@@ -124,7 +103,7 @@ export const CategoryFilter = () => {
 					<CheckBox
 						key={item.id}
 						label={item.name}
-						name={item.name.toLowerCase()}
+						name={"item.name.toLowerCase()"}
 						checked={formState.includes(item.slug)}
 						value={item.slug}
 						onChange={handleItemClick}

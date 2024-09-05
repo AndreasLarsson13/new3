@@ -65,7 +65,7 @@ export const footer = {
         {
           id: 1,
           title: 'link-customer-support',
-          path: '/',
+          path: '/support',
         },
 
         {

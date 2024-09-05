@@ -52,7 +52,6 @@ export default function LanguageSwitcher() {
     const cartItems = JSON.parse(localStorage.getItem('chawkbazar-cart'))
 
     localStorage.setItem('clickedLocation', JSON.stringify(option))
-    console.log(old)
     /*   if (old.id
         !== option.id) {
         if (!cartItems.isEmpty) {

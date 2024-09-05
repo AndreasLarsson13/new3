@@ -14,6 +14,7 @@ type CollapseProps = {
   translatorNS: string;
   setExpanded: any;
   pdf: any;
+  tecnical: any;
   variant?: 'gray' | 'transparent';
 };
 
@@ -28,12 +29,12 @@ export const Collapse: React.FC<CollapseProps> = ({
   contentKey,
   translatorNS,
   variant = 'gray',
+  tecnical
 }) => {
   const isOpen = i === expanded;
 
   const { t } = useTranslation(translatorNS);
 
-  console.log(pdf)
   return (
     <div
       className={cn({
@@ -87,10 +88,32 @@ export const Collapse: React.FC<CollapseProps> = ({
               })}
             >
               {contentKey ? t(contentKey) : content}
+              {tecnical && tecnical.map((item, index) => (
+                <div
+                  key={index}
+                  className={`flex gap-2 justify-between px-2 ${index % 2 === 0 ? 'bg-gray-300' : ''
+                    }`}
+                >
+                  <h4 className='font-semibold'>{t(`common:${item.title}`)}</h4>
+                  {Array.isArray(item.data) ? (
+                    <h4>
+                      {item.data.map((subItem, index) => (
+                        <span key={index}>
+                          {t(`common:${subItem}`)}{' '}
+                        </span>
+                      ))}
+                    </h4>
+                  ) : (
+                    <h4>
+                      {t(`common:${item.data}`, { defaultValue: item.data })}
+                    </h4>
+                  )}
+                </div>
+              ))}
               {pdf && pdf.map((item, index) => (
                 <div key={index} className="flex gap-2">
                   <h3>{item.title.se}</h3>
-                  <a href={item.url} target="_blank" rel="noopener noreferrer" className="font-semibold	">Ladda ner PDF</a>
+                  <a href={item.url} target="_blank" rel="noopener noreferrer" className="font-semibold	">{t("common:downloadPdf")}</a>
                 </div>
               ))}
             </div>

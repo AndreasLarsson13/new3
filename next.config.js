@@ -9,7 +9,7 @@ const withPWA = require("next-pwa")({
 module.exports = withPWA({
   i18n,
   images: {
-    domains: ['www.tapwell.fi'], // Add the localhost domain here
+    domains: ['www.tapwell.fi', 'firebasestorage.googleapis.com'], // Add the localhost domain here
 
   },
   typescript: {

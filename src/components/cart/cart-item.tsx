@@ -30,7 +30,6 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
     currencyCode: item.currency,
   });
 
-
   return (
     <motion.div
       layout
@@ -61,12 +60,26 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
 
       <div className="flex flex-col w-full overflow-hidden">
         <Link
-          href={`${ROUTES.PRODUCT}/${item?.slug}`}
+          href={`${ROUTES.PRODUCT}/${item?.linkId}`}
           className="truncate text-sm text-heading mb-1.5 -mt-1"
         >
           {generateCartItemName(item.name, item.attributes)}
         </Link>
         {/* @ts-ignore */}
+
+
+
+        {item.attributes.map((extraAdded, index) => (
+          extraAdded.id === "color" ?
+            <span className="text-sm ltr:pl-3 rtl:pr-3 text-gray-400" key={index}>
+              {`${extraAdded.name} : ${t(extraAdded.value)}`}
+            </span> :
+            <span className="text-sm ltr:pl-3 rtl:pr-3 text-gray-400" key={index}>
+              + {extraAdded.name}
+            </span>
+
+        ))}
+
         <span className="text-sm text-gray-400 mb-2.5">
           {t('text-unit-price')} : &nbsp; {price}
         </span>

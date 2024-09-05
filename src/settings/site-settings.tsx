@@ -91,8 +91,25 @@ export const siteSettings = {
               },
               {
                 id: 2,
-                path: '/search?q=belt-scarves',
-                label: 'menu-belt-scarves',
+                path: '/search?q=pizza-ugn',
+                label: 'pizza-ugn',
+                columnItemItems: [
+                  {
+                    id: 1,
+                    path: '/search?q=portabel',
+                    label: 'portabel',
+                  },
+                  {
+                    id: 2,
+                    path: '/search?q=casual-shirts',
+                    label: 'menu-casual-shirts',
+                  },
+                  {
+                    id: 3,
+                    path: '/search?q=formal-shirts',
+                    label: 'menu-formal-shirts',
+                  }
+                ],
               },
               {
                 id: 3,
@@ -107,12 +124,12 @@ export const siteSettings = {
               {
                 id: 1,
                 path: '/search?q=varme-kyla',
-                label: 'menu-hus-varme',
+                label: 'varme-kyla',
                 columnItemItems: [
                   {
                     id: 1,
-                    path: '/search?q=braskaminer',
-                    label: 'menu-hus-varme-braskamin',
+                    path: '/search?q=braskamin',
+                    label: 'braskamin',
                   },
                   {
                     id: 2,
@@ -236,13 +253,13 @@ export const siteSettings = {
               },
               {
                 id: 2,
-                path: '/search?q=belt-scarves',
-                label: 'menu-belt-scarves',
+                path: '/search?q=pizza-ugn',
+                label: 'pizza-ugn',
                 columnItemItems: [
                   {
                     id: 1,
-                    path: '/search?q=makeup',
-                    label: 'menu-makeup',
+                    path: '/search?q=portabel',
+                    label: 'portabel-pizza',
                   },
                   {
                     id: 2,
@@ -410,8 +427,8 @@ export const siteSettings = {
               },
               {
                 id: 2,
-                path: '/search?q=belt-scarves',
-                label: 'menu-belt-scarves',
+                path: '/search?q=pizza-ugn',
+                label: 'pizza-ugn',
               },
               {
                 id: 3,
@@ -861,19 +878,9 @@ export const siteSettings = {
         label: 'menu-pages',
         subMenu: [
           {
-            id: 2,
-            path: '/faq',
-            label: 'menu-faq',
-          },
-          {
             id: 6,
             path: '/checkout',
             label: 'menu-checkout',
-          },
-          {
-            id: 7,
-            path: '/collections/mens-collection',
-            label: 'menu-collection',
           },
           {
             id: 8,

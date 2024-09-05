@@ -26,6 +26,7 @@ let textObjekt = [];
 
 let found = false;
 
+let AttributeArray = []
 
 
 const productGalleryCarouselResponsive = {
@@ -59,9 +60,7 @@ const ProductSingleDetails: React.FC = () => {
   const [additionalData, setAdditionalData] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [locationCurrency, setlocationCurrency] = useState(null);
-
-
-
+  const [customOrder, setcustomOrder] = useState(false);
 
   const { price, basePrice, discount } = usePrice(
     data && {
@@ -71,10 +70,6 @@ const ProductSingleDetails: React.FC = () => {
     }
   );
   const { t, i18n } = useTranslation('common');
-
-
-
-
 
 
   useEffect(() => {
@@ -90,11 +85,11 @@ const ProductSingleDetails: React.FC = () => {
         const countyCode = i18n.language
 
         let translatedContent;
-
-        if (!item.PDF) {
+        if (!item.PDF && !item.tecnical) {
           translatedContent = item.content[countyCode]
         }
-        const translatedTitle = item.title[countyCode]
+
+        const translatedTitle = t(`common:${item.title}`)
 
 
 
@@ -111,19 +106,28 @@ const ProductSingleDetails: React.FC = () => {
       // Loop through each item in the variations array
       let dataNew = []
       data.variations.forEach((item) => {
+
         // Hämta översättningen för titeln baserat på språknyckeln
         const countyCode = i18n.language;
 
-        const translatedName = item.attribute.name[countyCode];
-        const translatedSlug = item.attribute.slug[countyCode];
-        const translatedValue = item.value[countyCode];
+        const translatedName = item.attribute.name; //Testa ta
+        const translatedSlug = item.attribute.slug;
+        if (item.img) {
+
+        }
+
+        /*   let translatedValue = item.value[countyCode]; */
         // Create a new object or deep clone the item object to avoid modifying the original
+
+        /*  if (item.img) {
+           translatedValue = item.value
+         } */
+
         const newItem = {
           ...item,
           attribute: { ...item.attribute, name: translatedName, slug: translatedSlug },
-          value: translatedValue // Deep clone the attribute object
+          value: item.value // Deep clone the attribute object
         };
-
 
         // Push the modified item to the dataNy array
         dataNew.push(newItem)
@@ -145,9 +149,9 @@ const ProductSingleDetails: React.FC = () => {
 
   const [currentPrice, setCurrentPrice] = useState();
 
+
   useEffect(() => {
     if (price !== null && price !== undefined) {
-      console.log(discount && discount)
       if (data && data.sale_price <= 0) {
         setCurrentPrice(data && data.price);
       } else {
@@ -161,7 +165,6 @@ const ProductSingleDetails: React.FC = () => {
 
 
   const variations = getVariations(filterDataLanguageAttributes);
-
   const isSelected = !isEmpty(variations)
     ? !isEmpty(attributes) &&
     Object.keys(variations).every((variation) =>
@@ -176,12 +179,21 @@ const ProductSingleDetails: React.FC = () => {
     setTimeout(() => {
       setAddToCartLoader(false);
     }, 600);
-    console.log(data!)
+
     const storedLocation = JSON.parse(localStorage.getItem('clickedLocation'));
-    console.log(storedLocation)
-    const item = generateCartItem(data!, attributes, currentPrice, storedLocation);
-    console.log(item)
+    const item = generateCartItem(data, attributes, AttributeArray, currentPrice, storedLocation);
+    console.log(attributes.value)
+    if (data?.gallery[0].extraColor) {
+      if (attributes.value in data?.gallery[0].extraColor) {
+        item.image = data?.gallery[0].extraColor[attributes.value]
+      }
+      else {
+        item.image = data?.gallery[0].original
+      }
+    }
+
     addItemToCart(item, quantity);
+    AttributeArray = []
     toast('Added to the bag', {
       progressClassName: 'fancy-progress-bar',
       position: width > 768 ? 'bottom-right' : 'top-right',
@@ -196,6 +208,39 @@ const ProductSingleDetails: React.FC = () => {
 
   function handleAttribute(attribute: any, tva: any, attribut: any) {
 
+    const index = AttributeArray.findIndex(attr => attr.id == attribute.id);
+    if (index !== -1) {
+      // Om objektet redan finns och värdet inte är false, uppdatera det
+      if (attribute.value !== false) {
+        AttributeArray[index] = attribute;
+      } else {
+        // Om värdet är false, ta bort objektet
+        AttributeArray.splice(index, 1);
+      }
+    } else {
+      // Om objektet inte finns och värdet inte är false, lägg till det
+      if (attribute.value !== false) {
+        AttributeArray.push(attribute);
+      }
+    }
+
+
+    data?.gallery.forEach(item => {
+      // Check if the "red" key exists in item.extraColor
+
+      if (item.extraColor) {
+        console.log(item.extraColor.red)
+        if (attribute.value in item.extraColor) {
+          // If it exists, set the original image to the value of item.extraColor.red
+          item.original = item.extraColor[attribute.value];
+        } else {
+          // Otherwise, default to the data.image.original
+          item.original = data.image.original;
+
+        }
+      }
+
+    });
 
     let totalProduct = 0; //pris attribut
 
@@ -225,7 +270,6 @@ const ProductSingleDetails: React.FC = () => {
         textObjekt.push({ type: tva, priceAtt: attribute.price });
       }
       textObjekt.forEach(obj => {
-        console.log(obj)
         totalProduct += parseInt(obj.priceAtt);
       });
 
@@ -237,6 +281,13 @@ const ProductSingleDetails: React.FC = () => {
       }
 
     }
+    if (attribute.customOrder !== undefined || attribute.customOrder) {
+      setcustomOrder(true);
+    } else {
+      setcustomOrder(false)
+    }
+
+
 
     setAttributes((prev) => ({
       ...prev,
@@ -274,7 +325,7 @@ const ProductSingleDetails: React.FC = () => {
                     '/assets/placeholder/products/product-gallery.svg'
                   }
                   alt={`${data?.name}--${index}`}
-                  className="object-cover w-full h-full max-h-[400px]"
+                  className="object-contain w-full h-full max-h-[400px]"
                 />
               </div>
             </SwiperSlide>
@@ -305,7 +356,7 @@ const ProductSingleDetails: React.FC = () => {
               <img
                 src={data.gallery[activeIndex]?.original ?? '/assets/placeholder/products/product-gallery.svg'}
                 alt={`${data?.name}--${activeIndex}`}
-                className="object-cover w-full max-h-[500px] min-h-[500px] transition duration-150 ease-in hover:opacity-90"
+                className="object-contain w-full max-h-[500px] min-h-[500px] transition duration-150 ease-in hover:opacity-90"
               />
             </div>
             <div className="col-span-1 overflow-x-auto flex space-x-2.5 mt-2.5">
@@ -318,7 +369,7 @@ const ProductSingleDetails: React.FC = () => {
                   <img
                     src={item?.original ?? '/assets/placeholder/products/product-gallery.svg'}
                     alt={`${data?.name}--${index}`}
-                    className="object-cover w-full h-full"
+                    className="object-contain w-full h-full"
                   />
                 </div>
               ))}
@@ -331,9 +382,10 @@ const ProductSingleDetails: React.FC = () => {
           <h2 className="text-heading text-lg md:text-xl lg:text-2xl 2xl:text-3xl font-bold hover:text-black mb-3.5">
             {data?.name}
           </h2>
-          <p className="text-body text-sm lg:text-base leading-6 lg:leading-8">
-            {data.description.se}
-          </p>
+          {
+            <div className="description-content" dangerouslySetInnerHTML={{ __html: data.description[i18n.language] }} />
+          }
+
           <div className="flex items-center mt-5">
             <div className="text-heading font-bold text-base md:text-xl lg:text-2xl 2xl:text-4xl ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
               {currentPrice}{locationCurrency.currency === "SEK" ? "kr" : locationCurrency.currency}
@@ -373,11 +425,11 @@ const ProductSingleDetails: React.FC = () => {
             onClick={addToCart}
             variant="slim"
             className={`w-full md:w-6/12 xl:w-full ${!isSelected && 'bg-gray-400 hover:bg-gray-400'
-              }`}
+              } ${customOrder && 'bg-green-400'} `}
             disabled={!isSelected}
             loading={addToCartLoader}
           >
-            <span className="py-2 3xl:px-8">{t("text-add-to-cart")}</span>
+            <span className="py-2 3xl:px-8">{customOrder ? t("text-add-to-cart-special") : t("text-add-to-cart")}</span>
           </Button>
         </div>
         <div className="py-6">
@@ -392,30 +444,48 @@ const ProductSingleDetails: React.FC = () => {
               <span className="font-semibold text-heading inline-block ltr:pr-2 rtl:pl-2">
                 {t('text-category')}:
               </span>
-              <Link
-                href="/"
-                className="transition hover:underline hover:text-heading"
-              >
-                {data?.category?.name}
-              </Link>
+              {data?.category.map((cat, index) => (
+                <div key={index} className="inline-flex items-center">
+                  <>
+                    <Link
+                      href={`/search?q=${cat.slug}`}
+                      className="transition hover:underline hover:text-heading"
+                    >
+                      {cat.name}
+                    </Link>
+                    <span className="text-heading inline-block pr-1 pl-1">></span>
+                  </>
+                  {cat.child &&
+                    cat.child.map((cat2, index) => (
+                      <>
+                        <Link
+                          href={`/search?q=${cat2.slug}`}
+                          className="transition hover:underline hover:text-heading"
+                        >
+                          {cat2.name}
+                        </Link>
+                        {
+                          cat2.child && <span className="text-heading inline-block pr-1 pl-1">></span>
+                        }
+                        {
+                          cat2.child && cat2.child.map((cat3, index) => (
+                            <Link
+                              href={`/search?q=${cat3.slug}`}
+                              className="transition hover:underline hover:text-heading"
+                            >
+                              {cat3.name}
+                            </Link>
+                          ))
+                        }
+                      </>
+                    ))}
+                </div>
+              ))}
+
+
+
             </li>
-            {data?.tags && Array.isArray(data.tags) && (
-              <li className="productTags">
-                <span className="font-semibold text-heading inline-block ltr:pr-2 rtl:pl-2">
-                  {t('text-tags')}:
-                </span>
-                {data.tags.map((tag) => (
-                  <Link
-                    key={tag.id}
-                    href={tag.slug}
-                    className="inline-block ltr:pr-1.5 rtl:pl-1.5 transition hover:underline hover:text-heading ltr:last:pr-0 rtl:last:pl-0"
-                  >
-                    {tag.name}
-                    <span className="text-heading"></span>
-                  </Link>
-                ))}
-              </li>
-            )}
+
           </ul>
         </div>
 

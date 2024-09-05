@@ -17,6 +17,7 @@ const ProductMetaReview: React.FC<Props> = ({ data }) => {
 					title={item.title}
 					pdf={item.PDF}
 					translatorNS="review"
+					tecnical={item.tecnical}
 					content={
 						/* item.PDF ? (item.PDF.title.se) : */
 						data?.length === item.id ? (

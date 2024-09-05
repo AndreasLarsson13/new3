@@ -14,5 +14,5 @@ export const faq = [
   {
     titleKey: "faq-four-title",
     contentKey: "faq-four-content",
-  },
+  }
 ];

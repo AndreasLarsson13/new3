@@ -3,6 +3,8 @@ import ProductCard from "@components/product/product-card";
 import ProductFeedLoader from "@components/ui/loaders/product-feed-loader";
 import { useRelatedProductsQuery } from "@framework/product/get-related-product";
 import Alert from "@components/ui/alert";
+import { useRouter } from 'next/router';
+
 
 interface ProductsProps {
 	sectionHeading: string;
@@ -13,8 +15,13 @@ const RelatedProducts: React.FC<ProductsProps> = ({
 	sectionHeading,
 	className = "mb-9 lg:mb-10 xl:mb-14",
 }) => {
+	const router = useRouter();
+	const { slug } = router.query;
+	/* 	console.log(slug)
+	 */
 	const { data, isLoading, error } = useRelatedProductsQuery({
 		limit: 10,
+		id: slug
 	});
 
 	return (

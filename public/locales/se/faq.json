@@ -1,10 +1,10 @@
 {
-  "faq-one-title": "How to contact with Customer Service?",
-  "faq-one-content": "Our Customer Experience Team is available 7 days a week and we offer 2 ways to get in contact.Email and Chat . We try to reply quickly, so you need not to wait too long for a response!.",
-  "faq-two-title": "App installation failed, how to update system information?",
-  "faq-two-content": "Please read the documentation carefully . We also have some online video tutorials regarding this issue . If the problem remains, Please Open a ticket in the support forum",
-  "faq-three-title": "Website response taking time, how to improve?",
-  "faq-three-content": "At first, Please check your internet connection . We also have some online video tutorials regarding this issue . If the problem remains, Please Open a ticket in the support forum.",
-  "faq-four-title": "How do I create an account?",
-  "faq-four-content": "If you want to open an account for personal use you can do it over the phone or online. Opening an account online should only take a few minutes."
+  "faq-one-title": "Hur lägger jag en beställning?",
+  "faq-one-content": "För att lägga en beställning, välj den produkt du vill köpa och klicka på Lägg i varukorg. Gå sedan till varukorgen och följ stegen för att slutföra köpet.",
+  "faq-two-title": "Kan jag ändra eller avbryta min beställning?",
+  "faq-two-content": "Du kan ändra eller avbryta din beställning inom 24 timmar efter att den lagts. Kontakta vår kundtjänst för hjälp.",
+  "faq-three-title": "Vilka betalningsmetoder accepteras?",
+  "faq-three-content": "Vi accepterar kreditkort, Klarna",
+  "faq-four-title": "Vad gör jag om jag har fått fel vara eller en defekt produkt?",
+  "faq-four-content": "Om du har fått fel eller en defekt produkt, kontakta vår kundtjänst omedelbart för hjälp med retur eller byte"
 }

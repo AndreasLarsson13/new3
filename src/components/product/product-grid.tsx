@@ -16,7 +16,8 @@ interface ProductGridProps {
 
 export const ProductGrid: FC<ProductGridProps> = ({ className = "" }) => {
 	const { t, i18n } = useTranslation("common");
-	const { query } = useRouter();
+	const { query, route } = useRouter();
+	console.log(useRouter())
 	const {
 		isFetching: isLoading,
 		isFetchingNextPage: loadingMore,
@@ -24,7 +25,7 @@ export const ProductGrid: FC<ProductGridProps> = ({ className = "" }) => {
 		hasNextPage,
 		data,
 		error,
-	} = useProductsQuery({ limit: 10, ...query });
+	} = useProductsQuery({ limit: 10, ...query, route });
 	if (error) return <p>{error.message}</p>;
 
 	const { filteredData, setFilteredData } = useFilteredData();
@@ -74,8 +75,8 @@ export const ProductGrid: FC<ProductGridProps> = ({ className = "" }) => {
 					// Check color filter
 					const isInColor = !colorList.length || (
 						colorList.length === 1
-							? product.variations.some((variation) => colorList.includes(variation.value[i18n.language]))
-							: colorList.every((color) => product.variations.some((variation) => color === variation.value[i18n.language]))
+							? product.variations.some((variation) => colorList.includes(variation.value))
+							: colorList.every((color) => product.variations.some((variation) => color === variation.value))
 					);
 
 					// Check brand filter

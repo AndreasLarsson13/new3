@@ -9,10 +9,7 @@ export const fetchSearchedProducts = async (options: QueryOptionsType) => {
 
   options.currency = location.value
 
-  console.log(API_ENDPOINTS.SEARCH, {
-    params: options
-  })
-  console.log(options)
+
   const { data } = await http.get(API_ENDPOINTS.SEARCH, {
     params: options,
   });

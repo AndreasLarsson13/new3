@@ -10,7 +10,6 @@ interface BannerProps {
 }
 
 
-
 const BannerBlock: React.FC<BannerProps> = ({
   data,
   className = 'mb-12 md:mb-14 xl:mb-16 px-2.5',

@@ -2,6 +2,7 @@ import isEmpty from "lodash/isEmpty";
 
 interface Item {
   id: string | number;
+  _id: string | number;
   name: string;
   slug: string;
   image: {
@@ -14,20 +15,21 @@ interface Item {
   currency: string;
   location: string;
 }
-export function generateCartItem(item: Item, attributes: object, currentPrice: number, locationS: string) {
-  const { id, name, slug, image, price, sale_price, currency } = item;
-  console.log(item)
+export function generateCartItem(item: Item, attributes: object, attributeArray: Array, currentPrice: number, locationS: string) {
+  const { id, name, slug, image, price, sale_price, currency, _id } = item;
   const currencyLocation = locationS.currency
+
 
   return {
     id: !isEmpty(attributes)
       ? `${id}.${Object.values(attributes).join(".")}`
       : id,
+    linkId: _id,
     name,
     slug,
     image: image.thumbnail,
     price: currentPrice,
-    attributes,
+    attributes: attributeArray,
     currency: locationS.currency,
     location: locationS.value
   };

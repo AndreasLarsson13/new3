@@ -3,6 +3,9 @@ import _ from 'lodash';
 import Image from 'next/image';
 import type { FC } from 'react';
 import { useEffect } from 'react'
+import { useRouter } from 'next/router';
+import { ROUTES } from '@utils/routes';
+
 import { useUI } from '@contexts/ui.context';
 import usePrice from '@framework/product/use-price';
 import { Product } from '@framework/types';
@@ -68,21 +71,22 @@ const ProductCard: FC<ProductProps> = ({
     currencyCode: product.currency,
   });
   const { i18n } = useTranslation();
+  const router = useRouter();
 
 
   /*  product.description = "product.description[i18n.language]";
    */
-  const filterProduct = _.cloneDeep(product);
+  const filterProduct = {
+    ...product,
+    description: product.description[i18n.language]  // Assuming product.description is an object with i18n.language keys
+  };
 
 
-  filterProduct.description = filterProduct.description[i18n.language]
-
-  filterProduct.variations.forEach(item => {
-    item.value = item.value[i18n.language]
-    item.attribute.name = item.attribute.name[i18n.language]
-    item.attribute.slug = item.attribute.slug[i18n.language]
-  })
-
+  function navigateToProductPage() {
+    router.push(`${ROUTES.PRODUCT}/${product._id}/`, undefined, {
+      locale: router.locale,
+    });
+  }
 
 
 
@@ -120,7 +124,8 @@ const ProductCard: FC<ProductProps> = ({
         },
         className
       )}
-      onClick={handlePopupView}
+      /*   onClick={handlePopupView} */
+      onClick={navigateToProductPage}
       role="button"
       title={product?.name}
     >
@@ -141,7 +146,7 @@ const ProductCard: FC<ProductProps> = ({
         )}
       >
         <Image
-          src={product?.image?.thumbnail ?? placeholderImage}
+          src={product?.image?.original ?? placeholderImage}
           width={demoVariant === 'ancient' ? 352 : imgWidth}
           height={demoVariant === 'ancient' ? 452 : imgHeight}
           loading={imgLoading}

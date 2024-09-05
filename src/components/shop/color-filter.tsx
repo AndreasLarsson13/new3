@@ -84,22 +84,19 @@ export const ColorFilter = () => {
 
   let arrayProduct = []
 
-  /*   console.log(filteredData)
-   */
-  console.log(i18n.language)
+
   filteredData.forEach((item: any) => {
     item.variations.forEach((variationColor: any) => {
-      if (variationColor.attribute.slug.se === "color") {
+      if (variationColor.attribute.slug === "color") {
 
 
         arrayProduct.push(
           {
             id: variationColor.id,
-            name: variationColor.value[i18n.language],
-            slug: variationColor.value[i18n.language],
+            name: variationColor.value,
+            slug: variationColor.value,
             hexColor: variationColor.meta
           })
-        console.log(arrayProduct)
       }
     })
 
@@ -109,8 +106,7 @@ export const ColorFilter = () => {
     new Map(arrayProduct.map(item => [item.slug, item])).values()
   );
 
-  /*   console.log(uniqueArrayProduct)
-   */
+
 
   const finalFilteredItems = items.filter((item) =>
     arrayProduct.includes(item.slug)
@@ -133,7 +129,7 @@ export const ColorFilter = () => {
                   className={`w-5 h-5 rounded-full block ltr:mr-3 rtl:ml-3 mt-0.5 border border-black border-opacity-20`}
                   style={{ backgroundColor: item.hexColor }}
                 />
-                {item.name}
+                {t(item.slug)}
               </span>
             }
             name={item.name.toLowerCase()}

@@ -4,8 +4,7 @@ import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
 import { useQuery } from "@tanstack/react-query";
 
 export const fetchCategory = async () => {
-	const data  = await http.get(API_ENDPOINTS.CATEGORIES);
-	console.log(data)
+	const data = await http.get(API_ENDPOINTS.CATEGORIES);
 	return { category: { data } };
 };
 export const useCategoriesQuery = (options: QueryOptionsType) => {
