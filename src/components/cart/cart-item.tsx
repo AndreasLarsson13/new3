@@ -23,13 +23,13 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
 
   const { price } = usePrice({
     amount: item.price,
-    currencyCode: item.currency,  // Byt framöver
-    /* currencyCode: "SEK", */
+    /*  currencyCode: item.currency,  */ // Byt framöver
+    currencyCode: "SEK",
   });
   const { price: totalPrice } = usePrice({
     amount: item.itemTotal,
-    currencyCode: item.currency,  // Byt framöver
-    /*  currencyCode: "SEK", */
+    /*    currencyCode: item.currency, */  // Byt framöver
+    currencyCode: "SEK",
   });
 
   return (
