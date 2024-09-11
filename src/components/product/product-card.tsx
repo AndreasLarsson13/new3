@@ -76,10 +76,20 @@ const ProductCard: FC<ProductProps> = ({
 
   /*  product.description = "product.description[i18n.language]";
    */
+
+
+
   const filterProduct = {
     ...product,
     description: product.description[i18n.language]  // Assuming product.description is an object with i18n.language keys
   };
+  const tempElement = document.createElement('div');
+
+  tempElement.innerHTML = filterProduct.description
+
+  const desriptionData = tempElement.firstChild?.textContent
+
+
 
 
   function navigateToProductPage() {
@@ -99,7 +109,7 @@ const ProductCard: FC<ProductProps> = ({
   return (
     <div
       className={cn(
-        `group box-border overflow-hidden flex ${!disableBorderRadius && 'rounded-md'
+        `group box-border overflow-hidden flex items-center	 ${!disableBorderRadius && 'rounded-md'
         } cursor-pointer`,
         {
           'ltr:pr-0 rtl:pl-0 pb-2 lg:pb-3 flex-col items-start transition duration-200 ease-in-out transform hover:-translate-y-1 md:hover:-translate-y-1.5 hover:shadow-product':
@@ -153,7 +163,7 @@ const ProductCard: FC<ProductProps> = ({
           quality={100}
           alt={product?.name || 'Product Image'}
           className={cn(
-            `bg-gray-300 object-cover ${!disableBorderRadius && 'rounded-s-md'
+            `object-fit h-[150px] md:h-[215px] ${!disableBorderRadius && 'rounded-s-md'
             }`,
             {
               'w-full transition duration-200 ease-in':
@@ -161,7 +171,7 @@ const ProductCard: FC<ProductProps> = ({
                 variant === 'gridModern' ||
                 variant === 'gridModernWide' ||
                 variant === 'gridTrendy',
-              'rounded-md group-hover:rounded-b-none':
+              'rounded-md group-hover:rounded-b-none object-fit h-[150px] md:h-[150px]':
                 (variant === 'grid' && !disableBorderRadius) ||
                 (variant === 'gridModern' && !disableBorderRadius) ||
                 (variant === 'gridModernWide' && !disableBorderRadius) ||
@@ -284,9 +294,9 @@ const ProductCard: FC<ProductProps> = ({
         >
           {product?.name}
         </h2>
-        {!hideProductDescription && filterProduct.description && (
+        {!hideProductDescription && desriptionData && (
           <p className="text-body text-xs lg:text-sm leading-normal xl:leading-relaxed max-w-[250px] truncate">
-            {filterProduct.description}
+            {desriptionData}
           </p>
         )}
         <div

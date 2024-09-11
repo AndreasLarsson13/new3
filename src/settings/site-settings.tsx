@@ -866,12 +866,7 @@ export const siteSettings = {
             ],
           },
         ],
-      },/* 
-      {
-        id: 5,
-        path: '/shops',
-        label: 'menu-shops',
-      }, */
+      },
       {
         id: 6,
         path: '/',
@@ -893,55 +888,18 @@ export const siteSettings = {
     mobileMenu: [
       {
         id: 1,
-        path: '/',
-        label: 'menu-demos',
+        path: '//search?q=hus',
+        label: 'hus',
         subMenu: [
           {
             id: 1,
-            path: '/',
-            label: 'menu-modern',
-          },
-          {
-            id: 2,
-            path: '/standard',
-            label: 'menu-standard',
-          },
-          {
-            id: 4,
-            path: '/vintage',
-            label: 'menu-vintage',
-          },
-          {
-            id: 6,
-            path: '/trendy',
-            label: 'menu-trendy',
-          },
-          {
-            id: 9,
-            path: '/contemporary',
-            label: 'menu-contemporary',
-          },
-          {
-            id: 10,
-            path: '/ancient',
-            label: 'menu-ancient',
-          },
-        ],
-      },
-      {
-        id: 2,
-        path: '/search?q=men-wear',
-        label: 'menu-men-wear',
-        subMenu: [
-          {
-            id: 1,
-            path: '/search?q=top-wear',
-            label: 'menu-top-wear',
+            path: '/search?q=kok',
+            label: 'kok',
             subMenu: [
               {
                 id: 1,
-                path: '/search?q=t-shirt',
-                label: 'menu-t-shirt',
+                path: '/search?q=kranar',
+                label: 'kranar',
               },
               {
                 id: 2,
@@ -972,8 +930,8 @@ export const siteSettings = {
           },
           {
             id: 2,
-            path: '/search?q=belt-scarves',
-            label: 'menu-belt-scarves',
+            path: '/search?q=pizza-ugn',
+            label: 'pizzaugn',
           },
           {
             id: 3,
@@ -1183,97 +1141,11 @@ export const siteSettings = {
       },
       {
         id: 5,
-        path: '/shops',
-        label: 'menu-shops',
-      },
-      {
-        id: 6,
-        path: '/',
-        label: 'menu-pages',
-        subMenu: [
-          {
-            id: 1,
-            path: '/',
-            label: 'menu-users',
-            subMenu: [
-              {
-                id: 1,
-                path: '/my-account',
-                label: 'menu-my-account',
-              },
-              {
-                id: 2,
-                path: '/signin',
-                label: 'menu-sign-in',
-              },
-              {
-                id: 3,
-                path: '/signup',
-                label: 'menu-sign-up',
-              },
-              {
-                id: 4,
-                path: '/forget-password',
-                label: 'menu-forget-password',
-              },
-            ],
-          },
-          {
-            id: 2,
-            path: '/faq',
-            label: 'menu-faq',
-          },
-          {
-            id: 3,
-            path: '/privacy',
-            label: 'menu-privacy-policy',
-          },
-          {
-            id: 4,
-            path: '/terms',
-            label: 'menu-terms-condition',
-          },
-          {
-            id: 5,
-            path: '/contact-us',
-            label: 'menu-contact-us',
-          },
-          {
-            id: 6,
-            path: '/checkout',
-            label: 'menu-checkout',
-          },
-          {
-            id: 7,
-            path: '/collections/mens-collection',
-            label: 'menu-collection',
-          },
-          {
-            id: 8,
-            path: '/category/man',
-            label: 'menu-category',
-          },
-          {
-            id: 9,
-            path: '/order',
-            label: 'menu-order',
-          },
-          {
-            id: 10,
-            path: '/404',
-            label: 'menu-404',
-          },
-        ],
-      },
+        path: '/contact-us',
+        label: 'menu-contact-us',
+      }
     ],
     currencyMenu: [
-      {
-        id: 'en',
-        name: 'English - EN',
-        value: 'en',
-        currency: 'EUR',
-        icon: <USFlag width="20px" height="15px" />,
-      },
       {
         id: 'se',
         name: 'Sverige',

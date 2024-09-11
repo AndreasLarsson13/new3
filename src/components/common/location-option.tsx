@@ -30,12 +30,16 @@ const LocationOption: React.FC<LocationOptionProps> = ({
 
   const locationClick = (e: any) => {
 
-    localStorage.setItem('clickedLocation', JSON.stringify(e))
+    /*     localStorage.setItem('clickedLocation', JSON.stringify(e))
+     */
 
+    console.log(e)
+    if (e.id === "se") {
+      alert(e)
+    }
 
-
-    document.getElementById("locationContainerStart")?.classList.add("hidden");
-  }
+/*     document.getElementById("locationContainerStart")?.classList.add("hidden");
+ */  }
 
   return (
     <div id="locationContainerStart"
@@ -46,19 +50,19 @@ const LocationOption: React.FC<LocationOptionProps> = ({
       <span className="inline-block mb:block mb-3.5 leading-6">Välkommen till våran butik! Vilken plats befinner du dig på?</span>
       <div className='flex gap-10 center'>
         <div onClick={() => locationClick({
-          currency: "SEK",
-          id: "se",
-          name: "Sverige",
-          value: "se"
+          currency: "€",
+          id: "ax",
+          name: "Åland",
+          value: "ax"
         })} className='pointer'>
           <AXFlag width="120px" />
         </div>
 
         <div onClick={() => locationClick({
-          currency: "€",
-          id: "ax",
-          name: "Åland",
-          value: "ax"
+          currency: "SEK",
+          id: "se",
+          name: "Sverige",
+          value: "se"
         })} className='pointer'>
           <SEFlag width="120px" />
 

@@ -33,14 +33,16 @@ export const ProductAttributes: React.FC<Props> = ({
   })
 
 
+
+
   const { t, i18n } = useTranslation('common');
 
-
+  console.log(title)
 
   return (
     <div className={className}>
       <h3 className="text-base md:text-lg text-heading font-semibold mb-2.5 capitalize">
-        {t(`${titelNew}`)}
+        {t(`${title}`)}
       </h3>
       <ul className="flex flex-wrap colors ltr:-mr-3 rtl:-ml-3">
         {attributes?.map(({ id, value, meta, price, img, customOrder, attribute }) => (
@@ -50,7 +52,7 @@ export const ProductAttributes: React.FC<Props> = ({
             className={cn(
               'cursor-pointer rounded border w-9 md:w-11 h-9 md:h-11 p-1 mb-2 md:mb-3 ltr:mr-2 rtl:ml-2 ltr:md:mr-3 rtl:md:ml-3 flex justify-center items-center text-heading text-xs md:text-sm uppercase font-semibold transition duration-200 ease-in-out hover:border-black',
               value === active ? 'border-black' : 'border-gray-500',
-              img ? 'md:w-28 md:h-28' : 'md:w-11 md:h-11',
+              img ? 'min-h-[110px] min-w-[110px] md:w-28 md:h-28' : 'md:w-11 md:h-11',
             )}
             onClick={() => onClick({ "id": title, [title]: value, "price": price, "value": value, "customOrder": customOrder, "name": attribute.name, /* "type": attribute.slug  */ })}
           >
@@ -64,8 +66,8 @@ export const ProductAttributes: React.FC<Props> = ({
               <div className="relative">
                 <img
                   src={img.url}
-                  alt="noImg"
-                  className={!value ? 'opacity-25' : 'opacity-100'}
+                  alt={img.name}
+                  className={`max-w-[100px] min-h-[100px] max-h-[100px] min-h-[100px] ${value ? 'opacity-100' : 'opacity-25'}`}
                 />
                 {!value && <svg
                   className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"

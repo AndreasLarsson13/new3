@@ -33,7 +33,7 @@ export const Collapse: React.FC<CollapseProps> = ({
 }) => {
   const isOpen = i === expanded;
 
-  const { t } = useTranslation(translatorNS);
+  const { t, i18n } = useTranslation(translatorNS);
 
   return (
     <div
@@ -112,7 +112,7 @@ export const Collapse: React.FC<CollapseProps> = ({
               ))}
               {pdf && pdf.map((item, index) => (
                 <div key={index} className="flex gap-2">
-                  <h3>{item.title.se}</h3>
+                  <h3>{item.title[i18n.language]}</h3>
                   <a href={item.url} target="_blank" rel="noopener noreferrer" className="font-semibold	">{t("common:downloadPdf")}</a>
                 </div>
               ))}

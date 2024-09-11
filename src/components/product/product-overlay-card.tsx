@@ -56,8 +56,14 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
   });
   const { i18n } = useTranslation();
 
-  const filterProduct = _.cloneDeep(product);
+  const filterProduct = product;
 
+
+  const tempElement = document.createElement('div');
+
+  tempElement.innerHTML = filterProduct.description
+
+  const desriptionData = tempElement.firstChild?.textContent
   /* 
     filterProduct.variations.forEach(items => {
       items.value = items.value
@@ -138,13 +144,21 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
             {filterProduct?.name}
           </h2>
 
-          {true ? (
-            <p className="text-body text-xs xl:text-sm leading-normal xl:leading-relaxed truncate max-w-[250px]">
-              {filterProduct.description}
-            </p>
-          ) : (
-            <Text className="pb-0.5 truncate">35 Brands, 1000+ Products</Text>
+
+          <p className="text-body text-xs xl:text-sm leading-normal xl:leading-relaxed truncate max-w-[250px]">
+            {desriptionData}
+          </p>
+
+        </div>
+        <div className="flex-shrink-0 flex flex-row-reverse md:flex-col lg:flex-row-reverse 2xl:flex-col items-center md:items-end lg:items-start 2xl:items-end justify-end ltr:md:text-right rtl:md:text-left lg:ltr:text-left rtl:text-right ltr:xl:text-right rtl:xl:text-left mt-2 md:-mt-0.5 lg:mt-2 2xl:-mt-0.5">
+          {discount && (
+            <del className="text-sm md:text-base lg:text-sm xl:text-base 3xl:text-lg">
+              {basePrice}
+            </del>
           )}
+          <div className="text-heading font-segoe font-semibold text-base md:text-xl lg:text-base xl:text-xl 3xl:text-2xl 3xl:mt-0.5 ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
+            {price}
+          </div>
         </div>
 
 

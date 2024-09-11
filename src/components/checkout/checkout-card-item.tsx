@@ -43,10 +43,10 @@ export const CheckoutItem: React.FC<{ item: Item }> = ({ item }) => {
           {item.attributes.map((extraAdded, index) => (
             extraAdded.id === "color" ?
               <h6 className="text-sm ltr:pl-3 rtl:pr-3 text-gray-400" key={index}>
-                {`${extraAdded.name} : ${t(extraAdded.value)}`}
+                {`${t(extraAdded.name)} : ${t(extraAdded.value)}`}
               </h6> :
               <h6 className="text-sm ltr:pl-3 rtl:pr-3 text-gray-400" key={index}>
-                + {extraAdded.name}
+                + {t(extraAdded.name)}
               </h6>
 
           ))}

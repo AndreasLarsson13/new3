@@ -119,9 +119,6 @@ const ProductSingleDetails: React.FC = () => {
         /*   let translatedValue = item.value[countyCode]; */
         // Create a new object or deep clone the item object to avoid modifying the original
 
-        /*  if (item.img) {
-           translatedValue = item.value
-         } */
 
         const newItem = {
           ...item,
@@ -325,38 +322,21 @@ const ProductSingleDetails: React.FC = () => {
                     '/assets/placeholder/products/product-gallery.svg'
                   }
                   alt={`${data?.name}--${index}`}
-                  className="object-contain w-full h-full max-h-[400px]"
+                  className="object-fit w-auto h-full max-h-[320px] min-h-[320px]"
+
                 />
               </div>
             </SwiperSlide>
           ))}
         </Carousel>
-      ) : /* original ( 
-        <div className="col-span-5 grid grid-cols-2 gap-2.5">
-          {data?.gallery?.map((item, index: number) => (
-            <div
-              key={index}
-              className="col-span-1 transition duration-150 ease-in hover:opacity-90"
-            >
-              <img
-                src={
-                  item?.original ??
-                  '/assets/placeholder/products/product-gallery.svg'
-                }
-                alt={`${data?.name}--${index}`}
-                className="object-cover w-full max-h-80"
-              />
-            </div>
-          ))}
-        </div>
-      ) */
+      ) :
         (
           <div className="col-span-4 grid grid-cols-1 gap-2.5">
-            <div className="col-span-1">
+            <div className="col-span-1 overflow-hidden flex justify-center">
               <img
                 src={data.gallery[activeIndex]?.original ?? '/assets/placeholder/products/product-gallery.svg'}
                 alt={`${data?.name}--${activeIndex}`}
-                className="object-contain w-full max-h-[500px] min-h-[500px] transition duration-150 ease-in hover:opacity-90"
+                className="w-auto h-full max-h-[402px] min-h-[402px] transition duration-150 ease-in hover:opacity-90 "
               />
             </div>
             <div className="col-span-1 overflow-x-auto flex space-x-2.5 mt-2.5">
@@ -369,12 +349,13 @@ const ProductSingleDetails: React.FC = () => {
                   <img
                     src={item?.original ?? '/assets/placeholder/products/product-gallery.svg'}
                     alt={`${data?.name}--${index}`}
-                    className="object-contain w-full h-full"
+                    className="object-fit w-full h-full"
                   />
                 </div>
               ))}
             </div>
           </div>
+
         )}
 
       <div className="col-span-5 pt-8 lg:pt-0">
@@ -388,7 +369,8 @@ const ProductSingleDetails: React.FC = () => {
 
           <div className="flex items-center mt-5">
             <div className="text-heading font-bold text-base md:text-xl lg:text-2xl 2xl:text-4xl ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
-              {currentPrice}{locationCurrency.currency === "SEK" ? "kr" : locationCurrency.currency}
+              {/*               {currentPrice}{locationCurrency.currency === "SEK" ? "kr" : locationCurrency.currency} Fixa till 
+ */}              {currentPrice} €
             </div>
             {discount && (
               <span className="line-through font-segoe text-gray-400 text-sm md:text-base lg:text-lg xl:text-xl ltr:pl-2 rtl:pr-2">
@@ -451,7 +433,7 @@ const ProductSingleDetails: React.FC = () => {
                       href={`/search?q=${cat.slug}`}
                       className="transition hover:underline hover:text-heading"
                     >
-                      {cat.name}
+                      {t(`menu:${cat.slug}`)}
                     </Link>
                     <span className="text-heading inline-block pr-1 pl-1">></span>
                   </>
@@ -462,7 +444,7 @@ const ProductSingleDetails: React.FC = () => {
                           href={`/search?q=${cat2.slug}`}
                           className="transition hover:underline hover:text-heading"
                         >
-                          {cat2.name}
+                          {t(`menu:${cat2.slug}`)}
                         </Link>
                         {
                           cat2.child && <span className="text-heading inline-block pr-1 pl-1">></span>
@@ -473,7 +455,7 @@ const ProductSingleDetails: React.FC = () => {
                               href={`/search?q=${cat3.slug}`}
                               className="transition hover:underline hover:text-heading"
                             >
-                              {cat3.name}
+                              {t(`menu:${cat3.slug}`)}
                             </Link>
                           ))
                         }

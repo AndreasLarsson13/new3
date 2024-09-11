@@ -8,7 +8,7 @@ import AddToHomeScreenButton from '@components/downloadApp'
 const data = {
   title: 'app-heading',
   subTitle: 'app-sub-heading',
-  appImage: '/assets/images/app.png',
+  appImage: '/assets/images/AppDownload.jpg',
   appImage2: '/assets/images/app2.png',
   appImage3: '/assets/images/app3.png',
   appButtons: [

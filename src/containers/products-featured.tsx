@@ -42,7 +42,7 @@ const ProductsFeatured: React.FC<ProductsProps> = ({
 
 
   filterProduct && filterProduct.forEach(item => {
-    item.description = item.description[i18n.language][0].text
+    item.description = item.description[i18n.language]
 
   })
 

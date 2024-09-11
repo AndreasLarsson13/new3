@@ -10,7 +10,7 @@ const data = {
 	title: "support-heading",
 	description: "support-sub-heading",
 	buttonText: "button-chat-services",
-	supportImage: "/assets/images/support.png",
+	supportImage: "/assets/images/customerSupport.webp",
 };
 
 
@@ -50,8 +50,9 @@ const Support: React.FC<Props> = ({ className }) => {
 				<Image
 					src={supportImage}
 					alt={t("text-support-thumbnail")}
-					width={870}
-					height={300}
+					width={150}
+					height={150}
+					style={{ margin: "auto", marginBottom: "20px" }}
 				/>
 			</div>
 			<Button onClick={handleClick}>

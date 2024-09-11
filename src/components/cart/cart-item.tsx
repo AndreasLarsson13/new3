@@ -24,12 +24,12 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
   const { price } = usePrice({
     amount: item.price,
     /*  currencyCode: item.currency,  */ // Byt framöver
-    currencyCode: "SEK",
+    currencyCode: "EUR",
   });
   const { price: totalPrice } = usePrice({
     amount: item.itemTotal,
     /*    currencyCode: item.currency, */  // Byt framöver
-    currencyCode: "SEK",
+    currencyCode: "EUR",
   });
 
   return (
@@ -73,11 +73,11 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
 
         {item.attributes.map((extraAdded, index) => (
           extraAdded.id === "color" ?
-            <span className="text-sm ltr:pl-3 rtl:pr-3 text-gray-400" key={index}>
-              {`${extraAdded.name} : ${t(extraAdded.value)}`}
+            <span className="text-sm rtl:pr-3 text-gray-400" key={index}>
+              {`${t(extraAdded.name)} : ${t(extraAdded.value)}`}
             </span> :
             <span className="text-sm ltr:pl-3 rtl:pr-3 text-gray-400" key={index}>
-              + {extraAdded.name}
+              + {t(extraAdded.name)}
             </span>
 
         ))}
