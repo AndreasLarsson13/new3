@@ -54,7 +54,7 @@ const BrandBlock: React.FC<BrandProps> = ({
     limit: 8,
     demoVariant,
   });
-  const brands = data && data[0].brands;
+  const brands = data && data;
 
   return (
     <div className={className}>

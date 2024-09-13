@@ -128,7 +128,7 @@ const ProductsFlashSaleBlock: React.FC<ProductsProps> = ({
   });
 
   const filterProduct = data && data.map(item => ({ ...item }));
-
+  console.log(filterProduct)
   if (isLoading) {
     return (
       <ProductFlashSaleWrapper

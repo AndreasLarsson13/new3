@@ -866,24 +866,7 @@ export const siteSettings = {
             ],
           },
         ],
-      },
-      {
-        id: 6,
-        path: '/',
-        label: 'menu-pages',
-        subMenu: [
-          {
-            id: 6,
-            path: '/checkout',
-            label: 'menu-checkout',
-          },
-          {
-            id: 8,
-            path: '/category/man',
-            label: 'menu-category',
-          }
-        ],
-      },
+      }
     ],
     mobileMenu: [
       {

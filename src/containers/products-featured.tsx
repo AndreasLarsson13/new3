@@ -46,7 +46,7 @@ const ProductsFeatured: React.FC<ProductsProps> = ({
 
   })
 
-
+  console.log(filterProduct)
 
   return (
     <div className={className}>

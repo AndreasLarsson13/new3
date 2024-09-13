@@ -46,7 +46,7 @@ export const BrandFilter = () => {
 
 	// Filter brands based on products
 	const arrayProductBrands = filteredData.map((item: any) => item.brand);
-	const finalFilteredItems = data[0].brands.filter((item) =>
+	const finalFilteredItems = data.filter((item) =>
 		arrayProductBrands.includes(item.slug)
 	);
 

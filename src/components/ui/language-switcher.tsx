@@ -41,17 +41,22 @@ export default function LanguageSwitcher() {
 
   // Define the locationClick function to handle the click event
   const locationClick = (option) => {
-    // Update the clickedLocation state to the clicked option
-    setClickedLocation(option);
-
-    // Save the clicked option to local storage
-    const old = JSON.parse(localStorage.getItem('clickedLocation'))
-    // Perform other actions if needed
-
-
-    const cartItems = JSON.parse(localStorage.getItem('chawkbazar-cart'))
-
-    localStorage.setItem('clickedLocation', JSON.stringify(option))
+    console.log(option)
+    if (option.id === "se") {
+      alert("Vi levererar inte till Sverige än")
+    }
+    // Fixa vid flera länder
+    /*   setClickedLocation(option);
+  
+      // Save the clicked option to local storage
+      const old = JSON.parse(localStorage.getItem('clickedLocation'))
+      // Perform other actions if needed
+  
+  
+      const cartItems = JSON.parse(localStorage.getItem('chawkbazar-cart'))
+  
+      localStorage.setItem('clickedLocation', JSON.stringify(option))
+   */
 
   };
 

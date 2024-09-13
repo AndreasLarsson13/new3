@@ -49,7 +49,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
           height={112}
           loading="eager"
           alt={item.name || 'Product Image'}
-          className="object-cover bg-gray-300"
+          className="object-fit bg-gray-300"
         />
         <div
           className="absolute top-0 flex items-center justify-center w-full h-full transition duration-200 ease-in-out bg-black ltr:left-0 rtl:right-0 bg-opacity-30 md:bg-opacity-0 md:group-hover:bg-opacity-30"

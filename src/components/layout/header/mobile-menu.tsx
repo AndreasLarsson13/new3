@@ -17,17 +17,10 @@ import { useTranslation } from 'next-i18next';
 const social = [
   {
     id: 0,
-    link: 'https://www.facebook.com/redqinc/',
+    link: 'https://www.facebook.com/nätbutiken/',
     icon: <IoLogoFacebook />,
     className: 'facebook',
     title: 'text-facebook',
-  },
-  {
-    id: 1,
-    link: 'https://twitter.com/redqinc',
-    icon: <IoLogoTwitter />,
-    className: 'twitter',
-    title: 'text-twitter',
   },
   {
     id: 2,
@@ -38,7 +31,7 @@ const social = [
   },
   {
     id: 3,
-    link: 'https://www.instagram.com/redqinc/',
+    link: 'https://www.instagram.com/nätbutiken/',
     icon: <IoLogoInstagram />,
     className: 'instagram',
     title: 'text-instagram',
@@ -90,9 +83,8 @@ export default function MobileMenu() {
               onClick={() => handleArrowClick(menuName)}
             >
               <IoIosArrowDown
-                className={`transition duration-200 ease-in-out transform text-heading ${
-                  activeMenus.includes(menuName) ? '-rotate-180' : 'rotate-0'
-                }`}
+                className={`transition duration-200 ease-in-out transform text-heading ${activeMenus.includes(menuName) ? '-rotate-180' : 'rotate-0'
+                  }`}
               />
             </div>
           )}

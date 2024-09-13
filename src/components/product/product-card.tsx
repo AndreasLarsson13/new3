@@ -68,7 +68,7 @@ const ProductCard: FC<ProductProps> = ({
   const { price, basePrice, discount } = usePrice({
     amount: product.sale_price ? product.sale_price : product.price,
     baseAmount: product.price,
-    currencyCode: product.currency,
+    currencyCode: "EUR",
   });
   const { i18n } = useTranslation();
   const router = useRouter();

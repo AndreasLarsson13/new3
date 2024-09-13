@@ -2,7 +2,7 @@ import axios from "axios";
 import { getToken } from "./get-token";
 
 const http = axios.create({
-  baseURL: "https://backendegnasidor.ue.r.appspot.com/",
+  baseURL: "http://localhost:4000",
   timeout: 30000,
   headers: {
     Accept: "application/json",
