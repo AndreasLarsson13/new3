@@ -30,12 +30,16 @@ const LocationOption: React.FC<LocationOptionProps> = ({
 
   const locationClick = (e: any) => {
 
-    /*     localStorage.setItem('clickedLocation', JSON.stringify(e))
-     */
+
+    if (e.id === "ax") {
+      localStorage.setItem('clickedLocation', JSON.stringify(e))
+      document.getElementById("locationContainerStart")?.classList.add("hidden");
+    }
+
 
     console.log(e)
     if (e.id === "se") {
-      alert(e)
+      alert("VI säljer inte till sverige än")
     }
 
 /*     document.getElementById("locationContainerStart")?.classList.add("hidden");
@@ -44,11 +48,11 @@ const LocationOption: React.FC<LocationOptionProps> = ({
   return (
     <div id="locationContainerStart"
       className={cn(
-        'text-center p-5 bg-white text-sm flex-row justify-center items-center font-medium fixed bottom-0 w-full h-full z-30 transition-all duration-300 ease-out shadow-cookies hidden',
+        'text-center p-5 bg-white text-sm flex-row justify-center items-center font-medium fixed bottom-0 w-full h-full z-30 transition-all duration-300 ease-out shadow-cookies hidden z-50',
       )}
     >
       <span className="inline-block mb:block mb-3.5 leading-6">Välkommen till våran butik! Vilken plats befinner du dig på?</span>
-      <div className='flex gap-10 center'>
+      <div className='flex gap-10 center justify-center'>
         <div onClick={() => locationClick({
           currency: "€",
           id: "ax",

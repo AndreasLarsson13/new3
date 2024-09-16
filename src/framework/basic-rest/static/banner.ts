@@ -152,8 +152,8 @@ export const homeThreeMasonryBanner = [
 export const promotionBanner = [
   {
     id: 1,
-    title: 'Travel Baggage',
-    slug: 'travel-baggage',
+    title: 'Sommar rea',
+    slug: 'sommar-rea',
     image: {
       mobile: {
         url: '/assets/images/banner/slider/mobile/summerSale.jpg',
@@ -170,8 +170,8 @@ export const promotionBanner = [
   },
   {
     id: 2,
-    title: "Women's Collection",
-    slug: "women's-collection",
+    title: "Kranar",
+    slug: "kranar",
     image: {
       mobile: {
         url: '/assets/images/banner/slider/mobile/kran-slide-banner.jpg',
@@ -188,8 +188,8 @@ export const promotionBanner = [
   },
   {
     id: 3,
-    title: 'Winter Collection',
-    slug: 'winter-collection',
+    title: 'Nya produkter',
+    slug: 'nya-produkter',
     image: {
       mobile: {
         url: '/assets/images/banner/slider/mobile/banner-3.jpg',

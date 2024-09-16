@@ -27,10 +27,10 @@ import { SneakerIcon } from '@components/icons/sneaker-icon';
 
 export const siteSettings = {
   name: 'Nätbutiken',
-  description: 'Fastest E-commerce template built with React, NextJS, TypeScript, @tanstack/react-query and Tailwind CSS.',
+  description: 'Välkommen till Ålands Nätbutik – din kompletta destination för att upptäcka och handla produkter',
   author: {
     name: 'Nätbutiken',
-    websiteUrl: 'https://redq.io',
+    websiteUrl: 'https://www.nätbutiken.ax',
     address: '',
   },
   logo: {

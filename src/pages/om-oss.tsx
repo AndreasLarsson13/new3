@@ -10,12 +10,12 @@ import { GetStaticProps } from 'next';
 export default function ContactUsPage() {
   const { t } = useTranslation('common');
   return (
-    <><PageHeader pageHeader="text-page-support" />
+    <><PageHeader pageHeader="text-page-about" />
       <Container>
         <div className="py-5 lg:py-13 px-0 max-w-5xl mx-auto space-y-4 min-h-[320px]">
+          <p className='text-center	'>{t("about")}</p>
 
-          <SupportForm />
-
+          <img src="https://media.istockphoto.com/id/1460717515/photo/maarianhamina-city-summer-01.jpg?s=2048x2048&w=is&k=20&c=Y9QZHK7zL5ZpSjkdkeWNQzbDcfxuJK2jhCPbmB77AKo=" alt="" srcset="" />
 
         </div>
         <Subscription />

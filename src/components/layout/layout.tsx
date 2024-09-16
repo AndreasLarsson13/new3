@@ -34,7 +34,7 @@ export default function Layout({ children }: React.PropsWithChildren<{}>) {
 				]}
 				title="Nätbutiken - Ålands nya handelsplats"
 				description="Är du trött på skattegränsen? Vi hjälper dig med enkel handen över gräsen"
-				canonical="https://chawkbazar.vercel.app/"
+				canonical="https://www.nätbutiken.ax"
 				openGraph={{
 					url: 'https://www.nätbutiken.ax',
 					title: 'Nätbutiken - ',
