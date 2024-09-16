@@ -1208,7 +1208,7 @@ export const siteSettings = {
                   {
                     id: 1,
                     path: '/search?q=t-shirt',
-                    label: 'menu-t-shirt',
+                    label: 'menu-kranar',
                   },
                   {
                     id: 2,

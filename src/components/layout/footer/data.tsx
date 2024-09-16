@@ -43,7 +43,7 @@ export const footer = {
         {
           id: 2,
           title: 'link-about-us',
-          path: '/contact-us',
+          path: '/om-oss',
         },
         {
           id: 3,
@@ -91,18 +91,18 @@ export const footer = {
       lists: [
         {
           id: 1,
-          title: 'link-men-wear',
-          path: '/search',
+          title: 'link-kranar',
+          path: '/search?q=kranar',
         },
         {
           id: 2,
-          title: 'link-men-wear',
-          path: '/search',
+          title: 'link-pizza',
+          path: '/search?q=pizza-ugn',
         },
         {
           id: 3,
-          title: 'link-kids-wear',
-          path: '/search',
+          title: 'link-braskamin',
+          path: '/search?q=braskamin',
         },
         {
           id: 4,
@@ -160,18 +160,10 @@ export const footer = {
       height: 20,
     },
     {
-      id: 4,
-      path: '/',
-      image: '/assets/images/payment/jcb.svg',
-      name: 'payment-jcb',
-      width: 26,
-      height: 20,
-    },
-    {
       id: 5,
       path: '/',
       image: '/assets/images/payment/skrill.svg',
-      name: 'payment-skrill',
+      name: 'klarna',
       width: 39,
       height: 20,
     },

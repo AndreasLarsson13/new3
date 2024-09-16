@@ -7,6 +7,7 @@ export const ROUTES = {
   POLICY: "/privacy",
   FAQ: "/faq",
   FORGET_PASSWORD: "/forget-password",
+  omOss: "/om-oss",
   /*   ACCOUNT: "/my-account",
    ORDERS: "/my-account/orders",
     ACCOUNT_DETAILS: "/my-account/account-details",
