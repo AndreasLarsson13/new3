@@ -113,8 +113,8 @@ export const homeThreeMasonryBanner = [
   },
   {
     id: 5,
-    title: 'Product Coupons',
-    slug: 'product-coupons',
+    title: 'Höst rea',
+    slug: 'host-rea',
     image: {
       mobile: {
         url: '/assets/images/banner/masonry/banner-mobile-5.jpg',
@@ -153,7 +153,7 @@ export const promotionBanner = [
   {
     id: 1,
     title: 'Sommar rea',
-    slug: 'sommar-rea',
+    slug: 'campaign=sommar-rea',
     image: {
       mobile: {
         url: '/assets/images/banner/slider/mobile/summerSale.jpg',
@@ -171,7 +171,7 @@ export const promotionBanner = [
   {
     id: 2,
     title: "Kranar",
-    slug: "kranar",
+    slug: "q=kranar",
     image: {
       mobile: {
         url: '/assets/images/banner/slider/mobile/kran-slide-banner.jpg',
@@ -189,7 +189,7 @@ export const promotionBanner = [
   {
     id: 3,
     title: 'Nya produkter',
-    slug: 'nya-produkter',
+    slug: 'campaign=nya-produkter',
     image: {
       mobile: {
         url: '/assets/images/banner/slider/mobile/banner-3.jpg',

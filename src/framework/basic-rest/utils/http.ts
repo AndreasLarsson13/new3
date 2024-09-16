@@ -2,7 +2,8 @@ import axios from "axios";
 import { getToken } from "./get-token";
 
 const http = axios.create({
-  baseURL: "https://natbutiken.lm.r.appspot.com",
+  /*  baseURL: "https://natbutiken.lm.r.appspot.com", */
+  baseURL: "http://localhost:4000",
   timeout: 30000,
   headers: {
     Accept: "application/json",

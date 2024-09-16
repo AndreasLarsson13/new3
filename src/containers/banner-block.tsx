@@ -33,7 +33,7 @@ const BannerBlock: React.FC<BannerProps> = ({
         <BannerCard
           key={`banner--key${banner.id}`}
           banner={banner}
-          href={`search?q=${banner.slug}`}
+          href={banner.slug === "host-rea" ? `search?campaign=${banner.slug}` : `search?q=${banner.slug}`}
           effectActive={true}
           variant='default'
           className={

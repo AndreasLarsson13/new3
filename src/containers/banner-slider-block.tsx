@@ -51,7 +51,7 @@ const BannerSliderBlock: React.FC<BannerProps> = ({
 							<BannerCard
 								banner={banner}
 								effectActive={true}
-								href={`search?q=${banner.slug}`}
+								href={`search?${banner.slug}`}
 							/>
 						</SwiperSlide>
 					))}
