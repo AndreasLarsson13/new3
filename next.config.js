@@ -9,14 +9,17 @@ const withPWA = require("next-pwa")({
 module.exports = withPWA({
   i18n,
   images: {
-    domains: ['www.tapwell.fi', 'firebasestorage.googleapis.com'], // Add the localhost domain here
-
+    domains: ['www.tapwell.fi', 'firebasestorage.googleapis.com'], // Add the correct domains
   },
   typescript: {
     ignoreBuildErrors: true,
   },
   async headers() {
-    const allowedOrigins = ["https://backendegnasidor.ue.r.appspot.com/"];
+    const allowedOrigins = [
+      "http://localhost:3000",   // Local development URL
+      "https://your-production-frontend.com",  // Replace with your production frontend domain
+      "https://backendegnasidor.ue.r.appspot.com"  // Backend URL on Google Cloud
+    ];
 
     return [
       {
@@ -24,9 +27,9 @@ module.exports = withPWA({
         source: "/:path*",
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
-          { key: "Access-Control-Allow-Origin", value: allowedOrigins.join(", ") },
+          { key: "Access-Control-Allow-Origin", value: "*" },  // Use '*' for open CORS or dynamically match allowedOrigins
           { key: "Access-Control-Allow-Methods", value: "GET,OPTIONS,PATCH,DELETE,POST,PUT" },
-          { key: "Access-Control-Allow-Headers", value: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" },
+          { key: "Access-Control-Allow-Headers", value: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization" }, // Added 'Authorization'
         ]
       }
     ];

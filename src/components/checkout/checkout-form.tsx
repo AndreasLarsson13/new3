@@ -47,8 +47,16 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
     input.country = location.name
 
 
+    const config = {
+      headers: {
+        'Authorization': 'Bearer your-token-here',  // Add your authorization token if necessary
+        'Content-Type': 'application/json'          // Set the correct content type
+      }
+    };
+
     try {
-      const response = await http.post('http://localhost:3500/open-payment-session', input);
+      const response = await http.post('https://service-dot-natbutiken.lm.r.appspot.com/open-payment-session', input, config);
+      console.log(response.data);
 
       if (response && response.data) {
         const htmlSnippet = response.data;
