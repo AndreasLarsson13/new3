@@ -14,6 +14,7 @@ export type CategoriesQueryOptionsType = {
   status?: string;
   limit?: number;
   demoVariant?: 'ancient';
+  popular?: boolean
 };
 export type ProductsQueryOptionsType = {
   type: string;
