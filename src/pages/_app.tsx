@@ -26,6 +26,8 @@ import "@styles/tailwind.css";
 import "@styles/rc-drawer.css";
 import { getDirection } from "@utils/get-direction";
 
+
+
 function handleExitComplete() {
   if (typeof window !== "undefined") {
     window.scrollTo({ top: 0 });

@@ -67,7 +67,7 @@ const DownloadApps: React.FC<Props> = ({
                 href={item.slug}
                 className="inline-flex transition duration-200 ease-in hover:box-shadow hover:opacity-80"
               >
-                <AddToHomeScreenButton />
+                {/*  <AddToHomeScreenButton /> */}
               </Link>
             ))}
           </div>

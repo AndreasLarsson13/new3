@@ -59,8 +59,8 @@ export const homeThreeMasonryBanner = [
   },
   {
     id: 2,
-    title: 'New Sports',
-    slug: 'new-sports',
+    title: 'Sport',
+    slug: 'sport',
     image: {
       mobile: {
         url: '/assets/images/banner/masonry/sport-mobile-top.jpg',
@@ -131,8 +131,8 @@ export const homeThreeMasonryBanner = [
   },
   {
     id: 6,
-    title: 'New Backpack',
-    slug: 'new-backpack',
+    title: 'Braskaminer',
+    slug: 'braskaminer',
     image: {
       mobile: {
         url: '/assets/images/banner/masonry/banner-mobile-6.jpg',

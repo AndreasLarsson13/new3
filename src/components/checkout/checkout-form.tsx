@@ -54,6 +54,7 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
       }
     };
 
+
     try {
       const response = await http.post('https://service-dot-natbutiken.lm.r.appspot.com/open-payment-session', input, config);
       console.log(response.data);

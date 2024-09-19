@@ -85,6 +85,7 @@ const CategoryBlock: React.FC<CategoriesProps> = ({
 
   const { data, isLoading, error } = useCategoriesQuery({
     limit: 10,
+    popular: true,
     demoVariant: demoVariant || undefined,
   });
 

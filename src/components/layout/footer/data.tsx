@@ -81,7 +81,7 @@ export const footer = {
         {
           id: 4,
           title: 'link-exchanges',
-          path: '/',
+          path: '/return',
         },
       ],
     },

@@ -23,6 +23,18 @@ const CheckoutCard: React.FC = () => {
     amount: total,
     currencyCode: location?.currency,
   });
+
+
+  let shippingPrice = 0
+
+  items.forEach(item => {
+    const price = item.quantity * item.shipping
+
+    shippingPrice += price
+  })
+
+
+  console.log(shippingPrice)
   const { t } = useTranslation('common');
   const checkoutFooter = [
     {
@@ -33,7 +45,7 @@ const CheckoutCard: React.FC = () => {
     {
       id: 2,
       name: t('text-shipping'),
-      price: t('text-free'),
+      price: shippingPrice,
     },
     {
       id: 3,

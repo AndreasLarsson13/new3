@@ -191,7 +191,7 @@ const ProductSingleDetails: React.FC = () => {
 
     addItemToCart(item, quantity);
     AttributeArray = []
-    toast('Added to the bag', {
+    toast(t('common:text-added-to-bag'), {
       progressClassName: 'fancy-progress-bar',
       position: width > 768 ? 'bottom-right' : 'top-right',
       autoClose: 2000,
