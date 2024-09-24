@@ -9,6 +9,7 @@ interface Props {
     price: number;
     img: string;
     customOrder: boolean;
+    translationName: object;
   }[];
   active: string;
   onClick: any;
@@ -27,25 +28,26 @@ export const ProductAttributes: React.FC<Props> = ({
   clicked
 }) => {
 
-  let titelNew = ""
-  attributes.forEach((item) => {
-    titelNew = item.attribute.name
-  })
 
 
 
 
   const { t, i18n } = useTranslation('common');
 
+
+  let titelNew = ""
+  attributes.forEach((item) => {
+    titelNew = item.attribute.name[i18n.language]
+  })
   console.log(title)
 
   return (
     <div className={className}>
       <h3 className="text-base md:text-lg text-heading font-semibold mb-2.5 capitalize">
-        {t(`${title}`)}
+        {t(title) !== title ? t(title) : titelNew}
       </h3>
       <ul className="flex flex-wrap colors ltr:-mr-3 rtl:-ml-3">
-        {attributes?.map(({ id, value, meta, price, img, customOrder, attribute }) => (
+        {attributes?.map(({ id, value, meta, price, img, customOrder, attribute, translationName }) => (
           <li
             key={`${value}-${id}`}
             value={price}
@@ -53,8 +55,9 @@ export const ProductAttributes: React.FC<Props> = ({
               'cursor-pointer rounded border w-9 md:w-11 h-9 md:h-11 p-1 mb-2 md:mb-3 ltr:mr-2 rtl:ml-2 ltr:md:mr-3 rtl:md:ml-3 flex justify-center items-center text-heading text-xs md:text-sm uppercase font-semibold transition duration-200 ease-in-out hover:border-black',
               value === active ? 'border-black' : 'border-gray-500',
               img ? 'min-h-[110px] min-w-[110px] md:w-28 md:h-28' : 'md:w-11 md:h-11',
+              !img && !meta ? ' min-w-[110px] md:w-auto md:h-auto' : 'md:w-11 md:h-11'
             )}
-            onClick={() => onClick({ "id": title, [title]: value, "price": price, "value": value, "customOrder": customOrder, "name": attribute.name, /* "type": attribute.slug  */ })}
+            onClick={() => onClick({ "id": title, [title]: value, "price": price, "value": value, "customOrder": customOrder, "name": attribute.name, "translationName": translationName/* "type": attribute.slug  */ })}
           >
             {title === 'color' ? (
               <span
@@ -87,7 +90,7 @@ export const ProductAttributes: React.FC<Props> = ({
 
 
             ) : (
-              <div>{value}</div>
+              <div>{translationName[i18n.language] ? translationName[i18n.language] : value}</div>
             )}
           </li>
         ))}

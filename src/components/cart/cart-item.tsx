@@ -15,7 +15,7 @@ type CartItemProps = {
 };
 
 const CartItem: React.FC<CartItemProps> = ({ item }) => {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const { addItemToCart, removeItemFromCart, clearItemFromCart } = useCart();
 
 
@@ -31,6 +31,8 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
     /*    currencyCode: item.currency, */  // Byt framöver
     currencyCode: "EUR",
   });
+
+  console.log(item)
 
   return (
     <motion.div
@@ -75,10 +77,16 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
           extraAdded.id === "color" ?
             <span className="text-sm rtl:pr-3 text-gray-400" key={index}>
               {`${t(extraAdded.name)} : ${t(extraAdded.value)}`}
-            </span> :
-            <span className="text-sm ltr:pl-3 rtl:pr-3 text-gray-400" key={index}>
-              + {t(extraAdded.name)}
             </span>
+            : extraAdded.img ?
+              <span className="text-sm ltr:pl-3 rtl:pr-3 text-gray-400" key={index}>
+                + {t(extraAdded.name)}
+              </span>
+              :
+              <span className="text-sm ltr:pl-3 rtl:pr-3 text-gray-400" key={index}>
+                + {extraAdded.translationName ? extraAdded.translationName[i18n.language] : extraAdded.namn}
+              </span>
+
 
         ))}
 

@@ -17,13 +17,15 @@ interface Item {
   weightPack: number;
   widthPack: number;
   heightPack: number;
-  lengthPack: number
+  lengthPack: number;
 }
+
+
 export function generateCartItem(item: Item, attributes: object, attributeArray: Array, currentPrice: number, locationS: string) {
   const { id, name, slug, image, price, sale_price, currency, _id, ship_price, weightPack, widthPack, heightPack, lengthPack } = item;
   const currencyLocation = locationS.currency
 
-
+  console.log(attributes)
   const formulaSHip = 11 * 10
 
   return {
@@ -35,9 +37,9 @@ export function generateCartItem(item: Item, attributes: object, attributeArray:
     slug,
     image: image.thumbnail,
     price: currentPrice,
-    attributes: attributeArray,
+    attributes,
     currency: locationS.currency,
     location: locationS.value,
-    shipping: ship_price ? ship_price : formulaSHip
+    shipping: ship_price ? ship_price : formulaSHip,
   };
 }

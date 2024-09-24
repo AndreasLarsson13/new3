@@ -8,7 +8,7 @@ import { useTranslation } from 'next-i18next';
 
 export const CheckoutItem: React.FC<{ item: Item }> = ({ item }) => {
   const [location, setLocation] = useState<{ currency: string } | null>(null);
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
 
   useEffect(() => {
     const storedLocation = localStorage.getItem('clickedLocation');
@@ -44,10 +44,14 @@ export const CheckoutItem: React.FC<{ item: Item }> = ({ item }) => {
             extraAdded.id === "color" ?
               <h6 className="text-sm ltr:pl-3 rtl:pr-3 text-gray-400" key={index}>
                 {`${t(extraAdded.name)} : ${t(extraAdded.value)}`}
-              </h6> :
-              <h6 className="text-sm ltr:pl-3 rtl:pr-3 text-gray-400" key={index}>
-                + {t(extraAdded.name)}
-              </h6>
+              </h6> : extraAdded.img ?
+                <h6 className="text-sm ltr:pl-3 rtl:pr-3 text-gray-400" key={index}>
+                  + {t(extraAdded.name)}
+                </h6>
+                :
+                <h6 className="text-sm ltr:pl-3 rtl:pr-3 text-gray-400" key={index}>
+                  + {extraAdded.translationName ? extraAdded.translationName[i18n.language] : extraAdded.namn}
+                </h6>
 
           ))}
         </div>
