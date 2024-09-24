@@ -37,9 +37,16 @@ export const ProductAttributes: React.FC<Props> = ({
 
   let titelNew = ""
   attributes.forEach((item) => {
-    titelNew = item.attribute.name[i18n.language]
+    if (item && item.attribute && typeof item.attribute.name === 'object') {
+      titelNew = item.attribute.name[i18n.language]
+    }
+    else {
+      if (item.value) {
+        titelNew = item.attribute.name
+      }
+    }
   })
-  console.log(title)
+
 
   return (
     <div className={className}>

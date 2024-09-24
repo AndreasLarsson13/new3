@@ -387,6 +387,7 @@ const ProductSingleDetails: React.FC = () => {
                 key={variation}
                 title={variation}
                 attributes={variations[variation]}
+                translation={variations}
                 active={attributes[variation]}
                 clicked={attributes}
                 onClick={(attribute: any) => handleAttribute(attribute, variation, attributes[variation])}
