@@ -180,7 +180,6 @@ const ProductSingleDetails: React.FC = () => {
     const storedLocation = JSON.parse(localStorage.getItem('clickedLocation'));
     const item = generateCartItem(data, attributes, AttributeArray, currentPrice, storedLocation);
 
-    console.log(attributes.value)
     if (data?.gallery[0].extraColor) {
       if (attributes.value in data?.gallery[0].extraColor) {
         item.image = data?.gallery[0].extraColor[attributes.value]

@@ -37,7 +37,7 @@ export function generateCartItem(item: Item, attributes: object, attributeArray:
     slug,
     image: image.thumbnail,
     price: currentPrice,
-    attributes,
+    attributes: attributeArray,
     currency: locationS.currency,
     location: locationS.value,
     shipping: ship_price ? ship_price : formulaSHip,

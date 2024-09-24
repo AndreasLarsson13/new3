@@ -32,8 +32,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
     currencyCode: "EUR",
   });
 
-  console.log(item)
-
+  console.log(item.attributes)
   return (
     <motion.div
       layout
@@ -71,8 +70,6 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
         </Link>
         {/* @ts-ignore */}
 
-
-
         {item.attributes.map((extraAdded, index) => (
           extraAdded.id === "color" ?
             <span className="text-sm rtl:pr-3 text-gray-400" key={index}>
@@ -84,7 +81,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
               </span>
               :
               <span className="text-sm ltr:pl-3 rtl:pr-3 text-gray-400" key={index}>
-                + {extraAdded.translationName ? extraAdded.translationName[i18n.language] : extraAdded.namn}
+                + {extraAdded.translationName ? extraAdded.translationName[i18n.language] : extraAdded.name}
               </span>
 
 
