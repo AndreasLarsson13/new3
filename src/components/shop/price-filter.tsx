@@ -21,7 +21,7 @@ export const PriceFilter = () => {
 
 	filteredData.forEach(item => {
 		if (item.price > highestPrice) {
-			highestPrice = item.price;
+			highestPrice = item.price * (item.vat + 1);
 		}
 		if (item.price < lowestPrice) {
 			lowestPrice = item.price;

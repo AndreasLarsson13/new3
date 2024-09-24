@@ -33,6 +33,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
   });
 
   console.log(item.attributes)
+
   return (
     <motion.div
       layout

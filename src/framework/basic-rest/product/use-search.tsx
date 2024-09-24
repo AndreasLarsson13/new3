@@ -4,10 +4,10 @@ import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
 import { useQuery } from "@tanstack/react-query";
 
 export const fetchSearchedProducts = async (options: QueryOptionsType) => {
-  const clickedLocation = "clickedLocation"
-  const location = JSON.parse(localStorage.getItem(clickedLocation));
-
-  options.currency = location.value
+  /*   const clickedLocation = "clickedLocation"
+    const location = JSON.parse(localStorage.getItem(clickedLocation));
+  
+    options.currency = location.value */
 
 
   const { data } = await http.get(API_ENDPOINTS.SEARCH, {

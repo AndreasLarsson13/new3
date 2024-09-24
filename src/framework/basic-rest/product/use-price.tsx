@@ -10,6 +10,33 @@ const currencySymbols: { [key: string]: string } = {
   // Add more currency codes and symbols as needed
 };
 
+// Custom rounding logic function
+function getFormattedAmount(amount: number, locale: string) {
+  let minimumFractionDigits: number;
+  let maximumFractionDigits: number;
+
+  if (amount >= 1000) {
+    minimumFractionDigits = 0;
+    maximumFractionDigits = 0;
+  } else if (amount >= 100) {
+    minimumFractionDigits = 1;
+    maximumFractionDigits = 1;
+  } else {
+    minimumFractionDigits = 2;
+    maximumFractionDigits = 2;
+  }
+
+  // Round up the amount based on the decimal places
+  const roundedAmount =
+    Math.ceil(amount * Math.pow(10, maximumFractionDigits)) /
+    Math.pow(10, maximumFractionDigits);
+
+  return new Intl.NumberFormat(locale, {
+    minimumFractionDigits,
+    maximumFractionDigits,
+  }).format(roundedAmount);
+}
+
 export function formatPrice({
   amount,
   currencyCode,
@@ -19,14 +46,10 @@ export function formatPrice({
   currencyCode: string;
   locale: string;
 }) {
-  const formatNumber = new Intl.NumberFormat(locale, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(amount);
-
+  const formattedAmount = getFormattedAmount(amount, locale);
   const currencySymbol = currencySymbols[currencyCode] || currencyCode;
 
-  return `${formatNumber}${currencySymbol}`;
+  return `${formattedAmount}${currencySymbol}`;
 }
 
 export function formatVariantPrice({
@@ -50,7 +73,6 @@ export function formatVariantPrice({
   const basePrice = hasDiscount
     ? formatPrice({ amount: baseAmount, currencyCode, locale })
     : null;
-
 
   return { price, basePrice, discount };
 }

@@ -18,7 +18,8 @@ module.exports = withPWA({
     const allowedOrigins = [
       "http://localhost:3000",   // Local development URL
       "https://your-production-frontend.com",  // Replace with your production frontend domain
-      "https://backendegnasidor.ue.r.appspot.com"  // Backend URL on Google Cloud
+      "https://backendegnasidor.ue.r.appspot.com",  // Backend URL on Google Cloud
+      "https://xn--ntbutiken-v2a.ax/"
     ];
 
     return [
