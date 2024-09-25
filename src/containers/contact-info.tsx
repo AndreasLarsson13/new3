@@ -33,9 +33,11 @@ const ContactInfoBlock: FC<Props> = () => {
   const { t } = useTranslation('common');
   return (
     <div className="mb-6 lg:border lg:rounded-md border-gray-300 lg:p-7">
-      <h4 className="text-2xl md:text-lg font-bold text-heading pb-7 md:pb-10 lg:pb-6 -mt-1">
+      <h4 className="text-2xl md:text-lg font-bold text-heading  -mt-1">
         {t('text-find-us-here')}
       </h4>
+      <h5> Nätbutiken.ax </h5>
+      <h5 className='pb-7 md:pb-10 lg:pb-6'> (En del av Hus& fritidscenter Åland Ab)</h5>
       {data?.map((item: any) => (
         <div key={`contact--key${item.id}`} className="flex pb-7">
           <div className="flex flex-shrink-0 justify-center items-center p-1.5 border rounded-md border-gray-300 w-10 h-10">

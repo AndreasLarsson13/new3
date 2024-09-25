@@ -1113,16 +1113,6 @@ export const siteSettings = {
         ],
       },
       {
-        id: 3,
-        path: '/search?q=women-wear',
-        label: 'menu-women-wear',
-      },
-      {
-        id: 4,
-        path: '/search',
-        label: 'menu-search',
-      },
-      {
         id: 5,
         path: '/contact-us',
         label: 'menu-contact-us',

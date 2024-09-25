@@ -13,7 +13,7 @@ interface BannerProps {
   classNameInner?: string;
   href: LinkProps['href'];
   disableBorderRadius?: boolean;
-  target: string
+  target: string;
 }
 
 function getImage(deviceWidth: number, imgObj: any) {
@@ -53,9 +53,8 @@ export default function BannerCard({
           })}
           priority={true}
         />
-        {effectActive && (
-          <div className="absolute top-0 ltr:-left-[100%] rtl:-right-[100%] h-full w-1/2 z-5 block transform ltr:-skew-x-12 rtl:skew-x-12 bg-gradient-to-r from-transparent to-white opacity-40 ltr:group-hover:animate-shine rtl:group-hover:animate-shineRTL" />
-        )}
+
+
       </Link>
     </div>
   );

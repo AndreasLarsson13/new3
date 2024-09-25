@@ -65,7 +65,7 @@ const BottomNavigation: React.FC = () => {
 					<HomeIcon />
 				</Link>
 				<CartButton />
-				<AuthMenu
+				{/* <AuthMenu
 					isAuthorized={isAuthorized}
 					href={ROUTES.ACCOUNT}
 					className="flex-shrink-0"
@@ -76,7 +76,7 @@ const BottomNavigation: React.FC = () => {
 					}}
 				>
 					<UserIcon />
-				</AuthMenu>
+				</AuthMenu> */}
 			</div>
 			{/* TODO: need to use just one drawer component */}
 			<Drawer
