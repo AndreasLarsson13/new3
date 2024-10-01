@@ -38,29 +38,36 @@ export const CartProvider: React.FC = (props) => {
     JSON.parse(savedCart!)
   );
 
-
-  //Rensar varukorgen om man byter land
+  // Rensar varukorgen om man byter land
   React.useEffect(() => {
-    const location = JSON.parse(localStorage.getItem('clickedLocation'))
+    const location = JSON.parse(localStorage.getItem("clickedLocation"));
 
-    const containsSubstring = state.items.some(item => item.location.includes(location.value));
-    if (containsSubstring) {
-      saveCart(JSON.stringify(state))
-    } else {
+    const containsSubstring = state.items.some((item) =>
+      item.location.includes(location.value)
+    );
+    if (!containsSubstring) {
       dispatch({ type: "RESET_CART" });
     }
-  }, [state, saveCart,]);
+  }, [state.items]);
+
+  // Save cart to local storage whenever state changes
+  React.useEffect(() => {
+    saveCart(JSON.stringify(state));
+  }, [state, saveCart]);
 
   const addItemToCart = (item: Item, quantity: number) =>
     dispatch({ type: "ADD_ITEM_WITH_QUANTITY", item, quantity });
+
   const removeItemFromCart = (id: Item["id"]) =>
     dispatch({ type: "REMOVE_ITEM_OR_QUANTITY", id });
+
   const clearItemFromCart = (id: Item["id"]) =>
     dispatch({ type: "REMOVE_ITEM", id });
+
   const isInCart = (id: Item["id"]) => !!getItem(state.items, id);
+
   const getItemFromCart = (id: Item["id"]) => getItem(state.items, id);
 
-  // const inStock=()=>{}
   const value = React.useMemo(
     () => ({
       ...state,
@@ -72,5 +79,7 @@ export const CartProvider: React.FC = (props) => {
     }),
     [state]
   );
+
   return <cartContext.Provider value={value} {...props} />;
 };
+

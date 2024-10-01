@@ -11,17 +11,15 @@ const currencySymbols: { [key: string]: string } = {
 };
 
 // Custom rounding logic function
+// Custom rounding logic function
 function getFormattedAmount(amount: number, locale: string) {
-  let minimumFractionDigits: number;
-  let maximumFractionDigits: number;
+  let minimumFractionDigits: number = 0;
+  let maximumFractionDigits: number = 0;
 
   if (amount >= 1000) {
     minimumFractionDigits = 0;
     maximumFractionDigits = 0;
   } else if (amount >= 100) {
-    minimumFractionDigits = 1;
-    maximumFractionDigits = 1;
-  } else {
     minimumFractionDigits = 2;
     maximumFractionDigits = 2;
   }
@@ -31,11 +29,19 @@ function getFormattedAmount(amount: number, locale: string) {
     Math.ceil(amount * Math.pow(10, maximumFractionDigits)) /
     Math.pow(10, maximumFractionDigits);
 
-  return new Intl.NumberFormat(locale, {
+  // Format the number using Intl.NumberFormat and then replace commas with spaces
+  let formattedAmount = new Intl.NumberFormat(locale, {
     minimumFractionDigits,
     maximumFractionDigits,
+    useGrouping: true, // This enables the thousand separator
   }).format(roundedAmount);
+
+  // Replace commas with spaces if needed
+  formattedAmount = formattedAmount.replace(/,/g, ' ');
+
+  return formattedAmount;
 }
+
 
 export function formatPrice({
   amount,

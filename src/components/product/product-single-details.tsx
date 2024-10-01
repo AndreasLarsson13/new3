@@ -140,7 +140,11 @@ const ProductSingleDetails: React.FC = () => {
 
   }, [data, i18n.language]);
 
-
+  function formatWithSeparator(price) {
+    return price >= 1000
+      ? price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+      : price.toString();
+  }
 
   /*   setfilterDataLanguage(data) */
 
@@ -179,7 +183,7 @@ const ProductSingleDetails: React.FC = () => {
 
     const storedLocation = JSON.parse(localStorage.getItem('clickedLocation'));
     const item = generateCartItem(data, attributes, AttributeArray, currentPrice, storedLocation);
-
+    console.log(item)
     if (data?.gallery[0].extraColor) {
       if (attributes.value in data?.gallery[0].extraColor) {
         item.image = data?.gallery[0].extraColor[attributes.value]
@@ -188,8 +192,9 @@ const ProductSingleDetails: React.FC = () => {
         item.image = data?.gallery[0].original
       }
     }
-    console.log(item)
+
     addItemToCart(item, quantity);
+    console.log(addItemToCart)
     AttributeArray = []
     toast(t('common:text-added-to-bag'), {
       progressClassName: 'fancy-progress-bar',
@@ -272,6 +277,7 @@ const ProductSingleDetails: React.FC = () => {
 
 
       if (data.sale_price > 0) {
+
         setCurrentPrice(data.sale_price + totalProduct)
       } else {
         setCurrentPrice(data.price + totalProduct)
@@ -370,7 +376,7 @@ const ProductSingleDetails: React.FC = () => {
           <div className="flex items-center mt-5">
             <div className="text-heading font-bold text-base md:text-xl lg:text-2xl 2xl:text-4xl ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
               {/*               {currentPrice}{locationCurrency.currency === "SEK" ? "kr" : locationCurrency.currency} Fixa till 
- */}              {currentPrice} €
+ */}              {currentPrice && formatWithSeparator(currentPrice)}€
             </div>
             {discount && (
               <span className="line-through font-segoe text-gray-400 text-sm md:text-base lg:text-lg xl:text-xl ltr:pl-2 rtl:pr-2">

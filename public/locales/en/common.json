@@ -2,7 +2,7 @@
   "bannersTop": [
     {
       "mobile": "/assets/images/banner/masonry/kok-mobile-banner.jpg",
-      "desktop": "/assets/images/banner/masonry/contura-banner.jpg"
+      "desktop": "/assets/images/banner/masonry/english/noblessa-kok-natbutiken-en.webp"
     },
     {
       "mobile": "/assets/images/banner/masonry/sport-mobile-top.jpg",
@@ -10,19 +10,19 @@
     },
     {
       "mobile": "/assets/images/banner/masonry/fritid-mobile-banner.jpg",
-      "desktop": "/assets/images/banner/masonry/fritid-banner-top.jpg"
+      "desktop": "/assets/images/banner/masonry/english/banner-3-en.webp"
     },
     {
       "mobile": "/assets/images/banner/masonry/badrum-mobile-top.jpg",
-      "desktop": "/assets/images/banner/masonry/banner-4.jpg"
+      "desktop": "/assets/images/banner/masonry/english/banner-4-en.webp"
     },
     {
       "mobile": "/assets/images/banner/masonry/banner-mobile-5.jpg",
-      "desktop": "/assets/images/banner/masonry/banner-5.jpg"
+      "desktop": "/assets/images/banner/masonry/english/banner-5-en.webp"
     },
     {
       "mobile": "/assets/images/banner/masonry/banner-mobile-6.jpg",
-      "desktop": "/assets/images/banner/masonry/contura-banner.jpg"
+      "desktop": "/assets/images/banner/masonry/english/contura-banner-en.webp"
     }
   ],
   "sliderPhotos": [

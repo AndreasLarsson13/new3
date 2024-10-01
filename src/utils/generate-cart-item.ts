@@ -23,22 +23,23 @@ interface Item {
 
 export function generateCartItem(item: Item, attributes: object, attributeArray: Array, currentPrice: number, locationS: string) {
   const { id, name, slug, image, price, sale_price, currency, _id, ship_price, weightPack, widthPack, heightPack, lengthPack } = item;
-  const currencyLocation = locationS.currency
-
+  /*   const currencyLocation = locationS.currency
+   */
   console.log(attributes)
   const formulaSHip = 11 * 10
+  console.log(_id)
 
   return {
     id: !isEmpty(attributes)
-      ? `${id}.${Object.values(attributes).join(".")}`
-      : id,
+      ? `${_id}.${Object.values(attributes).join(".")}`
+      : _id,
     linkId: _id,
     name,
     slug,
     image: image.thumbnail,
     price: currentPrice,
     attributes: attributeArray,
-    currency: locationS.currency,
+    currency: currency,
     location: locationS.value,
     shipping: ship_price ? ship_price : formulaSHip,
   };
