@@ -1,6 +1,6 @@
 const menuData = [
     {
-        slug: "hushåll",
+        slug: "hushall",
         child: [
             {
                 slug: "braskaminer",
