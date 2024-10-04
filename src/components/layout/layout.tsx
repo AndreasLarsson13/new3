@@ -16,6 +16,7 @@ export default function Layout({ children }: React.PropsWithChildren<{}>) {
 		/* if (!checkLocation) {
 			document.getElementById("locationContainerStart")?.classList.remove("hidden");
 		} */
+		document.getElementById("locationContainerStart")?.classList.remove("hidden");
 
 	}, [])
 	const { acceptedCookies, onAcceptCookies } = useAcceptCookies();
