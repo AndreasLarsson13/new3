@@ -13,9 +13,9 @@ import { useEffect } from 'react';
 export default function Layout({ children }: React.PropsWithChildren<{}>) {
 	useEffect(() => {
 		const checkLocation = localStorage.getItem('clickedLocation')
-		if (!checkLocation) {
+		/* if (!checkLocation) {
 			document.getElementById("locationContainerStart")?.classList.remove("hidden");
-		}
+		} */
 
 	}, [])
 	const { acceptedCookies, onAcceptCookies } = useAcceptCookies();
