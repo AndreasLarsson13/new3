@@ -163,7 +163,7 @@ const ProductCard: FC<ProductProps> = ({
           quality={100}
           alt={product?.name || 'Product Image'}
           className={cn(
-            `object-fit h-[150px] md:h-[215px] ${!disableBorderRadius && 'rounded-s-md'
+            `object-fit h-[150px] md:h-[215px] md:w-[215px] ${!disableBorderRadius && 'rounded-s-md'
             }`,
             {
               'w-full transition duration-200 ease-in':
