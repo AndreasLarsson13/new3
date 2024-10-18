@@ -19,6 +19,7 @@ import { useSsrCompatible } from '@utils/use-ssr-compatible';
 import { useTranslation } from 'next-i18next';
 import { RiTyphoonLine } from 'react-icons/ri';
 import { pick } from 'lodash';
+import Alert from '@components/ui/alert';
 
 
 let options; // Till logikem
@@ -39,18 +40,24 @@ const productGalleryCarouselResponsive = {
 };
 
 const ProductSingleDetails: React.FC = () => {
+
+  const router = useRouter()
   const {
     query: { slug },
   } = useRouter();
 
 
+  const fullPath = router.asPath;
+
+  // Split the path by '/' to get all parts as an array
+  const pathParts = fullPath.split('/')
 
 
 
-  /*   const productId = pathname.split('/products/')[1]?.split('/')[0];
-   */
+
+
   const { width } = useSsrCompatible(useWindowSize(), { width: 0, height: 0 });
-  const { data, isLoading } = useProductQuery(slug as string,);
+  const { data, isLoading } = useProductQuery(pathParts[2] as string,);
   const { addItemToCart } = useCart();
   const [attributes, setAttributes] = useState<{ [key: string]: string }>({});
   const [quantity, setQuantity] = useState(1);

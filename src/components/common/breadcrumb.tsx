@@ -59,6 +59,15 @@ export const BreadcrumbItems = (props: any) => {
 
 const Breadcrumb: React.FC<{ separator?: string }> = ({ separator = '/' }) => {
   const breadcrumbs = useBreadcrumb();
+
+
+
+
+  breadcrumbs && breadcrumbs.splice(1, 1)
+  console.log(breadcrumbs
+  )
+
+
   const { t } = useTranslation('common');
   return (
     <BreadcrumbItems separator={separator}>
@@ -73,7 +82,7 @@ const Breadcrumb: React.FC<{ separator?: string }> = ({ separator = '/' }) => {
           key={breadcrumb.href}
         >
           <a className="capitalize">
-            {convertBreadcrumbTitle(breadcrumb.breadcrumb)}
+            {t(`${convertBreadcrumbTitle(breadcrumb.breadcrumb)}`)}
           </a>
         </ActiveLink>
       ))}

@@ -59,8 +59,13 @@ export const PriceFilter = () => {
 			undefined,
 			{ scroll: false }
 		);
+
+
 	}
 
+	const formatPrice = (price) => {
+		return Math.round(price); // Rounds the price to the nearest integer
+	};
 	return (
 		<div className="block border-b border-gray-300 pb-7 mb-7">
 			<h3 className="text-heading text-sm md:text-base font-semibold mb-7">
@@ -69,10 +74,10 @@ export const PriceFilter = () => {
 			<div className="mt-2">
 				<div className="flex items-center justify-between">
 					<span className="text-sm text-gray-600">
-						Min: {minPrice}{locationCurrency && locationCurrency.currency === "SEK" ? "kr" : locationCurrency ? locationCurrency.currency : ""}
+						Min: {formatPrice(minPrice)}{locationCurrency && locationCurrency.currency === "SEK" ? "kr" : locationCurrency ? locationCurrency.currency : ""}
 					</span>
 					<span className="text-sm text-gray-600">
-						Max: {maxPrice}{locationCurrency && locationCurrency.currency === "SEK" ? "kr" : locationCurrency ? locationCurrency.currency : ""}
+						Max: {formatPrice(maxPrice)}{locationCurrency && locationCurrency.currency === "SEK" ? "kr" : locationCurrency ? locationCurrency.currency : ""}
 					</span>
 				</div>
 				<input

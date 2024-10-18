@@ -18,7 +18,7 @@
     },
     {
       "mobile": "/assets/images/banner/masonry/banner-mobile-5.jpg",
-      "desktop": "/assets/images/banner/masonry/english/banner-5-en.webp"
+      "desktop": "/assets/images/banner/masonry/banner-5.jpg"
     },
     {
       "mobile": "/assets/images/banner/masonry/banner-mobile-6.jpg",
@@ -49,6 +49,7 @@
       "desktop": "/assets/images/banner/myresjohusBannermyresjohusbanner.jpg"
     }
   ],
+  "products": "products",
   "productDesc": "en",
   "error-heading": "Looks like you are lost",
   "error-sub-heading": "We can't find the page you're looking for",

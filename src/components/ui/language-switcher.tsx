@@ -71,7 +71,7 @@ export default function LanguageSwitcher() {
             >
               <span className="flex truncate items-center">
                 <span className="ltr:mr-1.5 rtl:ml-1.5">{selectedItem.icon}</span>{' '}
-                {clickedLocation && clickedLocation.name} - {t(selectedItem.name)}
+                {clickedLocation && clickedLocation.name} - {t(selectedItem.name) === "Svenska - SE" ? "SE" : "EN"}
               </span>
               <span className="absolute inset-y-0 ltr:right-0 rtl:left-0 flex items-center ltr:pr-1.5 rtl:pl-1.5 pointer-events-none">
                 <HiOutlineSelector className="w-5 h-5 text-gray-400" aria-hidden="true" />

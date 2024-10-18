@@ -92,15 +92,21 @@ const ProductCard: FC<ProductProps> = ({
 
 
 
+  /* function navigateToProductPage() {
+    router.push(`${ROUTES.PRODUCT}/${product.name}/`, undefined, {
+      locale: router.locale,
+      productId: product._id
+    });
+  }
+ */
+
   function navigateToProductPage() {
-    router.push(`${ROUTES.PRODUCT}/${product._id}/`, undefined, {
+    router.push({
+      pathname: `${ROUTES.PRODUCT}/${product._id}/${product.name}`,
+    }, undefined, {
       locale: router.locale,
     });
   }
-
-
-
-
   function handlePopupView() {
     setModalData({ data: filterProduct });
     setModalView('PRODUCT_VIEW');
@@ -180,6 +186,7 @@ const ProductCard: FC<ProductProps> = ({
                 variant === 'gridSlim',
               'rounded-s-md transition duration-200 ease-linear transform group-hover:scale-105':
                 variant === 'list',
+              'p-2 h-[150px] md:h-[180px] md:w-[180px]': variant === 'listSmall', // Adding padding of 10px (equivalent to 2 in Tailwind)
             }
           )}
         />

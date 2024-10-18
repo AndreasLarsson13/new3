@@ -51,26 +51,25 @@ const BannerWithProducts: React.FC<ProductsProps> = ({
 						/>
 					)}
 					<div
-						className={`col-span-full 3xl:col-span-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-5 xl:gap-7 ${
-							variant === "reverse" ? "row-span-full" : ""
-						}`}
+						className={`col-span-full 3xl:col-span-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-5 xl:gap-7 ${variant === "reverse" ? "row-span-full" : ""
+							}`}
 					>
 						{isLoading
 							? Array.from({ length: 9 }).map((_, idx) => (
-									<ProductCardListSmallLoader
-										key={idx}
-										uniqueKey={`on-selling-${idx}`}
-									/>
-							  ))
+								<ProductCardListSmallLoader
+									key={idx}
+									uniqueKey={`on-selling-${idx}`}
+								/>
+							))
 							: data?.map((product: Product) => (
-									<ProductCard
-										key={`product--key${product.id}`}
-										product={product}
-										imgWidth={176}
-										imgHeight={176}
-										variant="listSmall"
-									/>
-							  ))}
+								<ProductCard
+									key={`product--key${product.id}`}
+									product={product}
+									imgWidth={176}
+									imgHeight={176}
+									variant="listSmall"
+								/>
+							))}
 					</div>
 				</div>
 			)}
