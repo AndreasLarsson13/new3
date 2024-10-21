@@ -57,7 +57,7 @@ const ProductSingleDetails: React.FC = () => {
 
 
   const { width } = useSsrCompatible(useWindowSize(), { width: 0, height: 0 });
-  const { data, isLoading } = useProductQuery(pathParts[2] as string,);
+  const { data, isLoading } = useProductQuery(slug as string,);
   const { addItemToCart } = useCart();
   const [attributes, setAttributes] = useState<{ [key: string]: string }>({});
   const [quantity, setQuantity] = useState(1);

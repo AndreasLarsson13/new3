@@ -102,7 +102,7 @@ const ProductCard: FC<ProductProps> = ({
 
   function navigateToProductPage() {
     router.push({
-      pathname: `${ROUTES.PRODUCT}/${product._id}/${product.name}`,
+      pathname: `${ROUTES.PRODUCT}/${product._id}`,
     }, undefined, {
       locale: router.locale,
     });

@@ -57,35 +57,42 @@ export const BreadcrumbItems = (props: any) => {
   );
 };
 
-const Breadcrumb: React.FC<{ separator?: string }> = ({ separator = '/' }) => {
+const Breadcrumb: React.FC<{ separator?: string; product?: any }> = ({ separator = '/', product }) => {
   const breadcrumbs = useBreadcrumb();
-
-
-
-
-  breadcrumbs && breadcrumbs.splice(1, 1)
-  console.log(breadcrumbs
-  )
-
-
   const { t } = useTranslation('common');
+
+  // Remove unnecessary breadcrumbs if needed
+
   return (
     <BreadcrumbItems separator={separator}>
       <ActiveLink href={'/'} activeClassName="font-semibold text-heading">
         <a>{t('breadcrumb-home')}</a>
       </ActiveLink>
 
-      {breadcrumbs?.map((breadcrumb: any) => (
-        <ActiveLink
-          href={breadcrumb.href}
-          activeClassName="font-semibold text-heading"
-          key={breadcrumb.href}
-        >
-          <a className="capitalize">
-            {t(`${convertBreadcrumbTitle(breadcrumb.breadcrumb)}`)}
-          </a>
-        </ActiveLink>
-      ))}
+
+      {breadcrumbs && <ActiveLink
+        href={breadcrumbs[0].href}
+        activeClassName="font-semibold text-heading"
+        key={breadcrumbs[0].href}
+      >
+        <a className="capitalize">
+          {t(`${convertBreadcrumbTitle(breadcrumbs[0].breadcrumb)}`)}
+        </a>
+
+      </ActiveLink>}
+
+
+
+
+
+      {product && (
+        <a className="capitalize">
+          {product.name}
+        </a>
+      )}
+
+
+
     </BreadcrumbItems>
   );
 };
