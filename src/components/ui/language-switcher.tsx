@@ -87,17 +87,17 @@ export default function LanguageSwitcher() {
             >
               <Listbox.Options
                 static
-                className="absolute z-50 w-[300px] py-1 mt-1 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm" // Fixed width and absolute position
+                className="absolute z-50 py-1 mt-1 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm" // Fixed width and absolute position
                 style={{
                   maxHeight: '300px', // Max height for scrollability
                   overflowY: 'auto', // Enable vertical scrolling
-                  right: 0, // Align to the right within the relative container
+
                 }}
               >
                 {/* Language Selection */}
                 <div>
                   <h3 className="px-3">Språk</h3>
-                  <div id="languageBox" className="mt-4">
+                  <div id="languageBox">
                     <label htmlFor="language-select" className="sr-only">Select Language</label>
                     <select
                       id="language-select"

@@ -79,7 +79,7 @@
     left: 50%;
     transform: translate(-50%);
     position: absolute;
-    width: 60vw;
+    /*  width: 60vw; */
     padding: 30px;
     display: flex;
     flex-direction: column;
@@ -91,10 +91,15 @@
     background-color: rgb(241 241 241 / var(--tw-bg-opacity));
   }
 
-  #languageBox,
+  /*   #languageBox,
   #locationBox {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+  } */
+
+
+  #language-select {
+    width: 130px;
   }
 
   /* Header Menu */

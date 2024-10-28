@@ -20,6 +20,8 @@ import { useTranslation } from 'next-i18next';
 import { RiTyphoonLine } from 'react-icons/ri';
 import { pick } from 'lodash';
 import Alert from '@components/ui/alert';
+import { FaInfoCircle } from 'react-icons/fa';
+
 
 
 let options; // Till logikem
@@ -380,17 +382,8 @@ const ProductSingleDetails: React.FC = () => {
             <div className="description-content" dangerouslySetInnerHTML={{ __html: data.description[i18n.language] }} />
           }
 
-          <div className="flex items-center mt-5">
-            <div className="text-heading font-bold text-base md:text-xl lg:text-2xl 2xl:text-4xl ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
-              {/*               {currentPrice}{locationCurrency.currency === "SEK" ? "kr" : locationCurrency.currency} Fixa till 
- */}              {currentPrice && formatWithSeparator(currentPrice)}€
-            </div>
-            {discount && (
-              <span className="line-through font-segoe text-gray-400 text-sm md:text-base lg:text-lg xl:text-xl ltr:pl-2 rtl:pr-2">
-                {basePrice}
-              </span>
-            )}
-          </div>
+
+
         </div>
 
         <div className="pb-3 border-b border-gray-300">
@@ -408,7 +401,19 @@ const ProductSingleDetails: React.FC = () => {
             );
           })}
         </div>
-        <div className="flex items-center gap-x-4 ltr:md:pr-32 rtl:md:pl-32 ltr:lg:pr-12 rtl:lg:pl-12 ltr:2xl:pr-32 rtl:2xl:pl-32 ltr:3xl:pr-48 rtl:3xl:pl-48  border-b border-gray-300 py-8">
+
+        <div className="flex items-center mt-5">
+          <div className="text-heading font-bold text-base md:text-xl lg:text-2xl 2xl:text-4xl ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
+            {/*               {currentPrice}{locationCurrency.currency === "SEK" ? "kr" : locationCurrency.currency} Fixa till 
+ */}              {currentPrice && formatWithSeparator(currentPrice)}€
+          </div>
+          {discount && (
+            <span className="line-through font-segoe text-gray-400 text-sm md:text-base lg:text-lg xl:text-xl ltr:pl-2 rtl:pr-2">
+              {basePrice}
+            </span>
+          )}
+        </div>
+        <div className="flex items-center gap-x-4 ltr:md:pr-32 rtl:md:pl-32 ltr:lg:pr-12 rtl:lg:pl-12 ltr:2xl:pr-32 rtl:2xl:pl-32 ltr:3xl:pr-48 rtl:3xl:pl-48  py-8">
           <Counter
             quantity={quantity}
             onIncrement={() => setQuantity((prev) => prev + 1)}
@@ -417,6 +422,7 @@ const ProductSingleDetails: React.FC = () => {
             }
             disableDecrement={quantity === 1}
           />
+
           <Button
             onClick={addToCart}
             variant="slim"
@@ -427,6 +433,19 @@ const ProductSingleDetails: React.FC = () => {
           >
             <span className="py-2 3xl:px-8">{customOrder ? t("text-add-to-cart-special") : t("text-add-to-cart")}</span>
           </Button>
+        </div>
+
+        <div className="flex items-center pb-7 space-x-2 border-b border-gray-300">
+          <h3 className="text-base md:text-lg text-heading font-semibold capitalize">
+            Förväntad leveranstid:
+          </h3>
+          <p className="text-gray-400">{data?.deliveryTime} dagar</p>
+          <div className="relative group">
+            <FaInfoCircle className="text-gray-400 cursor-pointer" />
+            <div className="absolute bottom-full left-0 mb-2 hidden group-hover:block w-64 bg-white text-gray-700 text-sm border border-gray-200 rounded shadow-md p-2">
+              Vi strävar efter att leverera din produkt inom den angivna tidsramen, men leveranstider kan variera beroende på produktens tillgänglighet och ditt val av leveransmetod.
+            </div>
+          </div>
         </div>
         <div className="py-6">
           <ul className="text-sm space-y-5 pb-1">
