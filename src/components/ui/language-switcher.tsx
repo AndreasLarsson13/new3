@@ -1,142 +1,168 @@
-import { useState, useEffect, Fragment } from 'react';
-import { Listbox, Transition } from '@headlessui/react';
+import { useState, useEffect } from 'react';
 import { HiOutlineSelector } from 'react-icons/hi';
 import { siteSettings } from '@settings/site-settings';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
+import React from 'react';
+import { capitalize } from 'lodash';
+
+interface Option {
+  id: string;
+  value: string;
+  name: string;
+  icon: JSX.Element;
+}
 
 export default function LanguageSwitcher() {
   const { site_header } = siteSettings;
   const { t } = useTranslation('common');
-  const options = site_header.languageMenu;
-  const optionsLocation = site_header.currencyMenu;
+  const options: Option[] = site_header.languageMenu;
+  const optionsLocation: Option[] = site_header.currencyMenu;
   const router = useRouter();
   const { asPath, locale } = router;
 
   // Initial state for language and location
   const currentSelectedItem = locale
-    ? options.find((o) => o.value === locale)!
+    ? options.find((o) => o.value === locale)
     : options[2];
-  const [selectedItem, setSelectedItem] = useState(currentSelectedItem);
-  const [clickedLocation, setClickedLocation] = useState(null);
+  const [selectedItem, setSelectedItem] = useState<Option | undefined>(currentSelectedItem);
+  const [clickedLocation, setClickedLocation] = useState<Option | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
+  const [isLocationDropdownOpen, setIsLocationDropdownOpen] = useState(false);
 
   // Load the clicked location from local storage when component mounts
   useEffect(() => {
-    const storedLocation = JSON.parse(localStorage.getItem('clickedLocation'));
+    const storedLocation = localStorage.getItem('clickedLocation');
     if (storedLocation) {
-      setClickedLocation(storedLocation); // Set the state to the stored location
+      const parsedLocation = JSON.parse(storedLocation);
+      const matchedOption = optionsLocation.find(option => option.id === parsedLocation.id);
+      if (matchedOption) {
+        setClickedLocation(matchedOption);
+      }
     }
   }, []);
 
   // Handle language selection and redirect
-  function handleLanguageChange(event) {
-    const selectedOption = options.find((option) => option.value === event.target.value);
-    setSelectedItem(selectedOption);
-    router.push(asPath, undefined, { locale: selectedOption.value });
+  function handleLanguageChange(option: Option) {
+    setSelectedItem(option);
+    router.push(asPath, undefined, { locale: option.value });
+    setIsLanguageDropdownOpen(false);
   }
 
   // Handle location selection change
-  function handleLocationChange(event) {
-    const selectedOption = optionsLocation.find((option) => option.value === event.target.value);
-    if (selectedOption.value === "se") {
+  function handleLocationChange(option: Option) {
+    if (option.value === "se") {
       alert("Vi säljer inte till Sverige än tyvärr");
     } else {
-      setClickedLocation(selectedOption);
-      localStorage.setItem('clickedLocation', JSON.stringify(selectedOption));
+      setClickedLocation(option);
+      localStorage.setItem('clickedLocation', JSON.stringify(option));
+      setIsLocationDropdownOpen(false);
     }
   }
 
-  // Load location on click
-  function openBox() {
-    const storedLocation = JSON.parse(localStorage.getItem('clickedLocation'));
-    if (storedLocation) {
-      setClickedLocation(storedLocation);
-    }
-    console.log(clickedLocation
-
-    )
+  // Toggle modal visibility
+  function toggleModal() {
+    setIsModalOpen(!isModalOpen);
   }
 
+  console.log(clickedLocation)
 
   return (
-    <div className="relative z-10 w-[140px] sm:w-[150px] lg:w-[130px] xl:w-[150px] ">
-      {/* Wrapper div with relative positioning */}
-      <Listbox value={selectedItem} onChange={setSelectedItem}>
-        {({ open }) => (
-          <div className="w-full relative"> {/* Full width of the container */}
+    <div>
+      {/* Button to show current selections and open modal */}
+      <button
+        className="border border-gray-300 text-heading text-sm font-semibold w-full py-2 px-3 bg-white rounded-lg shadow-md flex justify-between items-center "
+        onClick={toggleModal}
+      >
+        <span className="flex items-center">
+          {/* Render the icon */}
+          {clickedLocation?.icon && (
+            <span className="mr-2 flex items-center">
+              {clickedLocation.icon}
+            </span>
+          )}
+          {/* Display the name only on larger screens */}
+          <span className="hidden md:inline">
+            {clickedLocation?.name || t('Select Location')} - {selectedItem?.id ? capitalize(selectedItem.id) : t('Select Language')}
+          </span>
+        </span>
+        <HiOutlineSelector className="w-5 h-5 text-gray-400" />
+      </button>
+
+
+      {/* Modal for changing selections */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-[300px]">
+
+
             {/* Language Dropdown */}
-            <Listbox.Button
-              className="border border-gray-300 text-heading text-[13px] xl:text-sm font-semibold w-full py-2 ltr:pl-3 rtl:pr-3 ltr:pr-7 rtl:pl-7 ltr:text-left rtl:text-right bg-white rounded-lg shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 cursor-pointer"
-              onClick={openBox}
-            >
-              <span className="flex truncate items-center">
-                <span className="ltr:mr-1.5 rtl:ml-1.5">{selectedItem.icon}</span>{' '}
-                {clickedLocation && clickedLocation.name} - {t(selectedItem.name) === "Svenska - SE" ? "SE" : "EN"}
-              </span>
-              <span className="absolute inset-y-0 ltr:right-0 rtl:left-0 flex items-center ltr:pr-1.5 rtl:pl-1.5 pointer-events-none">
-                <HiOutlineSelector className="w-5 h-5 text-gray-400" aria-hidden="true" />
-              </span>
-            </Listbox.Button>
-            <Transition
-              show={open}
-              as={Fragment}
-              leave="transition ease-in duration-100"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-              id="languageLocationBox"
-            >
-              <Listbox.Options
-                static
-                className="absolute z-50 py-1 mt-1 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm" // Fixed width and absolute position
-                style={{
-                  maxHeight: '300px', // Max height for scrollability
-                  overflowY: 'auto', // Enable vertical scrolling
-
-                }}
+            <div className="mb-4 relative">
+              <h2 className="text-lg font-semibold mb-4">{t('language')}</h2>
+              <button
+                className="border border-gray-300 text-heading text-sm font-semibold w-full py-2 px-3 bg-white rounded-lg shadow-md flex justify-between items-center"
+                onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
               >
-                {/* Language Selection */}
-                <div>
-                  <h3 className="px-3">Språk</h3>
-                  <div id="languageBox">
-                    <label htmlFor="language-select" className="sr-only">Select Language</label>
-                    <select
-                      id="language-select"
-                      value={selectedItem.value}
-                      onChange={handleLanguageChange}
-                      className="border border-gray-300 text-heading text-[13px] xl:text-sm font-semibold relative w-full py-2 px-3 bg-white rounded-lg shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 cursor-pointer"
-                    >
-                      {options.map((option) => (
-                        <option key={option.id} value={option.value}>
-                          {option.icon} {t(option.name)}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                <span>{selectedItem?.name || t('Select Language')}</span>
+                <HiOutlineSelector className="w-5 h-5 text-gray-400" />
+              </button>
+              {isLanguageDropdownOpen && (
+                <div className="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+                  {options.map((option) => (
+                    <div
+                      key={option.id}
+                      className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => handleLanguageChange(option)}
+                    >{t(option.name)}
+                    </div>
+                  ))}
                 </div>
+              )}
+            </div>
 
-                {/* Location Selection */}
-                <div>
-                  <h3 className="px-3">Location</h3>
-                  <div id="locationBox" className="mt-2">
-                    <select
-                      id="location-select"
-                      value={clickedLocation?.value || ""} // Use clickedLocation value or empty string
-                      onChange={handleLocationChange}
-                      className="border border-gray-300 text-heading text-[13px] xl:text-sm font-semibold relative w-full py-2 px-3 bg-white rounded-lg shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 cursor-pointer"
+            {/* Location Dropdown */}
+            <div className="relative">
+              <h2 className="text-lg font-semibold mb-4">{t('location')}</h2>
+              <button
+                className="border border-gray-300 text-heading text-sm font-semibold w-full py-2 px-3 bg-white rounded-lg shadow-md flex justify-between items-center"
+                onClick={() => setIsLocationDropdownOpen(!isLocationDropdownOpen)}
+              >
+                <span className="flex items-center">
+
+                  <span className="mr-2" key={clickedLocation?.name}>{clickedLocation?.icon}</span>
+
+                  {clickedLocation?.name || t('Select Location')}
+                </span>
+                <HiOutlineSelector className="w-5 h-5 text-gray-400" />
+              </button>
+
+
+              {isLocationDropdownOpen && (
+                <div className="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+                  {optionsLocation.map((option) => (
+                    <div
+                      key={option.id}
+                      className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => handleLocationChange(option)}
                     >
-                      {optionsLocation?.map((option) => (
-                        <option key={option.id} value={option.value}>
-                          {option.icon} {t(option.name)}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                      {option.icon} {t(option.name)}
+                    </div>
+                  ))}
                 </div>
-              </Listbox.Options>
-            </Transition>
+              )}
+            </div>
+
+            {/* Close button */}
+            <button
+              className="mt-4 w-full py-2 bg-blue-500 text-white rounded-lg"
+              onClick={toggleModal}
+            >
+              {t('text-close')}
+            </button>
           </div>
-        )}
-      </Listbox>
+        </div>
+      )}
     </div>
   );
 }

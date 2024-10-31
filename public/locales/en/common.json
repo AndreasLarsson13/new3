@@ -140,7 +140,7 @@
   "text-map": "Map",
   "text-payment-method": "Payment method",
   "text-free": "Free",
-  "text-close": "close",
+  "text-close": "Close",
   "text-or": "Or",
   "text-and": "and",
   "text-account": "Account",
@@ -312,5 +312,7 @@
   "gasconsumption": "Gas consumption",
   "preheatingtime": "Preheating time",
   "floor": "Floor",
-  "downloadPdf": "Download PDF"
+  "downloadPdf": "Download PDF",
+  "language": "Language",
+  "location": "Location"
 }

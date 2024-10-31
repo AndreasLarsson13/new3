@@ -140,7 +140,7 @@
   "text-map": "Karta",
   "text-payment-method": "Payment method",
   "text-free": "Free",
-  "text-close": "stäng",
+  "text-close": "Stäng",
   "text-or": "Or",
   "text-and": "and",
   "text-account": "Account",
@@ -311,5 +311,7 @@
   "gasconsumption": "Gaskonsumtion",
   "preheatingtime": "Förvärmningstid",
   "floor": "Bakyta",
-  "downloadPdf": "Ladda ner PDF"
+  "downloadPdf": "Ladda ner PDF",
+  "language": "Språk",
+  "location": "Plats"
 }

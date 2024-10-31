@@ -102,6 +102,12 @@
     width: 130px;
   }
 
+
+  .logo {
+    width: 250px;
+    height: 60px;
+  }
+
   /* Header Menu */
   #siteHeader.is-scrolling .innerSticky {
     @apply shadow-header;
@@ -399,6 +405,11 @@
       top: 60px;
       width: 92vw;
       padding: 10px
+    }
+
+    .logo {
+      width: 210px;
+      height: auto;
     }
   }
 

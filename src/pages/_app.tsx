@@ -10,6 +10,7 @@ import { ToastContainer } from "react-toastify";
 // import { ReactQueryDevtools } from "@tanstack/react-query/devtools";
 import { appWithTranslation } from "next-i18next";
 import { DefaultSeo } from "@components/common/default-seo";
+import InitializeLocation from "./locationIntilize"
 
 // Load Open Sans and satisfy typeface font
 import "@fontsource/open-sans";
@@ -51,7 +52,10 @@ const CustomApp = ({ Component, pageProps }: AppProps) => {
   const Layout = (Component as any).Layout || Noop;
 
   return (
+
     <AnimatePresence mode="wait" onExitComplete={handleExitComplete}>
+      <InitializeLocation />
+
       <QueryClientProvider client={queryClientRef.current}>
         {/* @ts-ignore */}
         <HydrationBoundary state={pageProps.dehydratedState}>
