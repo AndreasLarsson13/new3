@@ -40,6 +40,7 @@ export const initialState: State = {
   total: 0,
   meta: null,
 };
+
 export function cartReducer(state: State, action: Action): State {
   switch (action.type) {
     case "ADD_ITEM_WITH_QUANTITY": {
@@ -54,7 +55,7 @@ export function cartReducer(state: State, action: Action): State {
       const items = removeItemOrQuantity(
         state.items,
         action.id,
-        (action.quantity = 1)
+        action.quantity || 1
       );
       return generateFinalState(state, items);
     }

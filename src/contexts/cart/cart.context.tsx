@@ -1,85 +1,112 @@
-import React from "react";
+import React, { useReducer, useEffect, useContext } from "react";
 import { cartReducer, State, initialState } from "./cart.reducer";
 import { Item, getItem } from "./cart.utils";
 import { useLocalStorage } from "@utils/use-local-storage";
+
 interface CartProviderState extends State {
   addItemToCart: (item: Item, quantity: number) => void;
   removeItemFromCart: (id: Item["id"]) => void;
-  // updateItem: (id: Item["id"], payload: object) => void;
-  // updateItemQuantity: (id: Item["id"], quantity: number) => void;
   clearItemFromCart: (id: Item["id"]) => void;
   getItemFromCart: (id: Item["id"]) => any | undefined;
   isInCart: (id: Item["id"]) => boolean;
-  // updateCartMetadata: (metadata: Metadata) => void;
 }
+
 export const cartContext = React.createContext<CartProviderState | undefined>(
   undefined
 );
 
-cartContext.displayName = "CartContext";
-
 export const useCart = () => {
-  const context = React.useContext(cartContext);
+  const context = useContext(cartContext);
   if (context === undefined) {
-    throw new Error(`useCart must be used within a CartProvider`);
+    throw new Error("useCart must be used within a CartProvider");
   }
   return context;
 };
 
 
+// Recursive function to sanitize and serialize attributes
+const sanitizeValue = (value: any) => {
+  if (value === null || typeof value !== "object") return value; // Primitives are safe
+  if (value instanceof HTMLElement || value['$$typeof']) return "[Circular]"; // DOM elements or React components
+  if (Array.isArray(value)) return value.map(sanitizeValue); // Recursively sanitize arrays
 
-export const CartProvider: React.FC = (props) => {
+  const sanitizedObject: any = {};
+  for (const key in value) {
+    sanitizedObject[key] = sanitizeValue(value[key]); // Recursively sanitize each property
+  }
+  return sanitizedObject;
+};
+
+const serializeAttributes = (attributes: any[]) => {
+  return attributes.map((attr) => sanitizeValue(attr));
+};
+
+// Main function to serialize state for localStorage
+const serializeState = (state: State) => ({
+  items: state.items.map((item) => ({
+    id: item.id,
+    name: item.name,
+    price: item.price,
+    quantity: item.quantity,
+    image: item.image,
+    location: item.location,
+    attributes: item.attributes ? serializeAttributes(item.attributes) : [],
+  })),
+  isEmpty: state.isEmpty,
+  totalItems: state.totalItems,
+  totalUniqueItems: state.totalUniqueItems,
+  total: state.total,
+});
+
+
+export const CartProvider: React.FC = ({ children }) => {
   const [savedCart, saveCart] = useLocalStorage(
-    `chawkbazar-cart`,
+    "chawkbazar-cart",
     JSON.stringify(initialState)
   );
-  const [state, dispatch] = React.useReducer(
+
+  const [state, dispatch] = useReducer(
     cartReducer,
-    JSON.parse(savedCart!)
+    savedCart ? JSON.parse(savedCart) : initialState
   );
 
-  // Rensar varukorgen om man byter land
-  React.useEffect(() => {
-    const location = JSON.parse(localStorage.getItem("clickedLocation"));
+  // Save only the necessary properties of state to localStorage
+  useEffect(() => {
+    try {
+      const serializedState = JSON.stringify(serializeState(state));
 
-    const containsSubstring = state.items.some((item) =>
-      item.location.includes(location.value)
-    );
-    if (!containsSubstring) {
-      dispatch({ type: "RESET_CART" });
+      saveCart(serializedState);
+      console.log("Updated saved cart:", serializedState);
+    } catch (error) {
+      console.error("Error saving cart to localStorage:", error);
     }
-  }, [state.items]);
-
-  // Save cart to local storage whenever state changes
-  React.useEffect(() => {
-    saveCart(JSON.stringify(state));
   }, [state, saveCart]);
 
-  const addItemToCart = (item: Item, quantity: number) =>
+  const addItemToCart = (item: Item, quantity: number) => {
+    console.log("Dispatching ADD_ITEM_WITH_QUANTITY", { item, quantity });
     dispatch({ type: "ADD_ITEM_WITH_QUANTITY", item, quantity });
+  };
 
-  const removeItemFromCart = (id: Item["id"]) =>
+  const removeItemFromCart = (id: Item["id"]) => {
     dispatch({ type: "REMOVE_ITEM_OR_QUANTITY", id });
+  };
 
-  const clearItemFromCart = (id: Item["id"]) =>
+  const clearItemFromCart = (id: Item["id"]) => {
     dispatch({ type: "REMOVE_ITEM", id });
+  };
 
   const isInCart = (id: Item["id"]) => !!getItem(state.items, id);
 
   const getItemFromCart = (id: Item["id"]) => getItem(state.items, id);
 
-  const value = React.useMemo(
-    () => ({
-      ...state,
-      addItemToCart,
-      removeItemFromCart,
-      clearItemFromCart,
-      getItemFromCart,
-      isInCart,
-    }),
-    [state]
-  );
+  const value = {
+    ...state,
+    addItemToCart,
+    removeItemFromCart,
+    clearItemFromCart,
+    getItemFromCart,
+    isInCart,
+  };
 
-  return <cartContext.Provider value={value} {...props} />;
+  return <cartContext.Provider value={value}>{children}</cartContext.Provider>;
 };
-

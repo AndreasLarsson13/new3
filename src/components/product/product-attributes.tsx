@@ -72,11 +72,12 @@ export const ProductAttributes: React.FC<Props> = ({
             price: selectedOption.price,
             customOrder: selectedOption.customOrder,
             value: selectedOption.value,
-            name: selectedOption.label,
+            name: title === "color" ? title : selectedOption.translation?.se, // Conditionally set name
           });
         }}
         isMulti={title === 'img'} // Enable multi-select only for images
       />
+
     </div>
   );
 };

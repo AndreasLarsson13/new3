@@ -21,26 +21,25 @@ interface Item {
 }
 
 
-export function generateCartItem(item: Item, attributes: object, attributeArray: Array, currentPrice: number, locationS: string) {
+export function generateCartItem(item: Item, attributes: object, attributeArray: Array<any>, currentPrice: number, locationS: string) {
   const { id, name, slug, image, price, sale_price, currency, _id, ship_price, weightPack, widthPack, heightPack, lengthPack } = item;
-  /*   const currencyLocation = locationS.currency
-   */
-  console.log(attributes)
-  const formulaSHip = 11 * 10
-  console.log(_id)
+
+  const formulaShip = 11 * 10;
+
+  // Generate unique ID based on attributes and item ID
+  const attributeString = Object.values(attributes).map((attr) => String(attr)).join(".");
+  const generatedId = `${_id}.${attributeString}`;
 
   return {
-    id: !isEmpty(attributes)
-      ? `${_id}.${Object.values(attributes).join(".")}`
-      : _id,
+    id: generatedId,
     linkId: _id,
     name,
     slug,
-    image: image.thumbnail,
+    image: image.thumbnail, // Assuming image has a thumbnail property
     price: currentPrice,
     attributes: attributeArray,
-    currency: currency,
-    location: locationS.value,
-    shipping: ship_price ? ship_price : formulaSHip,
+    currency,
+    location: locationS,
+    shipping: ship_price ? ship_price : formulaShip,
   };
 }
