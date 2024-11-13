@@ -12,36 +12,22 @@ const currencySymbols: { [key: string]: string } = {
 
 // Custom rounding logic function
 // Custom rounding logic function
+// Custom rounding logic function
 function getFormattedAmount(amount: number, locale: string) {
-  let minimumFractionDigits: number = 0;
-  let maximumFractionDigits: number = 0;
-
+  // If amount is 1000 or more, format with locale and thousand separator
   if (amount >= 1000) {
-    minimumFractionDigits = 0;
-    maximumFractionDigits = 0;
-  } else if (amount >= 100) {
-    minimumFractionDigits = 2;
-    maximumFractionDigits = 2;
+    return new Intl.NumberFormat(locale, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+      useGrouping: true, // Enables the thousand separator for large numbers
+    })
+      .format(amount)
+      .replace(/,/g, ' '); // Replace commas with spaces if needed
   }
 
-  // Round up the amount based on the decimal places
-  const roundedAmount =
-    Math.ceil(amount * Math.pow(10, maximumFractionDigits)) /
-    Math.pow(10, maximumFractionDigits);
-
-  // Format the number using Intl.NumberFormat and then replace commas with spaces
-  let formattedAmount = new Intl.NumberFormat(locale, {
-    minimumFractionDigits,
-    maximumFractionDigits,
-    useGrouping: true, // This enables the thousand separator
-  }).format(roundedAmount);
-
-  // Replace commas with spaces if needed
-  formattedAmount = formattedAmount.replace(/,/g, ' ');
-
-  return formattedAmount;
+  // For values less than 1000, return the amount as it is
+  return amount.toString();
 }
-
 
 export function formatPrice({
   amount,
@@ -52,11 +38,12 @@ export function formatPrice({
   currencyCode: string;
   locale: string;
 }) {
-  const formattedAmount = getFormattedAmount(amount, locale);
+  const formattedAmount = getFormattedAmount(amount, locale); // Use formatted amount for 1000+
   const currencySymbol = currencySymbols[currencyCode] || currencyCode;
 
-  return `${formattedAmount}${currencySymbol}`;
+  return `${formattedAmount}${currencySymbol}`; // Add a space before currency symbol
 }
+
 
 export function formatVariantPrice({
   amount,

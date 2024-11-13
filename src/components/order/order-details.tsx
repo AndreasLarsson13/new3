@@ -6,7 +6,7 @@ import { useTranslation } from 'next-i18next';
 const OrderItemCard = ({ product }: { product: OrderItem }) => {
   const { price: itemTotal } = usePrice({
     amount: product.price * product.quantity,
-    currencyCode: 'SEK',
+    currencyCode: 'EUR',
   });
   return (
     <tr
@@ -31,7 +31,7 @@ const OrderDetails: React.FC<{ className?: string }> = ({
   const { price: subtotal } = usePrice(
     order && {
       amount: order.total,
-      currencyCode: 'SEK',
+      currencyCode: 'EUR',
     }
   );
   const { price: total } = usePrice(

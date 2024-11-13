@@ -75,7 +75,7 @@ const ProductSingleDetails: React.FC = () => {
     data && {
       amount: data.sale_price ? data.sale_price : data.price,
       baseAmount: data.price,
-      currencyCode: 'SEK',
+      currencyCode: 'EUR',
     }
   );
   const { t, i18n } = useTranslation('common');
