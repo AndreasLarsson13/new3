@@ -42,7 +42,9 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
 
 
   const fetchSnippet = async (input: CheckoutInputType) => {
+
     const productsCart = JSON.parse(cosy[0]);
+    console.log(productsCart)
     input.orderData = productsCart;
     input.country = location.name
 
@@ -54,9 +56,10 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
       }
     };
 
+/*     https://service-dot-natbutiken.lm.r.appspot.com/open-payment-session,
 
-    try {
-      const response = await http.post('https://service-dot-natbutiken.lm.r.appspot.com/open-payment-session', input, config);
+ */    try {
+      const response = await http.post('http://localhost:8080/open-payment-session', input, config);
       console.log(response.data);
 
       if (response && response.data) {

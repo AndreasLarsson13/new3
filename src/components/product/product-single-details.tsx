@@ -176,45 +176,62 @@ const ProductSingleDetails: React.FC = () => {
 
   const variations = getVariations(filterDataLanguageAttributes);
   const isSelected = !isEmpty(variations)
-    ? !isEmpty(attributes) &&
-    Object.keys(variations).every((variation) =>
-      attributes.hasOwnProperty(variation)
-    )
+    ? Object.keys(variations).every((variation) => {
+      const isRequired = variations[variation][0]?.required; // Check if required
+      return !isRequired || attributes.hasOwnProperty(variation); // Ensure required attributes are selected
+    })
     : true;
 
+  const [fieldErrors, setFieldErrors] = useState<string[]>([]);
+
   function addToCart() {
-    if (!isSelected) return;
-    // to show btn feedback while product carting
+    const missingRequiredFields = Object.keys(variations).filter((variation) => {
+      const isRequired = variations[variation][0]?.required;
+      return isRequired && (!attributes[variation] || attributes[variation] === null);
+    });
+
+    if (missingRequiredFields.length > 0) {
+      setFieldErrors(missingRequiredFields); // Set field errors to highlight missing fields
+      toast.error(t('common:text-please-select-required-options'), {
+        position: 'top-right',
+        autoClose: 2000,
+      });
+      return;
+    }
+
+    // Proceed if all required fields are selected
+    setFieldErrors([]); // Clear errors on success
     setAddToCartLoader(true);
     setTimeout(() => {
       setAddToCartLoader(false);
     }, 600);
 
     const storedLocation = JSON.parse(localStorage.getItem('clickedLocation'));
+    console.log(AttributeArray)
     const item = generateCartItem(data, attributes, AttributeArray, currentPrice, storedLocation);
-    console.log(item)
+
     if (data?.gallery[0].extraColor) {
-      if (attributes.value in data?.gallery[0].extraColor) {
-        item.image = data?.gallery[0].extraColor[attributes.value]
-      }
-      else {
-        item.image = data?.gallery[0].original
-      }
+      item.image =
+        attributes.value in data?.gallery[0]?.extraColor
+          ? data?.gallery[0]?.extraColor[attributes.value]
+          : data?.gallery[0]?.original;
     }
 
     addItemToCart(item, quantity);
-    console.log(addItemToCart)
-    AttributeArray = []
-    toast(t('common:text-added-to-bag'), {
+    AttributeArray = [];
+    toast.success(t('common:text-added-to-bag'), {
       progressClassName: 'fancy-progress-bar',
       position: width > 768 ? 'bottom-right' : 'top-right',
       autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
     });
   }
+
+
+
+
+
+
+
 
 
   function handleAttribute(attribute: any, tva: any, attribut: any) {
@@ -396,6 +413,7 @@ const ProductSingleDetails: React.FC = () => {
                 translation={variations}
                 active={attributes[variation]}
                 clicked={attributes}
+                fieldErrors={fieldErrors}
                 onClick={(attribute: any) => handleAttribute(attribute, variation, attributes[variation])}
               />
             );

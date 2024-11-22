@@ -164,6 +164,7 @@
   "text-phone-details": "+1 1234 5678 90, +1 0987 6543 21",
   "text-order-received": "Thank you. Your order has been received.",
   "text-pay-cash": "Pay with cash upon delivery.",
+  "text-tax": "V.A.T",
   "text-order-details": "Order details",
   "text-details": "Details",
   "text-recent-orders": "recent orders",
@@ -234,6 +235,8 @@
   "text-trending-collection": "Trending Collection",
   "text-recently-view-products": "Recently View Products",
   "text-scroll-to-top": "Scroll to top",
+  "text-thank-you": "Thanks for your order!",
+  "text-order-confirmed": "Order bekräftelse",
   "login-helper": "Login with your email & password",
   "registration-helper": "By signing up, you agree to our",
   "forgot-password-helper": "We'll send you a link to reset your password",
@@ -314,5 +317,7 @@
   "floor": "Floor",
   "downloadPdf": "Download PDF",
   "language": "Language",
-  "location": "Location"
+  "location": "Location",
+  "quantity": "Quantity",
+  "select_placeholder": "Select..."
 }

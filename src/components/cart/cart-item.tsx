@@ -82,7 +82,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
               </span>
               :
               <span className="text-sm ltr:pl-3 rtl:pr-3 text-gray-400" key={index}>
-                + {extraAdded.translationName ? extraAdded.translationName[i18n.language] : extraAdded.name}
+                + {extraAdded.value ? extraAdded.value : extraAdded.name}
               </span>
 
 
