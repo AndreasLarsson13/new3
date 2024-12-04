@@ -185,13 +185,14 @@ const ProductSingleDetails: React.FC = () => {
   const [fieldErrors, setFieldErrors] = useState<string[]>([]);
 
   function addToCart() {
+    // Validate required fields
     const missingRequiredFields = Object.keys(variations).filter((variation) => {
       const isRequired = variations[variation][0]?.required;
       return isRequired && (!attributes[variation] || attributes[variation] === null);
     });
 
     if (missingRequiredFields.length > 0) {
-      setFieldErrors(missingRequiredFields); // Set field errors to highlight missing fields
+      setFieldErrors(missingRequiredFields);
       toast.error(t('common:text-please-select-required-options'), {
         position: 'top-right',
         autoClose: 2000,
@@ -199,26 +200,43 @@ const ProductSingleDetails: React.FC = () => {
       return;
     }
 
-    // Proceed if all required fields are selected
-    setFieldErrors([]); // Clear errors on success
+    setFieldErrors([]);
+
+    // Debugging: Check the state before adding to cart
+    console.log('Attributes:', attributes);
+    console.log('AttributeArray:', AttributeArray);
+    console.log('Current Price:', currentPrice);
+
+    // Show loader
     setAddToCartLoader(true);
     setTimeout(() => {
       setAddToCartLoader(false);
     }, 600);
 
+    // Get stored location
     const storedLocation = JSON.parse(localStorage.getItem('clickedLocation'));
-    console.log(AttributeArray)
+
+    // Generate the cart item
     const item = generateCartItem(data, attributes, AttributeArray, currentPrice, storedLocation);
 
-    if (data?.gallery[0].extraColor) {
+    // Handle image selection
+    if (data?.gallery[0]?.extraColor) {
       item.image =
         attributes.value in data?.gallery[0]?.extraColor
           ? data?.gallery[0]?.extraColor[attributes.value]
           : data?.gallery[0]?.original;
     }
 
+    // Debugging: Check the item before adding
+    console.log('Generated Item:', item);
+
+    // Add to cart
     addItemToCart(item, quantity);
+
+    // Reset the attribute array
     AttributeArray = [];
+
+    // Display success message
     toast.success(t('common:text-added-to-bag'), {
       progressClassName: 'fancy-progress-bar',
       position: width > 768 ? 'bottom-right' : 'top-right',
@@ -234,95 +252,68 @@ const ProductSingleDetails: React.FC = () => {
 
 
 
-  function handleAttribute(attribute: any, tva: any, attribut: any) {
+  function handleAttribute(attribute: any, variation: any, attribut: any) {
+    const index = AttributeArray.findIndex((attr) => attr.id === attribute.id);
 
-    const index = AttributeArray.findIndex(attr => attr.id == attribute.id);
+    // Update or remove the attribute in AttributeArray
     if (index !== -1) {
-      // Om objektet redan finns och värdet inte är false, uppdatera det
       if (attribute.value !== false) {
+        // Update existing attribute
         AttributeArray[index] = attribute;
       } else {
-        // Om värdet är false, ta bort objektet
+        // Remove the attribute if the value is false
         AttributeArray.splice(index, 1);
       }
     } else {
-      // Om objektet inte finns och värdet inte är false, lägg till det
       if (attribute.value !== false) {
+        // Add the attribute if it doesn't exist
         AttributeArray.push(attribute);
       }
     }
 
+    // Check if any `produktvariation` is selected
+    const hasProduktvariation = AttributeArray.some((attr) => attr.produktvariation);
 
-    data?.gallery.forEach(item => {
-      // Check if the "red" key exists in item.extraColor
-
-      if (item.extraColor) {
-        console.log(item.extraColor.red)
-        if (attribute.value in item.extraColor) {
-          // If it exists, set the original image to the value of item.extraColor.red
-          item.original = item.extraColor[attribute.value];
-        } else {
-          // Otherwise, default to the data.image.original
-          item.original = data.image.original;
-
-        }
-      }
-
+    // Calculate the total price based on selected attributes
+    let totalProduct = 0;
+    AttributeArray.forEach((attr) => {
+      totalProduct += attr.price || 0;
     });
 
-    let totalProduct = 0; //pris attribut
-
-    if (typeof attribute.price === "number") {
-      console.log("Not same value")
-
-      // Check if the array is not empty
-      if (textObjekt.length > 0) {
-        let found = false;
-
-        // Iterate over each item in the array
-        textObjekt.forEach(item => {
-          // Check if the item has the same type as the specified type (tva)
-          if (item.type === tva) {
-            // If found, update the priceAtt of the existing object
-
-            item.priceAtt = attribute.price;
-            found = true; // Set found to true
-          }
-        });
-        // If the specified type (tva) was not found in the array, push a new object
-        if (!found) {
-          textObjekt.push({ type: tva, priceAtt: attribute.price });
-        }
-      } else {
-        // If the array is empty, directly push a new object
-        textObjekt.push({ type: tva, priceAtt: attribute.price });
-      }
-      textObjekt.forEach(obj => {
-        totalProduct += parseInt(obj.priceAtt);
-      });
-
-
-      if (data.sale_price > 0) {
-
-        setCurrentPrice(data.sale_price + totalProduct)
-      } else {
-        setCurrentPrice(data.price + totalProduct)
-      }
-
-    }
-    if (attribute.customOrder !== undefined || attribute.customOrder) {
-      setcustomOrder(true);
+    // Update currentPrice based on the selection
+    if (hasProduktvariation) {
+      setCurrentPrice(totalProduct); // Use total product price if a product variation is selected
+    } else if (data.sale_price > 0) {
+      setCurrentPrice(data.sale_price + totalProduct); // Use sale price plus attribute prices if no variation
     } else {
-      setcustomOrder(false)
+      setCurrentPrice(data.price + totalProduct); // Use default price plus attribute prices
     }
 
+    // Update the gallery image based on the selected attribute
+    if (attribute.produktvariation) {
+      // Set the gallery's active image to the variation's image
+      data.gallery[activeIndex].original = attribute.url;
+    } else {
+      // Revert to the default image if the attribute is deselected
+      const defaultImage = data.gallery.find((item) => item.isDefault) || data.gallery[0];
+      data.gallery[activeIndex].original = defaultImage?.original ?? data.image.original;
+    }
 
+    // Debugging: Log the active image to confirm
+    console.log('Active Image:', data.gallery[activeIndex].original);
 
+    // Update the attributes state
     setAttributes((prev) => ({
       ...prev,
-      ...attribute,
+      [variation]: attribute.value,
     }));
   }
+
+
+
+
+
+
 
 
 
@@ -349,14 +340,11 @@ const ProductSingleDetails: React.FC = () => {
             <SwiperSlide key={`product-gallery-key-${index}`}>
               <div className="col-span-1 transition duration-150 ease-in hover:opacity-90 max-h-[400px]">
                 <img
-                  src={
-                    item?.original ??
-                    '/assets/placeholder/products/product-gallery.svg'
-                  }
-                  alt={`${data?.name}--${index}`}
-                  className="object-fit w-auto h-full max-h-[320px] min-h-[320px]"
-
+                  src={data.gallery[activeIndex]?.original ?? '/assets/placeholder/products/product-gallery.svg'}
+                  alt={`${data?.name}--${activeIndex}`}
+                  className="w-auto h-full max-h-[402px] min-h-[402px] transition duration-150 ease-in hover:opacity-90"
                 />
+
               </div>
             </SwiperSlide>
           ))}
@@ -410,12 +398,13 @@ const ProductSingleDetails: React.FC = () => {
                 key={variation}
                 title={variation}
                 attributes={variations[variation]}
-                translation={variations}
                 active={attributes[variation]}
                 clicked={attributes}
                 fieldErrors={fieldErrors}
                 onClick={(attribute: any) => handleAttribute(attribute, variation, attributes[variation])}
               />
+
+
             );
           })}
         </div>

@@ -1,10 +1,8 @@
 import { Item } from '@contexts/cart/cart.utils';
 import { generateCartItemName } from '@utils/generate-cart-item-name';
 import usePrice from '@framework/product/use-price';
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next';
-
-
 
 export const CheckoutItem: React.FC<{ item: Item }> = ({ item }) => {
   const [location, setLocation] = useState<{ currency: string } | null>(null);
@@ -19,46 +17,62 @@ export const CheckoutItem: React.FC<{ item: Item }> = ({ item }) => {
 
   const { price } = usePrice({
     amount: item.itemTotal,
-    currencyCode: location?.currency,
+    currencyCode: location?.currency || 'EUR', // Default to 'EUR' if location is unavailable
   });
-
-  console.log(item)
 
   return (
     <div className="flex py-4 items-center lg:px-3 border-b border-gray-300">
+      {/* Product Image */}
       <div className="flex border rounded-md border-gray-300 w-16 h-16 flex-shrink-0">
         <img
           src={item.image ?? '/assets/placeholder/order-product.svg'}
-
-          height="64"
-          className="object-fit"
+          alt={item.name || 'Product Image'}
+          className="object-fit w-full h-full"
         />
       </div>
-      <div>
-        <h6 className="text-sm ltr:pl-3 rtl:pr-3 font-regular text-heading">
+
+      {/* Product Details */}
+      <div className="flex-1 ltr:pl-3 rtl:pr-3">
+        {/* Product Name */}
+        <h6 className="text-sm font-medium text-heading truncate">
           {generateCartItemName(item.name, item.attributes)}
         </h6>
 
+        {/* Attributes */}
         <div className="flex flex-col">
           {item.attributes.map((extraAdded, index) => (
-            extraAdded.id === "color" ?
-              <h6 className="text-sm ltr:pl-3 rtl:pr-3 text-gray-400" key={index}>
+            extraAdded.id === 'color' ? (
+              <h6
+                className="text-sm text-gray-400"
+                key={index}
+              >
                 {`${t(extraAdded.name)} : ${t(extraAdded.value)}`}
-              </h6> : extraAdded.img ?
-                <h6 className="text-sm ltr:pl-3 rtl:pr-3 text-gray-400" key={index}>
-                  + {t(extraAdded.name)}
-                </h6>
-                :
-                <h6 className="text-sm ltr:pl-3 rtl:pr-3 text-gray-400" key={index}>
-                  + {extraAdded.translationName ? extraAdded.translationName[i18n.language] : extraAdded.namn}
-                </h6>
-
+              </h6>
+            ) : extraAdded.img ? (
+              <h6
+                className="text-sm text-gray-400"
+                key={index}
+              >
+                + {t(extraAdded.name)}
+              </h6>
+            ) : (
+              <h6
+                className="text-sm text-gray-400"
+                key={index}
+              >
+                + {extraAdded.translationName
+                  ? extraAdded.translationName[i18n.language]
+                  : extraAdded.namn || extraAdded.value}
+              </h6>
+            )
           ))}
         </div>
       </div>
-      <div className="flex ltr:ml-auto rtl:mr-auto text-heading text-sm ltr:pl-2 rtl:pr-2 flex-shrink-0 gap-5">
+
+      {/* Quantity and Price */}
+      <div className="flex items-center ltr:ml-auto rtl:mr-auto text-heading text-sm gap-5">
         <span>x {item.quantity}</span>
-        {price}
+        <span>{price}</span>
       </div>
     </div>
   );

@@ -14,20 +14,16 @@ const currencySymbols: { [key: string]: string } = {
 // Custom rounding logic function
 // Custom rounding logic function
 function getFormattedAmount(amount: number, locale: string) {
-  // If amount is 1000 or more, format with locale and thousand separator
-  if (amount >= 1000) {
-    return new Intl.NumberFormat(locale, {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-      useGrouping: true, // Enables the thousand separator for large numbers
-    })
-      .format(amount)
-      .replace(/,/g, ' '); // Replace commas with spaces if needed
-  }
-
-  // For values less than 1000, return the amount as it is
-  return amount.toString();
+  // Use Intl.NumberFormat to dynamically handle decimals and separators
+  return new Intl.NumberFormat(locale, {
+    minimumFractionDigits: 0, // Allow no decimals if none are present
+    maximumFractionDigits: 20, // Allow as many decimals as are present in the input
+    useGrouping: true, // Enable thousand separator
+  })
+    .format(amount)
+    .replace(/,/g, ' '); // Replace commas with spaces if needed
 }
+
 
 export function formatPrice({
   amount,

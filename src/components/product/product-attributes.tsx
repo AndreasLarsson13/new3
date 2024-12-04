@@ -19,8 +19,10 @@ interface Props {
     url?: string; // Add URL for the link
     namn: string;
     group: string;
+    variation: boolean;
     mainObject?: boolean; // Key to hide options
     required?: boolean; // Indicates if the input is required
+    sku: string;
   }[];
   active: string;
   onClick: any;
@@ -40,7 +42,6 @@ export const ProductAttributes: React.FC<Props> = ({
   const { t, i18n } = useTranslation('common');
   const [isTooltipOpen, setTooltipOpen] = useState(false);
   const tooltipRef = useRef(null);
-
   // Local state to track selected value for this specific attribute type
   const [selectedValue, setSelectedValue] = useState(active);
 
@@ -81,6 +82,8 @@ export const ProductAttributes: React.FC<Props> = ({
     }),
   };
 
+
+  console.log(attributes)
   return (
     <div className={className}>
       <h3 className="text-base md:text-lg text-heading font-semibold mb-2.5 capitalize flex items-center">
@@ -128,7 +131,7 @@ export const ProductAttributes: React.FC<Props> = ({
                 </p>
 
                 <a
-                  href={`/products/${productAttribute.id}`}
+                  href={`/products/${productAttribute._id}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-500 flex items-center mt-2"
@@ -146,8 +149,11 @@ export const ProductAttributes: React.FC<Props> = ({
         isClearable={true} // Allows deselecting the input
         options={attributes
           .filter(({ mainObject }) => !mainObject) // Exclude options with the mainObject key
-          .map(({ value, meta, price, img, namn }) => ({
+          .map(({ value, meta, price, img, namn, variation, sku }) => ({
             value,
+            variation,
+            img,
+            sku,
             label: (
               <div className="flex items-center space-x-2">
                 {title === 'color' ? (
@@ -157,11 +163,12 @@ export const ProductAttributes: React.FC<Props> = ({
                   ></span>
                 ) : (
                   img &&
-                  typeof img === 'object' && (
-                    <img src={img.url} alt={img.name} className="w-6 h-6 rounded-full" />
+                  typeof img === 'object' &&
+                  img.url && ( // Check if img.url is not empty
+                    <img src={img.url} alt={img.name || 'Image'} className="w-6 h-6 rounded-full" />
                   )
                 )}
-                <span>{`${namn} - ${price}€`}</span>
+                <span>{`${namn ? namn : t(`${value}`)} - ${price}€`}</span>
               </div>
             ),
             price,
@@ -171,12 +178,16 @@ export const ProductAttributes: React.FC<Props> = ({
           .filter(({ mainObject }) => !mainObject)
           .map((attr) => ({
             value: attr.value,
-            label: attr.value,
+            label: t(`${attr.value}`) ? t(`${attr.value}`) : attr.value,
           }))
           .find((option) => option.value === selectedValue) || null}
         onChange={(selectedOption) => {
           const newValue = selectedOption ? selectedOption.value : null;
           const newPrice = selectedOption ? selectedOption.price : 0;
+
+          // Check if selectedOption has an img URL before trying to access it
+          const imageUrl = selectedOption && selectedOption.img ? selectedOption.img.url : null;
+          const sku = selectedOption && selectedOption.sku ? selectedOption.sku : null;
 
           setSelectedValue(newValue); // Update local state for this specific attribute
 
@@ -186,10 +197,17 @@ export const ProductAttributes: React.FC<Props> = ({
             price: newValue ? newPrice : -clicked[title]?.price || 0, // Pass -price if deselected
             customOrder: selectedOption?.customOrder || false,
             value: newValue,
+            produktvariation: selectedOption?.variation || false,
             name: title === 'color' ? title : selectedOption?.translation?.se,
+            url: imageUrl, // Use the URL only if img exists
+            sku: sku,
+            deselected: !selectedOption, // Add this flag to indicate deselection
           });
         }}
+
       />
+
+
     </div>
   );
 };

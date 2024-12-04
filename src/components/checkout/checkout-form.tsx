@@ -59,7 +59,7 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
 /*     https://service-dot-natbutiken.lm.r.appspot.com/open-payment-session,
 
  */    try {
-      const response = await http.post('http://localhost:8080/open-payment-session', input, config);
+      const response = await http.post('http://localhost:8088/open-payment-session', input, config);
       console.log(response.data);
 
       if (response && response.data) {
