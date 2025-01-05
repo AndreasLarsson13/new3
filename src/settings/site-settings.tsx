@@ -1093,7 +1093,7 @@ export const siteSettings = {
         ],
       }
     ] */,
-    mobileMenu: [
+    mobileMenu: menuData/* [
       {
         id: 1,
         path: '/search?q=hushall',
@@ -1342,7 +1342,7 @@ export const siteSettings = {
         path: '/contact-us',
         label: 'menu-contact-us',
       }
-    ],
+    ], */,
     currencyMenu: [
       {
         id: 'se',
