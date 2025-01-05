@@ -379,6 +379,626 @@ const menuData = [
     },
 ];
 
+const mobileData = [
+    {
+        id: 1,
+        path: "/search?q=hushall",
+        label: "hushall",
+        subMenu: [
+            {
+                id: 1,
+                path: "/search?q=braskaminer",
+                label: "braskaminer",
+                subMenu: [
+                    {
+                        id: 1,
+                        path: "/search?q=taljstenskaminer",
+                        label: "taljstenskaminer",
+                        subMenu: [
+                            {
+                                id: 1,
+                                path: "/search?q=tillbehor-taljstenskaminer",
+                                label: "tillbehor-taljstenskaminer"
+                            }
+                        ]
+                    },
+                    {
+                        id: 2,
+                        path: "/search?q=kaminer",
+                        label: "kaminer",
+                        subMenu: [
+                            {
+                                id: 1,
+                                path: "/search?q=tillbehor-kaminer",
+                                label: "tillbehor-kaminer"
+                            }
+                        ]
+                    },
+                    {
+                        id: 3,
+                        path: "/search?q=eldstader/murspis",
+                        label: "eldstader/murspis"
+                    },
+                    {
+                        id: 4,
+                        path: "/search?q=gjutjarnskaminer",
+                        label: "gjutjarnskaminer",
+
+                    }
+                ]
+            },
+            {
+                id: 2,
+                path: "/search?q=varmepumpar",
+                label: "varmepumpar",
+                subMenu: [
+                    {
+                        id: 1,
+                        path: "/search?q=luftvarmepumpar",
+                        label: "luftvarmepumpar",
+
+                    },
+                    {
+                        id: 2,
+                        path: "/search?q=franluftvarmepump",
+                        label: "franluftvarmepump",
+
+                    },
+                    {
+                        id: 3,
+                        path: "/search?q=bergvarmepumpar",
+                        label: "bergvarmepumpar",
+
+                    },
+                    {
+                        id: 4,
+                        path: "/search?q=jordvarmepump",
+                        label: "jordvarmepump",
+
+                    },
+                    {
+                        id: 5,
+                        path: "/search?q=AC",
+                        label: "AC",
+
+                    }
+                ]
+            },
+            {
+                id: 3,
+                path: "/search?q=ventilation",
+                label: "ventilation",
+                subMenu: [
+                    {
+                        id: 1,
+                        path: "/search?q=ftx-aggregat",
+                        label: "ftx-aggregat",
+
+                    },
+                    {
+                        id: 2,
+                        path: "/search?q=mekaniskventilation",
+                        label: "mekaniskventilation",
+
+                    },
+                    {
+                        id: 3,
+                        path: "/search?q=friflode-sjalvdrag",
+                        label: "friflode-sjalvdrag",
+
+                    }
+                ]
+            },
+            {
+                id: 4,
+                path: "/search?q=golvvarme",
+                label: "golvvarme",
+
+            },
+            {
+                id: 5,
+                path: "/search?q=vvs",
+                label: "vvs",
+                subMenu: [
+                    {
+                        id: 1,
+                        path: "/search?q=kranar/blandare",
+                        label: "kranar/blandare",
+
+                    },
+                    {
+                        id: 2,
+                        path: "/search?q=handfat/badkar",
+                        label: "handfat/badkar",
+
+                    },
+                    {
+                        id: 3,
+                        path: "/search?q=spabad/badtunnor",
+                        label: "spabad/badtunnor",
+
+                    },
+                    {
+                        id: 4,
+                        path: "/search?q=toastolar",
+                        label: "toastolar",
+
+                    }
+                ]
+            },
+            {
+                id: 6,
+                path: "/search?q=sol/lagring/elbil",
+                label: "sol/lagring/elbil",
+                subMenu: [
+                    {
+                        id: 1,
+                        path: "/search?q=solsystem",
+                        label: "solsystem",
+
+                    },
+                    {
+                        id: 2,
+                        path: "/search?q=batterier",
+                        label: "batterier",
+
+                    },
+                    {
+                        id: 3,
+                        path: "/search?q=elbilsladdning",
+                        label: "elbilsladdning",
+
+                    }
+                ]
+            },
+            {
+                id: 7,
+                path: "/search?q=byggvaror",
+                label: "byggvaror",
+                subMenu: [
+                    {
+                        id: 1,
+                        path: "/search?q=fonster",
+                        label: "fonster",
+
+                    },
+                    {
+                        id: 2,
+                        path: "/search?q=takstegar",
+                        label: "takstegar",
+
+                    }
+                ]
+            },
+            {
+                id: 8,
+                path: "/search?q=inredning",
+                label: "inredning",
+                subMenu: [
+                    {
+                        id: 1,
+                        path: "/search?q=koksinredning",
+                        label: "koksinredning",
+
+                    },
+                    {
+                        id: 2,
+                        path: "/search?q=badrumsinredning",
+                        label: "badrumsinredning",
+
+                    },
+                    {
+                        id: 3,
+                        path: "/search?q=garderob/forvaring",
+                        label: "garderob/forvaring",
+
+                    },
+                    {
+                        id: 4,
+                        path: "/search?q=hallinredning",
+                        label: "hallinredning",
+
+                    },
+                    {
+                        id: 5,
+                        path: "/search?q=vardagsrumsinrening",
+                        label: "vardagsrumsinrening",
+
+                    }
+                ]
+            },
+            {
+                id: 9,
+                path: "/search?q=vitvaror",
+                label: "vitvaror",
+                subMenu: [
+                    {
+                        id: 1,
+                        path: "/search?q=kylar",
+                        label: "kylar",
+
+                    },
+                    {
+                        id: 2,
+                        path: "/search?q=frysar",
+                        label: "frysar",
+
+                    },
+                    {
+                        id: 3,
+                        path: "/search?q=vinkylar",
+                        label: "vinkylar",
+
+                    },
+                    {
+                        id: 4,
+                        path: "/search?q=diskmaskiner",
+                        label: "diskmaskiner",
+
+                    },
+                    {
+                        id: 5,
+                        path: "/search?q=frysboxar",
+                        label: "frysboxar",
+
+                    },
+                    {
+                        id: 6,
+                        path: "/search?q=kombineradkyl/frys",
+                        label: "kombineradkyl/frys",
+
+                    },
+                    {
+                        id: 7,
+                        path: "/search?q=flaktar",
+                        label: "flaktar",
+
+                    },
+                    {
+                        id: 8,
+                        path: "/search?q=tvattmaskiner",
+                        label: "tvattmaskiner",
+
+                    },
+                    {
+                        id: 9,
+                        path: "/search?q=torktumlare",
+                        label: "torktumlare",
+
+                    },
+                    {
+                        id: 10,
+                        path: "/search?q=microugn",
+                        label: "microugn",
+
+                    },
+                    {
+                        id: 11,
+                        path: "/search?q=hallar",
+                        label: "hallar",
+
+                    },
+                    {
+                        id: 12,
+                        path: "/search?q=ugnar",
+                        label: "ugnar",
+
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        id: 2,
+        path: "/search?q=fritid",
+        label: "fritid",
+        subMenu: [
+            {
+                id: 1,
+                path: "/search?q=bastu",
+                label: "bastu",
+                subMenu: [
+                    {
+                        id: 1,
+                        path: "/search?q=elektiskt/bastupriser",
+                        label: "elektiskt/bastupriser",
+
+                    },
+                    {
+                        id: 2,
+                        path: "/search?q=vedeldade/bastuspisar",
+                        label: "vedeldade/bastuspisar",
+
+                    },
+                    {
+                        id: 3,
+                        path: "/search?q=tillbehor",
+                        label: "tillbehor",
+
+                    },
+                    {
+                        id: 4,
+                        path: "/search?q=bastu-inredning",
+                        label: "bastu-inredning",
+
+                    },
+                    {
+                        id: 5,
+                        path: "/search?q=bastu-stugor",
+                        label: "bastu-stugor",
+
+                    }
+                ]
+            },
+            {
+                id: 2,
+                path: "/search?q=forfon/atv",
+                label: "forfon/atv",
+                subMenu: [
+                    {
+                        id: 1,
+                        path: "/search?q=atv/utv",
+                        label: "atv/utv",
+
+                    },
+                    {
+                        id: 2,
+                        path: "/search?q=snoskoter",
+                        label: "snoskoter",
+
+                    },
+                    {
+                        id: 3,
+                        path: "/search?q=elsparkcyklar",
+                        label: "elsparkcyklar",
+
+                    },
+                    {
+                        id: 4,
+                        path: "/search?q=elcyklar",
+                        label: "elcyklar",
+
+                    },
+                    {
+                        id: 5,
+                        path: "/search?q=cyklar",
+                        label: "cyklar",
+
+                    },
+                    {
+                        id: 6,
+                        path: "/search?q=mopeder",
+                        label: "mopeder",
+
+                    },
+                    {
+                        id: 7,
+                        path: "/search?q=mopedbilar",
+                        label: "mopedbilar",
+
+                    }
+                ]
+            },
+            {
+                id: 3,
+                path: "/search?q=batar/marin",
+                label: "batar/marin",
+                subMenu: [
+                    {
+                        id: 1,
+                        path: "/search?q=plotter/ekolod",
+                        label: "plotter/ekolod",
+
+                    },
+                    {
+                        id: 2,
+                        path: "/search?q=radar",
+                        label: "radar",
+
+                    },
+                    {
+                        id: 3,
+                        path: "/search?q=roddbat",
+                        label: "roddbat",
+
+                    },
+                    {
+                        id: 4,
+                        path: "/search?q=jetskis",
+                        label: "jetskis",
+
+                    },
+                    {
+                        id: 5,
+                        path: "/search?q=bryggor",
+                        label: "bryggor",
+
+                    },
+                    {
+                        id: 6,
+                        path: "/search?q=flytvastar",
+                        label: "flytvastar",
+
+                    }
+                ]
+            },
+            {
+                id: 4,
+                path: "/search?q=fiske",
+                label: "fiske",
+                subMenu: [
+                    {
+                        id: 1,
+                        path: "/search?q=fiskespon",
+                        label: "fiskespon",
+
+                    },
+                    {
+                        id: 2,
+                        path: "/search?q=fiskerulle",
+                        label: "fiskerulle",
+
+                    },
+                    {
+                        id: 3,
+                        path: "/search?q=fiskedrag",
+                        label: "fiskedrag",
+
+                    },
+                    {
+                        id: 4,
+                        path: "/search?q=ekolod",
+                        label: "ekolod",
+
+                    },
+                    {
+                        id: 5,
+                        path: "/search?q=trollingmotor",
+                        label: "trollingmotor",
+
+                    },
+                    {
+                        id: 6,
+                        path: "/search?q=fiskeklader",
+                        label: "fiskeklader",
+
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        id: 3,
+        path: "/search?q=sport",
+        label: "sport",
+        subMenu: [
+            {
+                id: 1,
+                path: "/search?q=golf",
+                label: "golf",
+                subMenu: [
+                    {
+                        id: 1,
+                        path: "/search?q=golfbollar",
+                        label: "golfbollar",
+
+                    },
+                    {
+                        id: 2,
+                        path: "/search?q=golfklubbor",
+                        label: "golfklubbor",
+
+                    },
+                    {
+                        id: 3,
+                        path: "/search?q=utrustning",
+                        label: "utrustning",
+
+                    },
+                    {
+                        id: 4,
+                        path: "/search?q=golfklader",
+                        label: "golfklader",
+
+                    },
+                    {
+                        id: 5,
+                        path: "/search?q=bastu-stugor",
+                        label: "bastu-stugor",
+
+                    }
+                ]
+            },
+            {
+                id: 2,
+                path: "/search?q=sportklader",
+                label: "sportkläder",
+                subMenu: [
+                    {
+                        id: 1,
+                        path: "/search?q=traningsklader",
+                        label: "traningsklader",
+
+                    },
+                    {
+                        id: 2,
+                        path: "/search?q=golfklader",
+                        label: "golfkläder",
+
+                    }
+                ]
+            },
+            {
+                id: 3,
+                path: "/search?q=alpin",
+                label: "alpin",
+                subMenu: [
+                    {
+                        id: 1,
+                        path: "/search?q=langdskidor",
+                        label: "langdskidor",
+
+                    },
+                    {
+                        id: 2,
+                        path: "/search?q=skidor",
+                        label: "skidor",
+
+                    }
+                ]
+            },
+            {
+                id: 4,
+                path: "/search?q=fotboll",
+                label: "fotboll",
+                subMenu: [
+                    {
+                        id: 1,
+                        path: "/search?q=fotbollar",
+                        label: "fotbollar",
+
+                    },
+                    {
+                        id: 2,
+                        path: "/search?q=fotbollsklader",
+                        label: "fotbollsklader",
+
+                    }
+                ]
+            },
+            {
+                id: 5,
+                path: "/search?q=hockey",
+                label: "hockey",
+                subMenu: [
+                    {
+                        id: 1,
+                        path: "/search?q=hockeyutrustning",
+                        label: "hockeyutrustning",
+
+                    },
+                    {
+                        id: 2,
+                        path: "/search?q=skridskor",
+                        label: "skridskor",
+
+                    }
+                    ,
+                    {
+                        id: 3,
+                        path: "/search?q=klubbor",
+                        label: "klubbor",
+
+                    }
+                ]
+            }
+        ]
+    }
+];
+
+
+
+
 let menu = [];
 
 menuData.forEach((element, index) => {
@@ -443,4 +1063,4 @@ menuData.forEach((element, index) => {
 });
 
 // Export the menu data
-export default menu;
+export default { menu, mobileData };

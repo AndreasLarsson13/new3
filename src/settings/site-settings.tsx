@@ -13,9 +13,9 @@ import menuData from './menu'; // Import the data
 import { ThunderIcon } from '@components/icons/thunder-icon';
 
 
+const { menu, mobileData } = menuData
 
-
-
+console.log(mobileData)
 
 export const siteSettings = {
   name: 'Nätbutiken',
@@ -36,7 +36,7 @@ export const siteSettings = {
   currencyCode: 'EUR',
   site_header: {
 
-    menu: menuData/* [
+    menu: menu/* [
       {
         id: 1,
         path: '/search?q=hus',
@@ -1093,7 +1093,7 @@ export const siteSettings = {
         ],
       }
     ] */,
-    mobileMenu: menuData/* [
+    mobileMenu: mobileData/* [
       {
         id: 1,
         path: '/search?q=hushall',
