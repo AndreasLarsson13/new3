@@ -23,6 +23,7 @@ interface Props {
     mainObject?: boolean; // Key to hide options
     required?: boolean; // Indicates if the input is required
     sku: string;
+    option: boolean
   }[];
   active: string;
   onClick: any;
@@ -149,11 +150,12 @@ export const ProductAttributes: React.FC<Props> = ({
         isClearable={true} // Allows deselecting the input
         options={attributes
           .filter(({ mainObject }) => !mainObject) // Exclude options with the mainObject key
-          .map(({ value, meta, price, img, namn, variation, sku }) => ({
+          .map(({ value, meta, price, img, namn, variation, sku, option }) => ({
             value,
             variation,
             img,
             sku,
+            option,
             label: (
               <div className="flex items-center space-x-2">
                 {title === 'color' ? (
@@ -189,6 +191,9 @@ export const ProductAttributes: React.FC<Props> = ({
           const imageUrl = selectedOption && selectedOption.img ? selectedOption.img.url : null;
           const sku = selectedOption && selectedOption.sku ? selectedOption.sku : null;
 
+          const option = selectedOption && selectedOption.option ? selectedOption.option : null;
+          console.log(selectedOption)
+          console.log(imageUrl)
           setSelectedValue(newValue); // Update local state for this specific attribute
 
           onClick({
@@ -201,6 +206,7 @@ export const ProductAttributes: React.FC<Props> = ({
             name: title === 'color' ? title : selectedOption?.translation?.se,
             url: imageUrl, // Use the URL only if img exists
             sku: sku,
+            option: option || false,
             deselected: !selectedOption, // Add this flag to indicate deselection
           });
         }}

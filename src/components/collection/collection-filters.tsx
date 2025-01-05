@@ -10,7 +10,7 @@ export const CollectionFilters: React.FC = () => {
 	const { data, isLoading } = useCollectionsQuery({
 		limit: 15,
 	});
-	if (isLoading) return <p>Loading...</p>;
+	if (isLoading) return <p>Laddar...</p>;
 	const router = useRouter();
 	const currentPath = router.asPath.split("/").slice(2, 3).join();
 
@@ -30,9 +30,8 @@ export const CollectionFilters: React.FC = () => {
 						<li key={item.id} className="text-sm lg:text-[15px] cursor-pointer">
 							<ActiveLink href={`${ROUTES.COLLECTIONS}/${item.slug}`}>
 								<a
-									className={`block transition duration-300 ease-in-out text-heading hover:font-semibold py-0.5 ${
-										currentPath === item.slug && "font-semibold"
-									}`}
+									className={`block transition duration-300 ease-in-out text-heading hover:font-semibold py-0.5 ${currentPath === item.slug && "font-semibold"
+										}`}
 								>
 									{item.name}
 								</a>

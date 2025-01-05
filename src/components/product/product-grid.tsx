@@ -61,10 +61,16 @@ export const ProductGrid: FC<ProductGridProps> = ({ className = "" }) => {
 							categoryList.includes(cat.slug) ||
 							(cat.child && cat.child.some(childCat =>
 								categoryList.includes(childCat.slug) ||
-								(childCat.child && childCat.child.some(grandChildCat => categoryList.includes(grandChildCat.slug)))
+								(childCat.child && childCat.child.some(grandChildCat =>
+									categoryList.includes(grandChildCat.slug) ||
+									(grandChildCat.child && grandChildCat.child.some(greatGrandChildCat =>
+										categoryList.includes(greatGrandChildCat.slug)
+									))
+								))
 							))
 						)
 					);
+
 
 					// Check price filter
 					const isInPriceRange = !priceRanges.length || priceRanges.some(({ min, max }) => {

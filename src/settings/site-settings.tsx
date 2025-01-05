@@ -1096,7 +1096,7 @@ export const siteSettings = {
     mobileMenu: [
       {
         id: 1,
-        path: '/search?q=hus',
+        path: '/search?q=hushall',
         label: 'hus',
         subMenu: [
           {

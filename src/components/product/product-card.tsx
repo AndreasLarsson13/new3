@@ -162,9 +162,9 @@ const ProductCard: FC<ProductProps> = ({
         )}
       >
         <Image
-          src={product?.image?.original ?? placeholderImage}
-          width={demoVariant === 'ancient' ? 352 : imgWidth}
-          height={demoVariant === 'ancient' ? 452 : imgHeight}
+          src={product?.image?.original?.length > 0 ? product.image.original : placeholderImage}
+          width={imgWidth}
+          height={imgHeight}
           loading={imgLoading}
           quality={100}
           alt={product?.name || 'Product Image'}
@@ -204,7 +204,7 @@ const ProductCard: FC<ProductProps> = ({
               </span>
             )}
 
-          {product?.isNewArrival &&
+          {/*    {product?.isNewArrival &&
             (variant === 'gridModernWide' ||
               variant === 'gridModern' ||
               variant === 'gridTrendy') && (
@@ -213,16 +213,16 @@ const ProductCard: FC<ProductProps> = ({
                   New <span className="hidden sm:inline">Arrival</span>
                 </p>
               </span>
-            )}
+            )} */}
         </div>
 
-        {variant === 'gridModernWide' && (
+        {/*  {variant === 'gridModernWide' && (
           <div className="absolute ltr:right-2 rtl:left-2 ltr:sm:right-3 rtl:sm:left-3 bottom-6 space-y-2 w-[32px] sm:w-[42px] lg:w-[52px]">
             <ProductViewIcon className="w-full transition duration-300 ease-in delay-100 bg-white rounded-md sm:opacity-0 group-hover:opacity-100" />
             <ProductWishIcon className="w-full transition duration-300 ease-in delay-200 bg-white rounded-md sm:opacity-0 group-hover:opacity-100" />
             <ProductCompareIcon className="w-full transition duration-300 ease-in delay-300 bg-white rounded-md sm:opacity-0 group-hover:opacity-100" />
           </div>
-        )}
+        )} */}
       </div>
       <div
         className={cn(

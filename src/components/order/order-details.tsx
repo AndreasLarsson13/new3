@@ -48,7 +48,7 @@ const OrderDetails: React.FC<{ className?: string }> = ({
       currencyCode: 'EUR',
     }
   );
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <p>Laddar...</p>;
   return (
     <div className={className}>
       <h2 className="mb-6 text-lg font-bold md:text-xl xl:text-2xl text-heading xl:mb-8">

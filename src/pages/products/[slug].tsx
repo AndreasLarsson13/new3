@@ -22,7 +22,7 @@ export default function ProductPage() {
 	// Use the useProductQuery to fetch data based on itemId
 	const { data: product, isLoading, error } = useProductQuery(slug as string,);
 
-	if (isLoading) return <p>Loading...</p>;
+	if (isLoading) return <p>Laddar...</p>;
 	if (error) return <p>Error loading product data</p>;
 
 	console.log(product)

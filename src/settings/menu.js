@@ -7,11 +7,11 @@ const menuData = [
                 child: [
                     {
                         slug: "taljstenskaminer",
-                        subChildItems: ["tillbehor"], // Add subchildren here
+                        subChildItems: ["tillbehor-taljstenskaminer"], // Add subchildren here
                     },
                     {
                         slug: "kaminer",
-                        subChildItems: ["tillbehor"], // Add subchildren here
+                        subChildItems: ["tillbehor-kaminer"], // Add subchildren here
                     },
                     {
                         slug: "eldstader/murspis", // No subChildItems here

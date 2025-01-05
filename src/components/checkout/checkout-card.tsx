@@ -29,10 +29,12 @@ const CheckoutCard: React.FC = () => {
 
   items.forEach(item => {
     const price = item.quantity * item.shipping
-
     shippingPrice += price
   })
 
+  if (Number.isNaN(shippingPrice)) {
+    shippingPrice = 0;
+  }
 
   console.log(shippingPrice)
   const { t } = useTranslation('common');

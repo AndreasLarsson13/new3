@@ -29,7 +29,7 @@ export const CategoryFilter = () => {
 		setFormState(selectedCategories);
 	}, [query?.category]);
 
-	if (isLoading) return <p>Loading...</p>;
+	if (isLoading) return <p>Laddar...</p>;
 
 	function handleItemClick(e: React.FormEvent<HTMLInputElement>): void {
 		const { value } = e.currentTarget;
@@ -63,20 +63,34 @@ export const CategoryFilter = () => {
 		item.category.forEach(categoryItem => {
 
 			// If the current item's slug doesn't match the query slug
-
-			console.log(categoryItem)
 			if (categoryItem.child) {
 				if (categoryItem.child[0].child) {
-					if (query.category?.includes(categoryItem.child[0].child[0].slug) || query.q === categoryItem.child[0].slug) {
-						arrayProduct.push(categoryItem.child[0].child[0].slug)
+					if (categoryItem.child[0].child[0].child) {
+						if (
+							query.category?.includes(categoryItem.child[0].child[0].child[0].slug) ||
+							query.q === categoryItem.child[0].child[0].slug
+						) {
+							arrayProduct.push(categoryItem.child[0].child[0].child[0].slug);
+						} else {
+							arrayProduct.push(categoryItem.child[0].child[0].slug);
+							arrayProduct.push(categoryItem.child[0].child[0].child[0].slug);
+						}
 					} else {
-						arrayProduct.push(categoryItem.child[0].slug)
-						arrayProduct.push(categoryItem.child[0].child[0].slug)
+						if (
+							query.category?.includes(categoryItem.child[0].child[0].slug) ||
+							query.q === categoryItem.child[0].slug
+						) {
+							arrayProduct.push(categoryItem.child[0].child[0].slug);
+						} else {
+							arrayProduct.push(categoryItem.child[0].slug);
+							arrayProduct.push(categoryItem.child[0].child[0].slug);
+						}
 					}
 				} else {
-					arrayProduct.push(categoryItem.child[0].slug)
+					arrayProduct.push(categoryItem.child[0].slug);
 				}
 			}
+
 
 
 		})
@@ -84,7 +98,6 @@ export const CategoryFilter = () => {
 	})
 
 	console.log(arrayProduct)
-
 	const items = data?.categories.data; //test
 	const finalFilteredItems = items.filter((item) => {
 		if (true) {
@@ -92,6 +105,9 @@ export const CategoryFilter = () => {
 		}
 	});
 
+
+
+	console.log("HEJSAN", finalFilteredItems)
 
 	return (
 		<div className="block border-b border-gray-300 pb-7 mb-7">

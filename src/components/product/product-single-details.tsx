@@ -171,7 +171,7 @@ const ProductSingleDetails: React.FC = () => {
   }, [price]);
 
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <p>Laddar...</p>;
 
 
   const variations = getVariations(filterDataLanguageAttributes);
@@ -288,9 +288,9 @@ const ProductSingleDetails: React.FC = () => {
     } else {
       setCurrentPrice(data.price + totalProduct); // Use default price plus attribute prices
     }
-
+    console.log(attribute.option)
     // Update the gallery image based on the selected attribute
-    if (attribute.produktvariation) {
+    if (attribute.produktvariation || attribute.option) {
       // Set the gallery's active image to the variation's image
       data.gallery[activeIndex].original = attribute.url;
     } else {

@@ -56,10 +56,13 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
       }
     };
 
-/*     https://service-dot-natbutiken.lm.r.appspot.com/open-payment-session,
-
- */    try {
-      const response = await http.post('http://localhost:8088/open-payment-session', input, config);
+    /*     https://service-dot-natbutiken.lm.r.appspot.com/open-payment-session,
+    http://localhost:8088
+        
+     */
+    console.log(input)
+    try {
+      const response = await http.post('https://service-dot-natbutiken.lm.r.appspot.com/open-payment-session', input, config);
       console.log(response.data);
 
       if (response && response.data) {

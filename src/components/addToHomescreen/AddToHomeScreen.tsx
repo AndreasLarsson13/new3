@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { setCookie, getCookie } from 'cookies-next';
 import dynamic from 'next/dynamic';
 
-const ModuleLoading = () => <p className="animate-bounce text-white font-bold">Loading...</p>;
+const ModuleLoading = () => <p className="animate-bounce text-white font-bold">Laddar...</p>;
 const AddToIosSafari = dynamic(() => import('./AddToIosSafari'), { loading: () => <ModuleLoading /> });
 const AddToMobileChrome = dynamic(() => import('./AddToMobileChrome'), { loading: () => <ModuleLoading /> });
 const AddToMobileFirefox = dynamic(() => import('./AddToMobileFirefox'), { loading: () => <ModuleLoading /> });

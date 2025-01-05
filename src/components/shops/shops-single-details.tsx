@@ -24,7 +24,7 @@ export default function ShopsSingleDetails() {
   const dir = getDirection(locale);
   const contentWrapperCSS = dir === 'ltr' ? { left: 0 } : { right: 0 };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <p>Laddar...</p>;
 
   return (
     <>

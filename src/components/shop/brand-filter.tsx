@@ -22,7 +22,7 @@ export const BrandFilter = () => {
 		setFormState(selectedBrands);
 	}, [query?.brand]);
 
-	if (isLoading) return <p>Loading...</p>;
+	if (isLoading) return <p>Laddar...</p>;
 	if (error) return <p>{error.message}</p>;
 
 	function handleItemClick(e: React.FormEvent<HTMLInputElement>): void {
