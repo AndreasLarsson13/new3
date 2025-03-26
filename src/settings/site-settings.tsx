@@ -5,7 +5,11 @@ import { USFlag } from '@components/icons/USFlag';
 import { DEFlag } from '@components/icons/DEFlag';
 import { ESFlag } from '@components/icons/ESFlag';
 import { SEFlag } from '@components/icons/SEFlag';
+import { FIFlag } from '@components/icons/FIFlag';
 import { AXFlag } from '@components/icons/AXFlag';
+import { GBFlag } from '@components/icons/GBFlag';
+import { EUFlag } from '@components/icons/EUFlag';
+import { WorldFlag } from '@components/icons/worldFlag';
 import menuData from './menu'; // Import the data
 
 
@@ -1346,34 +1350,61 @@ export const siteSettings = {
     currencyMenu: [
       {
         id: 'se',
-        name: 'Sverige',
+        name: 'SVERIGE',
         value: 'se',
         currency: 'SEK',
         icon: <SEFlag width="20px" height="15px" />,
       },
       {
         id: 'ax',
-        name: 'Åland',
+        name: 'ÅLAND',
         value: 'ax',
         currency: '€',
         icon: <AXFlag width="20px" height="15px" />,
+      },
+      {
+        id: 'fi',
+        name: 'FINLAND',
+        value: 'fi',
+        currency: '€',
+        icon: <FIFlag width="20px" height="15px" />,
+      },
+      {
+        id: 'eu',
+        name: 'REST OF EUROPE',
+        value: 'eu',
+        currency: '€',
+        icon: <EUFlag width="20px" height="15px" />,
+      },
+      {
+        id: 'world',
+        name: 'OUTSIDE EUROPE',
+        value: 'world',
+        currency: '€',
+        icon: <WorldFlag width="20px" height="15px" />,
       }
     ],
     languageMenu: [
 
       {
         id: 'en',
-        name: 'English - EN',
+        name: 'ENGLISH',
         value: 'en',
-        icon: <USFlag width="20px" height="15px" />,
+        icon: <GBFlag width="20px" height="15px" />,
       },
 
       {
         id: 'se',
-        name: 'Svenska - SE',
+        name: 'SVENSKA',
         value: 'se',
         icon: <SEFlag width="20px" height="15px" />,
-      }/* ,
+      },
+      {
+        id: 'fi',
+        name: 'SUOMI',
+        value: 'fi',
+        icon: <FIFlag width="20px" height="15px" />,
+      }       /* ,
       {
         id: 'de',
         name: 'Deutsch - DE',

@@ -47,7 +47,7 @@ const LocationOption: React.FC<LocationOptionProps> = ({
 
   return (
     <div id="locationContainerStart"
-      style={{ display: "none" }}
+      style={{ display: "true" }}
       className={cn(
         'text-center p-5 bg-white text-sm flex-row justify-center items-center font-medium fixed bottom-0 w-full h-full z-30 transition-all duration-300 ease-out shadow-cookies hidden z-50',
       )}

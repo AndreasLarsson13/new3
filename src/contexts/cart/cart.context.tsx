@@ -49,9 +49,9 @@ const serializeState = (state: State) => ({
     price: item.price,
     quantity: item.quantity,
     image: item.image,
-    location: item.location,
-    attributes: item.attributes ? serializeAttributes(item.attributes) : [],
-    sku: item.sku
+    location: "item.location",
+    attributes: "item.attributes ? serializeAttributes(item.attributes) : []",
+    sku: "item.sku"
   })),
   isEmpty: state.isEmpty,
   totalItems: state.totalItems,

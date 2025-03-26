@@ -8,7 +8,7 @@ export const fetchProduct = async (_slug: string) => {
 	const storedLocation = JSON.parse(localStorage.getItem('clickedLocation'));
 	const currency = storedLocation.value
 	const { data } = await http.get(`${API_ENDPOINTS.PRODUCT}${_slug}?currency=${currency}`);
-
+	console.log(data.variations)
 	return data;
 };
 

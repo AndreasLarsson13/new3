@@ -16,12 +16,15 @@ const currencySymbols: { [key: string]: string } = {
 function getFormattedAmount(amount: number, locale: string) {
   // Use Intl.NumberFormat to dynamically handle decimals and separators
   return new Intl.NumberFormat(locale, {
-    minimumFractionDigits: 0, // Allow no decimals if none are present
-    maximumFractionDigits: 20, // Allow as many decimals as are present in the input
+    minimumFractionDigits: 2, // Allow no decimals if none are present
+    maximumFractionDigits: 2, // Allow as many decimals as are present in the input
     useGrouping: true, // Enable thousand separator
+
+
   })
     .format(amount)
-    .replace(/,/g, ' '); // Replace commas with spaces if needed
+  /*  .replace(/,/g, ' ') // Replace commas with spaces if needed
+   .replace(/\./g, ','); */
 }
 
 
@@ -37,7 +40,7 @@ export function formatPrice({
   const formattedAmount = getFormattedAmount(amount, locale); // Use formatted amount for 1000+
   const currencySymbol = currencySymbols[currencyCode] || currencyCode;
 
-  return `${formattedAmount}${currencySymbol}`; // Add a space before currency symbol
+  return `${formattedAmount} ${currencySymbol}`; // Add a space before currency symbol
 }
 
 
@@ -75,7 +78,7 @@ export default function usePrice(
 ) {
   const { amount, baseAmount, currencyCode } = data ?? {};
 
-  const locale = "en";
+  const locale = "sv-SE";
   const value = useMemo(() => {
     if (typeof amount !== "number" || !currencyCode) return "";
 

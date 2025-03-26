@@ -40,7 +40,7 @@ export const CheckoutItem: React.FC<{ item: Item }> = ({ item }) => {
 
         {/* Attributes */}
         <div className="flex flex-col">
-          {item.attributes.map((extraAdded, index) => (
+          {item.attributes.lenght > 0 ?? item.attributes.map((extraAdded, index) => (
             extraAdded.id === 'color' ? (
               <h6
                 className="text-sm text-gray-400"

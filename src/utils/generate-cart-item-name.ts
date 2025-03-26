@@ -1,14 +1,19 @@
 import isEmpty from "lodash/isEmpty";
 import orderBy from "lodash/orderBy";
 function shortenString(str) {
-  if (str.length > 15) {
-    return str.slice(0, 30) + '...'; // Shorten and add "..."
+  console.log(str)
+  if (str) {
+    if (str.length > 15) {
+      return str.slice(0, 30) + '...'; // Shorten and add "..."
+    }
   }
+
   return str; // Return the original string if it's 15 characters or shorter
 }
 
 
 export function generateCartItemName(name: string, attributes: object) {
+
   if (!isEmpty(attributes)) {
 
 
@@ -37,7 +42,14 @@ export function generateCartItemName(name: string, attributes: object) {
 
     return shortString;
   }
-  let shortString = shortenString(name)
+
+  console.log("när", name)
+  let shortString;
+  if (name !== null) {
+    shortString = shortenString(name)
+
+  }
+
 
 
   return shortString;

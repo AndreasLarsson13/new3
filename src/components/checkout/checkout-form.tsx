@@ -26,11 +26,29 @@ interface CheckoutInputType {
   country: string;
 }
 
+
+const defaultCheckoutValues: CheckoutInputType = {
+  firstName: 'Andreas',
+  lastName: '',
+  phone: '',
+  email: '',
+  address: '',
+  city: '',
+  zipCode: '',
+  save: false,
+  note: '',
+  orderData: {},
+  country: 'Åland' // Default to an empty string if location is null
+};
+
 const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbillingInfo }) => {
   const cosy = useLocalStorage(`chawkbazar-cart`);
   const { t } = useTranslation();
   const { mutate: updateUser, isPending } = useCheckoutMutation();
-  const { register, handleSubmit, formState: { errors } } = useForm<CheckoutInputType>();
+  /* const { register, handleSubmit, formState: { errors } } = useForm<CheckoutInputType>(); */
+  const { register, handleSubmit, formState: { errors } } = useForm<CheckoutInputType>({
+    defaultValues: defaultCheckoutValues
+  });
   const [location, setLocation] = useState<{ name: string } | null>(null);
 
   useEffect(() => {
@@ -44,11 +62,25 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
   const fetchSnippet = async (input: CheckoutInputType) => {
 
     const productsCart = JSON.parse(cosy[0]);
-    console.log(productsCart)
+
     input.orderData = productsCart;
+    console.log(input.orderData)
     input.country = location.name
 
+    const text = {
+      "firstName": "Test",
+      "lastName": "Person-fi",
+      "address": "Mannerheimintie 34",
+      "phone": "+358401234567",
+      "email": "customer@email.fi",
+      "city": "Helsinki",
+      "zipCode": "00100",
+      "country": "FI",
+      "note": "",
+      "orderData": productsCart
+    }
 
+    console.log(text)
     const config = {
       headers: {
         'Authorization': 'Bearer your-token-here',  // Add your authorization token if necessary
@@ -60,9 +92,9 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
     http://localhost:8088
         
      */
-    console.log(input)
+    console.log(text)
     try {
-      const response = await http.post('https://service-dot-natbutiken.lm.r.appspot.com/open-payment-session', input, config);
+      const response = await http.post('http://localhost:8088/open-payment-session', text, config);
       console.log(response.data);
 
       if (response && response.data) {
@@ -206,3 +238,6 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
 };
 
 export default CheckoutForm;
+
+
+

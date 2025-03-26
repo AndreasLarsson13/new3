@@ -71,7 +71,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
         </Link>
         {/* @ts-ignore */}
 
-        {item.attributes.map((extraAdded, index) => (
+        {item.attributes.lenght > 0 ?? item.attributes.map((extraAdded, index) => (
           extraAdded.id === "color" ?
             <span className="text-sm rtl:pr-3 text-gray-400" key={index}>
               {`${t(extraAdded.name)} : ${t(extraAdded.value)}`}

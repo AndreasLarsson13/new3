@@ -23,8 +23,11 @@ interface Props {
     mainObject?: boolean; // Key to hide options
     required?: boolean; // Indicates if the input is required
     sku: string;
-    option: boolean
+    option: boolean;
+    produktvariation: boolean;
+    image: { original: string; } | string;
   }[];
+  resetInputFields: boolean;
   active: string;
   onClick: any;
   clicked: any;
@@ -39,6 +42,7 @@ export const ProductAttributes: React.FC<Props> = ({
   onClick,
   clicked,
   fieldErrors,
+  resetInputFields
 }) => {
   const { t, i18n } = useTranslation('common');
   const [isTooltipOpen, setTooltipOpen] = useState(false);
@@ -54,6 +58,12 @@ export const ProductAttributes: React.FC<Props> = ({
     const textContent = htmlContent.replace(/<\/?[^>]+(>|$)/g, '');
     return textContent.length > limit ? `${textContent.substring(0, limit)}...` : textContent;
   }
+
+  useEffect(() => {
+    if (resetInputFields) {
+      setSelectedValue(''); // Clear selected value
+    }
+  }, [resetInputFields]);
 
   // Close tooltip if clicked outside
   useEffect(() => {
@@ -84,8 +94,8 @@ export const ProductAttributes: React.FC<Props> = ({
   };
 
 
-  console.log(attributes)
-  return (
+/*   console.log(attributes)
+ */  return (
     <div className={className}>
       <h3 className="text-base md:text-lg text-heading font-semibold mb-2.5 capitalize flex items-center">
         {t(title) !== title ? t(title) : titleNew}
@@ -150,12 +160,13 @@ export const ProductAttributes: React.FC<Props> = ({
         isClearable={true} // Allows deselecting the input
         options={attributes
           .filter(({ mainObject }) => !mainObject) // Exclude options with the mainObject key
-          .map(({ value, meta, price, img, namn, variation, sku, option }) => ({
+          .map(({ value, meta, price, img, namn, variation, sku, option, produktvariation, image }) => ({
             value,
             variation,
             img,
             sku,
             option,
+            produktvariation,
             label: (
               <div className="flex items-center space-x-2">
                 {title === 'color' ? (
@@ -187,22 +198,25 @@ export const ProductAttributes: React.FC<Props> = ({
           const newValue = selectedOption ? selectedOption.value : null;
           const newPrice = selectedOption ? selectedOption.price : 0;
 
-          // Check if selectedOption has an img URL before trying to access it
-          const imageUrl = selectedOption && selectedOption.img ? selectedOption.img.url : null;
-          const sku = selectedOption && selectedOption.sku ? selectedOption.sku : null;
 
-          const option = selectedOption && selectedOption.option ? selectedOption.option : null;
+          // Check if selectedOption has an img URL before trying to access it
+          const imageUrl = selectedOption
+            ? selectedOption.img?.url || selectedOption.image?.original || null
+            : null;
           console.log(selectedOption)
-          console.log(imageUrl)
+          const sku = selectedOption && selectedOption.sku ? selectedOption.sku : null;
+          const option = selectedOption && selectedOption.option ? selectedOption.option : null;
+          /*           console.log("selected", variationsssss)
+           */        /*   console.log(variationsssss) */
           setSelectedValue(newValue); // Update local state for this specific attribute
 
           onClick({
             id: title,
-            [title]: newValue,
+            productName: newValue,
             price: newValue ? newPrice : -clicked[title]?.price || 0, // Pass -price if deselected
             customOrder: selectedOption?.customOrder || false,
             value: newValue,
-            produktvariation: selectedOption?.variation || false,
+            produktvariation: selectedOption?.produktvariation || selectedOption?.variation || false,
             name: title === 'color' ? title : selectedOption?.translation?.se,
             url: imageUrl, // Use the URL only if img exists
             sku: sku,

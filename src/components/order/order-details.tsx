@@ -44,7 +44,7 @@ const OrderDetails: React.FC<{ className?: string }> = ({
   );
   const { price: shipping } = usePrice(
     order && {
-      amount: order.shipping_fee,
+      amount: 1555,
       currencyCode: 'EUR',
     }
   );

@@ -26,6 +26,8 @@ import "@styles/custom-plugins.css";
 import "@styles/tailwind.css";
 import "@styles/rc-drawer.css";
 import { getDirection } from "@utils/get-direction";
+import UnderConstruction from "../pages/underConstruction";
+
 
 
 
@@ -39,7 +41,15 @@ function Noop({ children }: React.PropsWithChildren<{}>) {
   return <>{children}</>;
 }
 
+const underConstruction = true; // Change this to false when the site is ready
+
+
 const CustomApp = ({ Component, pageProps }: AppProps) => {
+
+  if (underConstruction) {
+    return <UnderConstruction />;
+  }
+
   const queryClientRef = useRef<any>();
   if (!queryClientRef.current) {
     queryClientRef.current = new QueryClient();
@@ -61,6 +71,7 @@ const CustomApp = ({ Component, pageProps }: AppProps) => {
         <HydrationBoundary state={pageProps.dehydratedState}>
           {/* @ts-ignore */}
           <ManagedUIContext>
+
             <Layout pageProps={pageProps}>
               <DefaultSeo />
               <Component {...pageProps} key={router.route} />

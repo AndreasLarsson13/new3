@@ -6,7 +6,7 @@ import { useProductQuery } from '@framework/product/get-product';
 import { getVariations } from '@framework/utils/get-variations';
 import usePrice from '@framework/product/use-price';
 import { useCart } from '@contexts/cart/cart.context';
-import { generateCartItem } from '@utils/generate-cart-item';
+import { generateCartItem, generateCartItemOptions } from '@utils/generate-cart-item';
 import { ProductAttributes } from './product-attributes';
 import isEmpty from 'lodash/isEmpty';
 import Link from '@components/ui/link';
@@ -18,9 +18,10 @@ import ProductMetaReview from '@components/product/product-meta-review';
 import { useSsrCompatible } from '@utils/use-ssr-compatible';
 import { useTranslation } from 'next-i18next';
 import { RiTyphoonLine } from 'react-icons/ri';
-import { pick } from 'lodash';
+import { forEach, pick } from 'lodash';
 import Alert from '@components/ui/alert';
 import { FaInfoCircle } from 'react-icons/fa';
+
 
 
 
@@ -55,9 +56,6 @@ const ProductSingleDetails: React.FC = () => {
   const pathParts = fullPath.split('/')
 
 
-
-
-
   const { width } = useSsrCompatible(useWindowSize(), { width: 0, height: 0 });
   const { data, isLoading } = useProductQuery(slug as string,);
   const { addItemToCart } = useCart();
@@ -66,10 +64,12 @@ const ProductSingleDetails: React.FC = () => {
   const [addToCartLoader, setAddToCartLoader] = useState<boolean>(false);
   const [filterDataLanguage, setfilterDataLanguage] = useState();
   const [filterDataLanguageAttributes, setFilterDataLanguageAttributes] = useState();
+  const [filterDataLanguagOptions, setFilterDataLanguageOptions] = useState();
   const [additionalData, setAdditionalData] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [locationCurrency, setlocationCurrency] = useState(null);
   const [customOrder, setcustomOrder] = useState(false);
+  const [resetInputFields, setresetInputFields] = useState(false);
 
   const { price, basePrice, discount } = usePrice(
     data && {
@@ -88,6 +88,7 @@ const ProductSingleDetails: React.FC = () => {
     /*     const countyCode = i18n.language
      */
     if (!isLoading && data && data.meta) {
+      console.log(data.options)
       // Kontrollera om datan har laddats och om den innehåller meta-information
       const translatedData = data.meta.map((item) => {
         // Hämta översättningen för titeln baserat på språknyckeln
@@ -114,6 +115,7 @@ const ProductSingleDetails: React.FC = () => {
     if (!isLoading && data) {
       // Loop through each item in the variations array
       let dataNew = []
+      let dataNewOptions = []
       data.variations.forEach((item) => {
 
         // Hämta översättningen för titeln baserat på språknyckeln
@@ -121,60 +123,77 @@ const ProductSingleDetails: React.FC = () => {
 
         const translatedName = item.attribute.name; //Testa ta
         const translatedSlug = item.attribute.slug;
-        if (item.img) {
 
-        }
-
-        /*   let translatedValue = item.value[countyCode]; */
         // Create a new object or deep clone the item object to avoid modifying the original
-
 
         const newItem = {
           ...item,
           attribute: { ...item.attribute, name: translatedName, slug: translatedSlug },
           value: item.value // Deep clone the attribute object
         };
-
         // Push the modified item to the dataNy array
         dataNew.push(newItem)
       });
+
+      data.options.forEach((item) => {
+        /*    console.log(item) */
+
+        // Hämta översättningen för titeln baserat på språknyckeln
+        const countyCode = i18n.language;
+
+        const translatedName = item.attribute.name; //Testa ta
+        const translatedSlug = item.attribute.slug;
+
+        // Create a new object or deep clone the item object to avoid modifying the original
+
+        const newItem = {
+          ...item,
+          attribute: { ...item.attribute, name: translatedName, slug: translatedSlug },
+          value: item.value // Deep clone the attribute object
+        };
+        // Push the modified item to the dataNy array
+        dataNewOptions.push(newItem)
+      });
+      setFilterDataLanguageOptions(dataNewOptions)
+      /*  console.log(dataNewOptions) */
+      console.log(dataNew)
       setFilterDataLanguageAttributes(dataNew)
 
     }
-
-
-
-
-
-
   }, [data, i18n.language]);
 
   function formatWithSeparator(price) {
-    return price >= 1000
-      ? price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
-      : price.toString();
+    if (price < 100) {
+      return price.toFixed(2).replace('.', ','); // Ensure two decimals & replace '.' with ','
+    } else if (price >= 1000) {
+      return price
+        .toFixed(0) // Remove decimals
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ' '); // Add spaces as thousand separators
+    }
+    return price.toString(); // Default for numbers between 100 and 999 (no changes)
   }
 
   /*   setfilterDataLanguage(data) */
 
   const [currentPrice, setCurrentPrice] = useState();
-
+  const [optionPrice, setOptionPrice] = useState();
 
   useEffect(() => {
     if (price !== null && price !== undefined) {
       if (data && data.sale_price <= 0) {
-        setCurrentPrice(data && data.price);
+        setCurrentPrice(data && price);
       } else {
         setCurrentPrice(data && data.sale_price);
       }
     }
   }, [price]);
 
-
   if (isLoading) return <p>Laddar...</p>;
 
-
   const variations = getVariations(filterDataLanguageAttributes);
+  console.log(variations)
+  const productOptions = getVariations(filterDataLanguagOptions)
+  /*   console.log(productOptions) */
   const isSelected = !isEmpty(variations)
     ? Object.keys(variations).every((variation) => {
       const isRequired = variations[variation][0]?.required; // Check if required
@@ -202,11 +221,6 @@ const ProductSingleDetails: React.FC = () => {
 
     setFieldErrors([]);
 
-    // Debugging: Check the state before adding to cart
-    console.log('Attributes:', attributes);
-    console.log('AttributeArray:', AttributeArray);
-    console.log('Current Price:', currentPrice);
-
     // Show loader
     setAddToCartLoader(true);
     setTimeout(() => {
@@ -217,7 +231,13 @@ const ProductSingleDetails: React.FC = () => {
     const storedLocation = JSON.parse(localStorage.getItem('clickedLocation'));
 
     // Generate the cart item
+
+
+
     const item = generateCartItem(data, attributes, AttributeArray, currentPrice, storedLocation);
+
+
+
 
     // Handle image selection
     if (data?.gallery[0]?.extraColor) {
@@ -228,11 +248,60 @@ const ProductSingleDetails: React.FC = () => {
     }
 
     // Debugging: Check the item before adding
-    console.log('Generated Item:', item);
-
     // Add to cart
-    addItemToCart(item, quantity);
 
+
+    let variationPrice = 0
+    let combinedIds = ""
+    if (AttributeArray.length > 0) {
+      let int = 0
+      AttributeArray.forEach(itemAttributes => {
+        if (!itemAttributes.produktvariation) {
+          int++
+          /*  console.log("fejesfj", itemAttributes, int) */
+          const test = generateCartItemOptions(itemAttributes)
+          addItemToCart(test, 1)
+        }
+        else {
+          variationPrice += itemAttributes.price
+          item.id = itemAttributes.id
+          item.price = variationPrice
+          console.log(itemAttributes)
+          combinedIds += `${itemAttributes.id}_`
+          addItemToCart(item, quantity)
+        }
+      })
+      // After the loop finishes, call `addItemToCart` once with the combined data
+      if (combinedIds) {
+        // Remove the trailing underscore from the combined IDs
+        combinedIds = combinedIds.slice(0, -1);
+
+        // Add the item with the accumulated price and combined IDs to the cart
+        item.id = combinedIds; // Assign the combined IDs to the item
+        item.name = `${item.name} - ${combinedIds}`
+
+        // Now call `addItemToCart` only once with the final data
+        addItemToCart(item, quantity);
+      }
+    } else {
+      addItemToCart(item, quantity)
+    }
+
+
+
+    // Börja här
+    /*  console.log("attributarray", AttributeArray)
+     AttributeArray.forEach(variation => {
+       if (variation.produktvariation) {
+         addItemToCart(item, quantity);
+       }
+     }) */
+    /*     addItemToCart(item, quantity);
+     */
+
+
+    /*     console.log("testa122", attributes)
+     */    /* addItemToCart(item2, quantity); */
     // Reset the attribute array
     AttributeArray = [];
 
@@ -242,6 +311,19 @@ const ProductSingleDetails: React.FC = () => {
       position: width > 768 ? 'bottom-right' : 'top-right',
       autoClose: 2000,
     });
+    setresetInputFields(true)
+
+
+    setTimeout(() => {
+      setAddToCartLoader(false);
+      setresetInputFields(false); // Reset back to false after clearing
+      if (data.sale_price > 0) {
+        setCurrentPrice(data.sale_price); // Use sale price plus attribute prices if no variation
+      } else {
+        setCurrentPrice(data.price); // Use default price plus attribute prices
+      }
+    }, 500);
+
   }
 
 
@@ -253,6 +335,9 @@ const ProductSingleDetails: React.FC = () => {
 
 
   function handleAttribute(attribute: any, variation: any, attribut: any) {
+
+
+
     const index = AttributeArray.findIndex((attr) => attr.id === attribute.id);
 
     // Update or remove the attribute in AttributeArray
@@ -273,7 +358,7 @@ const ProductSingleDetails: React.FC = () => {
 
     // Check if any `produktvariation` is selected
     const hasProduktvariation = AttributeArray.some((attr) => attr.produktvariation);
-
+    /* console.log("pristest", AttributeArray) */
     // Calculate the total price based on selected attributes
     let totalProduct = 0;
     AttributeArray.forEach((attr) => {
@@ -288,31 +373,32 @@ const ProductSingleDetails: React.FC = () => {
     } else {
       setCurrentPrice(data.price + totalProduct); // Use default price plus attribute prices
     }
-    console.log(attribute.option)
+
+    if (!hasProduktvariation) {
+      setOptionPrice(totalProduct)
+    }
+
     // Update the gallery image based on the selected attribute
-    if (attribute.produktvariation || attribute.option) {
+    if (attribute.produktvariation) {
       // Set the gallery's active image to the variation's image
       data.gallery[activeIndex].original = attribute.url;
+
     } else {
       // Revert to the default image if the attribute is deselected
       const defaultImage = data.gallery.find((item) => item.isDefault) || data.gallery[0];
       data.gallery[activeIndex].original = defaultImage?.original ?? data.image.original;
     }
 
+
+
     // Debugging: Log the active image to confirm
-    console.log('Active Image:', data.gallery[activeIndex].original);
 
     // Update the attributes state
     setAttributes((prev) => ({
       ...prev,
-      [variation]: attribute.value,
+      attribute,
     }));
   }
-
-
-
-
-
 
 
 
@@ -393,6 +479,7 @@ const ProductSingleDetails: React.FC = () => {
 
         <div className="pb-3 border-b border-gray-300">
           {Object.keys(variations).map((variation) => {
+            /*  console.log(variation) */
             return (
               <ProductAttributes
                 key={variation}
@@ -402,6 +489,7 @@ const ProductSingleDetails: React.FC = () => {
                 clicked={attributes}
                 fieldErrors={fieldErrors}
                 onClick={(attribute: any) => handleAttribute(attribute, variation, attributes[variation])}
+                resetInputFields={resetInputFields}
               />
 
 
@@ -409,10 +497,30 @@ const ProductSingleDetails: React.FC = () => {
           })}
         </div>
 
+        <div className="pb-3 border-b border-gray-300">
+          Tillbehör
+
+          {Object.keys(productOptions).map((option) => {
+            /* console.log("tillbehör attribut", productOptions) */
+            return (
+              <ProductAttributes
+                key={option}
+                title={option}
+                attributes={productOptions[option]}
+                active={attributes[option]}
+                clicked={attributes}
+                fieldErrors={fieldErrors}
+                onClick={(attribute: any) => handleAttribute(attribute, option, attributes[option])}
+                resetInputFields={resetInputFields}
+              />
+            );
+          })}
+        </div>
+
         <div className="flex items-center mt-5">
           <div className="text-heading font-bold text-base md:text-xl lg:text-2xl 2xl:text-4xl ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
             {/*               {currentPrice}{locationCurrency.currency === "SEK" ? "kr" : locationCurrency.currency} Fixa till 
- */}              {currentPrice && formatWithSeparator(currentPrice)}€
+ */}              {currentPrice && currentPrice}
           </div>
           {discount && (
             <span className="line-through font-segoe text-gray-400 text-sm md:text-base lg:text-lg xl:text-xl ltr:pl-2 rtl:pr-2">
@@ -513,7 +621,7 @@ const ProductSingleDetails: React.FC = () => {
 
         <ProductMetaReview data={filterDataLanguage} />
       </div>
-    </div>
+    </div >
   );
 };
 

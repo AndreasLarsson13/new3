@@ -18,18 +18,21 @@ interface Item {
   widthPack: number;
   heightPack: number;
   lengthPack: number;
+  shipping: number
 }
 
 
 export function generateCartItem(item: Item, attributes: object, attributeArray: Array<any>, currentPrice: number, locationS: string) {
-  const { id, name, slug, image, price, sale_price, currency, _id, ship_price, weightPack, widthPack, heightPack, lengthPack, sku } = item;
+  const { id, name, slug, image, price, sale_price, currency, _id, shipping, weightPack, widthPack, heightPack, lengthPack, sku } = item;
 
-  const formulaShip = 11 * 10;
+
+  console.log(item)
+  const formulaShip = 9999;
   console.log(attributes)
   // Generate unique ID based on attributes and item ID
   const attributeString = Object.values(attributes).map((attr) => String(attr)).join(".");
   const generatedId = `${_id}.${attributeString}`;
-  console.log("hesj", image)
+
   return {
     id: generatedId,
     linkId: _id,
@@ -41,6 +44,33 @@ export function generateCartItem(item: Item, attributes: object, attributeArray:
     currency,
     location: locationS,
     sku,
-    shipping: ship_price ? ship_price : formulaShip,
+    shipping: shipping ? shipping : formulaShip,
+  };
+}
+
+export function generateCartItemOptions(item: Array<any>) {
+  /* onst { id, name, slug, image, price, sale_price, currency, _id, shipping, weightPack, widthPack, heightPack, lengthPack, sku } = item;
+ */
+
+  /*   console.log(item)
+    const formulaShip = 9999;
+    console.log(attributes)
+    // Generate unique ID based on attributes and item ID
+    const attributeString = Object.values(attributes).map((attr) => String(attr)).join(".");
+    const generatedId = `${_id}.${attributeString}`; */
+  const formulaShip = 9999;
+
+  return {
+    id: item.productName + item.sku,
+    linkId: item.id,
+    name: item.productName,
+    slug: "slug",
+    image: item.url,
+    price: item.price,
+    attributes: "No",
+    currency: "foji",
+    location: "locationS",
+    sku: item.sku,
+    shipping: /* shipping ? shipping :  */formulaShip,
   };
 }
