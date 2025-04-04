@@ -97,8 +97,8 @@ export const CategoryFilter = () => {
 
 	})
 
-	console.log(arrayProduct)
-	const items = data?.categories.data; //test
+/* 	console.log(arrayProduct)
+ */	const items = data?.categories.data; //test
 	const finalFilteredItems = items.filter((item) => {
 		if (true) {
 			return arrayProduct.includes(item.slug)

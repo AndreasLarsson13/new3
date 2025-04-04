@@ -17,8 +17,8 @@ interface ProductGridProps {
 export const ProductGrid: FC<ProductGridProps> = ({ className = "" }) => {
 	const { t, i18n } = useTranslation("common");
 	const { query, route } = useRouter();
-	console.log(useRouter())
-	const {
+/* 	console.log(useRouter())
+ */	const {
 		isFetching: isLoading,
 		isFetchingNextPage: loadingMore,
 		fetchNextPage,

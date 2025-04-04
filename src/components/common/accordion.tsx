@@ -112,7 +112,7 @@ export const Collapse: React.FC<CollapseProps> = ({
               ))}
               {pdf && pdf.map((item, index) => (
                 <div key={index} className="flex gap-2">
-                  <h3>{item.title[i18n.language]}</h3>
+                  <h3>{item.title}</h3>
                   <a href={item.url} target="_blank" rel="noopener noreferrer" className="font-semibold	">{t("common:downloadPdf")}</a>
                 </div>
               ))}

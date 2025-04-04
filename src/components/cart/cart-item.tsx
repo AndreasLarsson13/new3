@@ -18,7 +18,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
   const { t, i18n } = useTranslation('common');
   const { addItemToCart, removeItemFromCart, clearItemFromCart } = useCart();
 
-
+  console.log(item)
 
 
   const { price } = usePrice({
@@ -46,7 +46,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
     >
       <div className="relative flex flex-shrink-0 w-24 h-24 overflow-hidden bg-gray-200 rounded-md cursor-pointer md:w-28 md:h-28 ltr:mr-4 rtl:ml-4">
         <Image
-          src={item?.image?.length > 0 ? item.image : '/assets/placeholder/cart-item.svg'}
+          src={item?.image?.original ? item?.image?.original : item.image /* : '/assets/placeholder/cart-item.svg' */}
           width={112}
           height={112}
           loading="eager"
@@ -70,6 +70,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
           {generateCartItemName(item.name, item.attributes)}
         </Link>
         {/* @ts-ignore */}
+        {item.variationName ? `Variation : ${item.variationName}` : ''}
 
         {item.attributes.lenght > 0 ?? item.attributes.map((extraAdded, index) => (
           extraAdded.id === "color" ?

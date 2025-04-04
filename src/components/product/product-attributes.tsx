@@ -2,6 +2,10 @@ import { useTranslation } from 'next-i18next';
 import Select from 'react-select';
 import { FaInfoCircle, FaLink, FaTimes } from 'react-icons/fa';
 import { useState, useRef, useEffect } from 'react';
+import usePrice from '@framework/product/use-price';
+
+
+
 
 interface Props {
   className?: string;
@@ -11,6 +15,7 @@ interface Props {
     value: string;
     meta: string;
     price: number;
+    sale_price: number;
     img: { url: string; name: string } | string;
     customOrder: boolean;
     product?: boolean;
@@ -26,6 +31,9 @@ interface Props {
     option: boolean;
     produktvariation: boolean;
     image: { original: string; } | string;
+    _id: string;
+    shipping: number;
+
   }[];
   resetInputFields: boolean;
   active: string;
@@ -33,6 +41,7 @@ interface Props {
   clicked: any;
   fieldErrors: string[]; // Array of field errors for highlighting
 }
+
 
 export const ProductAttributes: React.FC<Props> = ({
   className = 'mb-4',
@@ -57,6 +66,18 @@ export const ProductAttributes: React.FC<Props> = ({
   function truncateText(htmlContent, limit) {
     const textContent = htmlContent.replace(/<\/?[^>]+(>|$)/g, '');
     return textContent.length > limit ? `${textContent.substring(0, limit)}...` : textContent;
+  }
+
+
+  function formatWithSeparator(price) {
+    if (price < 1000) {
+      return price.toFixed(2).replace('.', ','); // Ensure two decimals & replace '.' with ','
+    } else if (price >= 1000) {
+      return price
+        .toFixed(2) // Remove decimals
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ' ').replace('.', ','); // Add spaces as thousand separators
+    }
+    return price.toString(); // Default for numbers between 100 and 999 (no changes)
   }
 
   useEffect(() => {
@@ -101,7 +122,7 @@ export const ProductAttributes: React.FC<Props> = ({
         {t(title) !== title ? t(title) : titleNew}
 
         {/* Add an asterisk for required inputs */}
-        {attributes.some((attr) => attr.required) && (
+        {attributes.some((attr) => attr.variation) && (
           <span className="text-red-500 ml-1">*</span>
         )}
 
@@ -131,24 +152,29 @@ export const ProductAttributes: React.FC<Props> = ({
                   <FaTimes />
                 </button>
 
-                <p className="mb-2">
+                {attributes.some((attr) => !attr.variation) && <p className="mb-2">
                   <strong>{truncateText(productAttribute.translation[i18n.language], 25)}</strong>
-                </p>
+                </p>}
 
                 <p className="mb-2">
-                  {productAttribute.description && (
+                  {attributes.some((attr) => !attr.variation) && productAttribute.description &&
                     <span>{truncateText(productAttribute.description[i18n.language], 50)}</span>
-                  )}
+                  }
+                  {attributes.some((attr) => attr.variation) &&
+                    <span>{"Detta är ett fält du måste fylla i"}</span>
+                  }
                 </p>
 
-                <a
+
+
+                {attributes.some((attr) => !attr.variation) && <a
                   href={`/products/${productAttribute._id}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-500 flex items-center mt-2"
                 >
                   <FaLink className="mr-1" /> Gå till produktsidan
-                </a>
+                </a>}
               </div>
             )}
           </div>
@@ -160,13 +186,18 @@ export const ProductAttributes: React.FC<Props> = ({
         isClearable={true} // Allows deselecting the input
         options={attributes
           .filter(({ mainObject }) => !mainObject) // Exclude options with the mainObject key
-          .map(({ value, meta, price, img, namn, variation, sku, option, produktvariation, image }) => ({
+          .map(({ value, meta, price, img, namn, variation, sku, option, produktvariation, image, _id, id, shipping, sale_price }) => ({
+
             value,
             variation,
             img,
             sku,
             option,
             produktvariation,
+            id,
+            _id,
+            shipping,
+            sale_price,
             label: (
               <div className="flex items-center space-x-2">
                 {title === 'color' ? (
@@ -181,7 +212,18 @@ export const ProductAttributes: React.FC<Props> = ({
                     <img src={img.url} alt={img.name || 'Image'} className="w-6 h-6 rounded-full" />
                   )
                 )}
-                <span>{`${namn ? namn : t(`${value}`)} - ${price}€`}</span>
+                <span>
+                  {<span>{namn ? namn : t(value)}</span>}
+                  {<span style={{ padding: "0 8px" }}> - </span>}
+                  {sale_price > 0 ? (
+                    <>
+                      <span style={{ color: "#ff6666" }}>{formatWithSeparator(sale_price)} €</span> <s>{formatWithSeparator(price)} €</s>
+                    </>
+                  ) : (
+                    `${formatWithSeparator(price)} €`
+                  )}
+                </span>
+
               </div>
             ),
             price,
@@ -192,6 +234,7 @@ export const ProductAttributes: React.FC<Props> = ({
           .map((attr) => ({
             value: attr.value,
             label: t(`${attr.value}`) ? t(`${attr.value}`) : attr.value,
+
           }))
           .find((option) => option.value === selectedValue) || null}
         onChange={(selectedOption) => {
@@ -203,17 +246,20 @@ export const ProductAttributes: React.FC<Props> = ({
           const imageUrl = selectedOption
             ? selectedOption.img?.url || selectedOption.image?.original || null
             : null;
+/*           console.log(selectedOption)
+ */          const sku = selectedOption && selectedOption.sku ? selectedOption.sku : null;
           console.log(selectedOption)
-          const sku = selectedOption && selectedOption.sku ? selectedOption.sku : null;
           const option = selectedOption && selectedOption.option ? selectedOption.option : null;
           /*           console.log("selected", variationsssss)
            */        /*   console.log(variationsssss) */
           setSelectedValue(newValue); // Update local state for this specific attribute
 
           onClick({
-            id: title,
+            id: selectedOption?._id, // Måste Ändras påverkar prisuppdateing
+            group: title,
             productName: newValue,
             price: newValue ? newPrice : -clicked[title]?.price || 0, // Pass -price if deselected
+            sale_price: selectedOption?.sale_price,
             customOrder: selectedOption?.customOrder || false,
             value: newValue,
             produktvariation: selectedOption?.produktvariation || selectedOption?.variation || false,
@@ -221,6 +267,7 @@ export const ProductAttributes: React.FC<Props> = ({
             url: imageUrl, // Use the URL only if img exists
             sku: sku,
             option: option || false,
+            shipping: selectedOption?.shipping,
             deselected: !selectedOption, // Add this flag to indicate deselection
           });
         }}

@@ -12,8 +12,8 @@ type SearchProductProps = {
 const SearchProduct: React.FC<SearchProductProps> = ({ item }) => {
 
   const [location, setLocation] = useState<{ currency: string } | null>(null);
-  console.log(location?.currency)
-  useEffect(() => {
+/*   console.log(location?.currency)
+ */  useEffect(() => {
     const storedLocation = localStorage.getItem('clickedLocation');
     if (storedLocation) {
       setLocation(JSON.parse(storedLocation));

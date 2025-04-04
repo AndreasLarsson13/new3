@@ -9,8 +9,7 @@ export const fetchRelatedProducts = async (options) => {
 			return item.id
 		}
 	})
-	console.log(id)
-	console.log(options.queryKey[1].id)
+
 
 
 	const { data } = await http.get(`${API_ENDPOINTS.RELATED_PRODUCTS}?q=${options.queryKey[1].id}`);

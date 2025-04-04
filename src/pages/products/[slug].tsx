@@ -16,7 +16,7 @@ export default function ProductPage() {
 
 
 	const fullPath = router.asPath;
-	console.log(slug)
+
 	// Split the path by '/' to get all parts as an array
 	const pathParts = fullPath.split('/')
 	// Use the useProductQuery to fetch data based on itemId
@@ -25,7 +25,7 @@ export default function ProductPage() {
 	if (isLoading) return <p>Laddar...</p>;
 	if (error) return <p>Error loading product data</p>;
 
-	console.log(product)
+
 	return (
 		<>
 			<Divider className="mb-0" />

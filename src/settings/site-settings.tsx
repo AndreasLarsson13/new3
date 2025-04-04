@@ -19,7 +19,6 @@ import { ThunderIcon } from '@components/icons/thunder-icon';
 
 const { menu, mobileData } = menuData
 
-console.log(mobileData)
 
 export const siteSettings = {
   name: 'Nätbutiken',

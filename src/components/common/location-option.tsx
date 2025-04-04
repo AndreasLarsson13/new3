@@ -37,8 +37,8 @@ const LocationOption: React.FC<LocationOptionProps> = ({
     }
 
 
-    console.log(e)
-    if (e.id === "se") {
+/*     console.log(e)
+ */    if (e.id === "se") {
       alert("VI säljer inte till sverige än")
     }
 

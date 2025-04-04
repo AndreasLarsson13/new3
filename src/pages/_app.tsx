@@ -4,7 +4,7 @@ import { AnimatePresence } from "framer-motion";
 import { ManagedUIContext } from "@contexts/ui.context";
 import ManagedModal from "@components/common/modal/managed-modal";
 import ManagedDrawer from "@components/common/drawer/managed-drawer";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { QueryClient, QueryClientProvider, HydrationBoundary } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
 // import { ReactQueryDevtools } from "@tanstack/react-query/devtools";
@@ -31,6 +31,7 @@ import UnderConstruction from "../pages/underConstruction";
 
 
 
+
 function handleExitComplete() {
   if (typeof window !== "undefined") {
     window.scrollTo({ top: 0 });
@@ -41,30 +42,43 @@ function Noop({ children }: React.PropsWithChildren<{}>) {
   return <>{children}</>;
 }
 
-const underConstruction = true; // Change this to false when the site is ready
 
 
 const CustomApp = ({ Component, pageProps }: AppProps) => {
-
-  if (underConstruction) {
-    return <UnderConstruction />;
-  }
-
-  const queryClientRef = useRef<any>();
-  if (!queryClientRef.current) {
-    queryClientRef.current = new QueryClient();
-  }
+  const [showSite, setShowSite] = useState(false);
   const router = useRouter();
   const dir = getDirection(router.locale);
+  const queryClientRef = useRef<any>();
+
+  // Setup text direction
   useEffect(() => {
     document.documentElement.dir = dir;
   }, [dir]);
+
+  // Check preview mode
+  useEffect(() => {
+    const isAllowed = typeof window !== "undefined" && localStorage.getItem("previewMode") === "true";
+    setShowSite(isAllowed);
+  }, []);
+
+  // Setup query client
+  if (!queryClientRef.current) {
+    queryClientRef.current = new QueryClient();
+  }
+
   const Layout = (Component as any).Layout || Noop;
+
+  const isUnderConstruction = true; // Toggle this to false when ready
+
+  // ⛔ This comes AFTER all hooks
+  if (isUnderConstruction && !showSite) {
+    return <UnderConstruction />;
+  }
 
   return (
 
     <AnimatePresence mode="wait" onExitComplete={handleExitComplete}>
-      <InitializeLocation />
+      {/*  <InitializeLocation /> */}
 
       <QueryClientProvider client={queryClientRef.current}>
         {/* @ts-ignore */}

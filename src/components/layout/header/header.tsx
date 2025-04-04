@@ -49,6 +49,8 @@ const Header: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
   const [isLocationDropdownOpen, setIsLocationDropdownOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
 
   // Load the clicked location from local storage when component mounts
   useEffect(() => {
@@ -60,6 +62,23 @@ const Header: React.FC = () => {
         setClickedLocation(matchedOption);
       }
     }
+
+  }, []);
+
+
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Change threshold as needed
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Handle language selection and redirect
@@ -97,91 +116,95 @@ const Header: React.FC = () => {
       ref={siteHeaderRef}
       className="relative z-20 w-full h-16 sm:h-20 lg:h-24"
     >
-      <div className='flex gap-5 p-1 bg-gray-200 z-50 '>
-        <div className='flex items-center gap-1 pl-3'>
-          <h5 className="text-sm font-semibold">{/* {t('language')} */} Language:</h5>
-          <div className="relative z-999">
-            {/* <h5 className="text-sm font-semibold mr-1">{/* {t('language')}  */}
-            <button
-              className="border border-gray-300 text-heading text-sm font-semibold w-full py-1 px-2 bg-white rounded-lg shadow-md flex justify-between items-center"
-              onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
-            >
-              <span>{selectedItem?.icon}</span>
-              <HiOutlineSelector className="w-5 h-5 text-gray-400" />
-            </button>
-            {isLanguageDropdownOpen && (
-              <div className="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-50 sm:w-[120px] lg:w-[120px]">
-                {options.map((option) => (
-                  <div
-                    key={option.id}
-                    className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-                    onClick={() => handleLanguageChange(option)}
-                  > <span className="flex items-center gap-2 text-sm flex-nowrap">{option.icon}{t(option.name)}</span>
-                  </div>
-                ))}
-              </div>
-            )}
+      <div className='fixed w-full'>
+        <div className={`flex gap-5 p-1 bg-gray-200 transition-all duration-300 ${isScrolled ? 'opacity-0 -translate-y-full' : 'opacity-100'
+          }`}>
+          <div className='flex items-center gap-1 pl-3'>
+            <h5 className="text-sm font-semibold">{/* {t('language')} */} Language:</h5>
+            <div className="relative z-999">
+              {/* <h5 className="text-sm font-semibold mr-1">{/* {t('language')}  */}
+              <button
+                className="border border-gray-300 text-heading text-sm font-semibold w-full py-1 px-2 bg-white rounded-lg shadow-md flex justify-between items-center"
+                onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
+              >
+                <span>{selectedItem?.icon}</span>
+                <HiOutlineSelector className="w-5 h-5 text-gray-400" />
+              </button>
+              {isLanguageDropdownOpen && (
+                <div className="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-50 sm:w-[120px] lg:w-[120px]">
+                  {options.map((option) => (
+                    <div
+                      key={option.id}
+                      className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => handleLanguageChange(option)}
+                    > <span className="flex items-center gap-2 text-sm flex-nowrap">{option.icon}{t(option.name)}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-        {/* Location Dropdown */}
+          {/* Location Dropdown */}
 
-        <div className='flex items-center gap-1'>
-          <h5 className="text-sm font-semibold">{t('location')}:</h5>
+          <div className='flex items-center gap-1'>
+            <h5 className="text-sm font-semibold">{t('location')}:</h5>
 
-          <div className="relative">
-            {/*               <h5 className="text-sm font-semibold mr-1">{t('location')}: </h5>
+            <div className="relative">
+              {/*               <h5 className="text-sm font-semibold mr-1">{t('location')}: </h5>
  */}              <button
-              className="border border-gray-300 text-heading text-sm font-semibold w-full py-1 px-2 bg-white rounded-lg shadow-md flex justify-between items-center "
-              onClick={() => setIsLocationDropdownOpen(!isLocationDropdownOpen)}
-            >
-              <span className="flex items-center">
+                className="border border-gray-300 text-heading text-sm font-semibold w-full py-1 px-2 bg-white rounded-lg shadow-md flex justify-between items-center "
+                onClick={() => setIsLocationDropdownOpen(!isLocationDropdownOpen)}
+              >
+                <span className="flex items-center">
 
-                <span className="mr-2" key={clickedLocation?.name}>{clickedLocation?.icon}</span>
+                  <span className="mr-2" key={clickedLocation?.name}>{clickedLocation?.icon}</span>
 
-                {/*  {clickedLocation?.name || t('Select Location')} */}
-              </span>
-              <HiOutlineSelector className="w-5 h-5 text-gray-400" />
-            </button>
+                  {/*  {clickedLocation?.name || t('Select Location')} */}
+                </span>
+                <HiOutlineSelector className="w-5 h-5 text-gray-400" />
+              </button>
 
 
-            {isLocationDropdownOpen && (
-              <div className="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-10 sm:w-[180px] lg:w-[180px] z-50">
-                {optionsLocation.map((option) => (
-                  <div
-                    key={option.id}
-                    className="px-3 py-2 hover:bg-gray-100 cursor-pointer "
-                    onClick={() => handleLocationChange(option)}
-                  >
+              {isLocationDropdownOpen && (
+                <div className="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-10 sm:w-[180px] lg:w-[180px] z-50">
+                  {optionsLocation.map((option) => (
+                    <div
+                      key={option.id}
+                      className="px-3 py-2 hover:bg-gray-100 cursor-pointer "
+                      onClick={() => handleLocationChange(option)}
+                    >
 
-                    <span className="flex items-center gap-2 text-sm flex-nowrap">{option.icon} {t(option.name)}</span>
-                  </div>
-                ))}
-              </div>
-            )}
+                      <span className="flex items-center gap-2 text-sm flex-nowrap">{option.icon} {t(option.name)}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="fixed z-10 w-full h-16 px-4 text-gray-700 transition duration-200 ease-in-out bg-white innerSticky body-font sm:h-20 lg:h-24 md:px-8 lg:px-6">
+        <div className={`z-50 w-full h-16 px-4 text-gray-700 transition duration-200 ease-in-out bg-white innerSticky body-font sm:h-20 lg:h-24 md:px-8 lg:px-6 
+        ${isScrolled ? 'fixed' : ''}`}
+          style={{ top: 0 }}>
 
-        <div className="flex items-center justify-center mx-auto max-w-[1920px] h-full w-full">
+          <div className="flex items-center justify-center mx-auto max-w-[1920px] h-full w-full">
 
-          <Logo />
+            <Logo />
 
-          <HeaderMenu
-            data={site_header.menu}
-            className="hidden lg:flex ltr:md:ml-6 rtl:md:mr-6 ltr:xl:ml-10 rtl:xl:mr-10"
-          />
+            <HeaderMenu
+              data={site_header.menu}
+              className="hidden lg:flex ltr:md:ml-6 rtl:md:mr-6 ltr:xl:ml-10 rtl:xl:mr-10"
+            />
 
 
-          <div className="items-center justify-end flex-shrink-0 hidden lg:flex gap-x-6 lg:gap-x-5 xl:gap-x-8 2xl:gap-x-10 ltr:ml-auto rtl:mr-auto">
-            <button
-              className="relative flex items-center justify-center flex-shrink-0 h-auto transform focus:outline-none"
-              onClick={openSearch}
-              aria-label="search-button"
-            >
-              <SearchIcon />
-            </button>
-            {/* Login knapp <div className="-mt-0.5 flex-shrink-0">
+            <div className="items-center justify-end flex-shrink-0 hidden lg:flex gap-x-6 lg:gap-x-5 xl:gap-x-8 2xl:gap-x-10 ltr:ml-auto rtl:mr-auto">
+              <button
+                className="relative flex items-center justify-center flex-shrink-0 h-auto transform focus:outline-none"
+                onClick={openSearch}
+                aria-label="search-button"
+              >
+                <SearchIcon />
+              </button>
+              {/* Login knapp <div className="-mt-0.5 flex-shrink-0">
               <AuthMenu
                 isAuthorized={isAuthorized}
                 href={ROUTES.ACCOUNT}
@@ -197,7 +220,8 @@ const Header: React.FC = () => {
                 {t('text-account')}
               </AuthMenu>
             </div> */}
-            <CartButton />
+              <CartButton />
+            </div>
           </div>
         </div>
       </div>

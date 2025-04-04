@@ -64,7 +64,6 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
     const productsCart = JSON.parse(cosy[0]);
 
     input.orderData = productsCart;
-    console.log(input.orderData)
     input.country = location.name
 
     const text = {
@@ -80,7 +79,6 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
       "orderData": productsCart
     }
 
-    console.log(text)
     const config = {
       headers: {
         'Authorization': 'Bearer your-token-here',  // Add your authorization token if necessary
@@ -92,7 +90,6 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
     http://localhost:8088
         
      */
-    console.log(text)
     try {
       const response = await http.post('http://localhost:8088/open-payment-session', text, config);
       console.log(response.data);
