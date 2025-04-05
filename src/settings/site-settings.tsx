@@ -29,7 +29,7 @@ export const siteSettings = {
     address: '',
   },
   logo: {
-    url: '/assets/images/Natbutiken.axLogo.png',
+    url: '/assets/images/logo.svg',
     alt: 'Nätbutiken',
     href: '/',
     width: 280,
