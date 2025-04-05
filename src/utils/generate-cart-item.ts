@@ -46,6 +46,7 @@ export function generateCartItem(item: Item, attributes: object, attributeArray:
     price: price ? price : parseInt(currentPrice),
     attributes: attributeArray,
     currency,
+    sale_price,
     location: locationS,
     sku: sku ? sku : attribute?.sku,
     shipping: shipping ? shipping : formulaShip,
@@ -67,16 +68,17 @@ export function generateCartItemOptions(item: Item) {
   console.log("generate", item)
 
   return {
-    id: item.productName + item.sku,
-    linkId: id,
+    id,
+    linkId: _id,
     name: item.productName,
     slug: "slug",
     image: item.url,
-    price: sale_price > 0 ? sale_price : price,
+    price: price,
+    sale_price,
     attributes: "No",
     currency: "foji",
     location: "locationS",
-    sku: sku,
+    sku,
     shipping: shipping ? shipping : formulaShip,
   };
 }

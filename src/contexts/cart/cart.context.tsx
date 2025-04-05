@@ -51,7 +51,8 @@ const serializeState = (state: State) => ({
     image: item.image,
     location: "item.location",
     attributes: "item.attributes ? serializeAttributes(item.attributes) : []",
-    sku: "item.sku"
+    sku: item.sku,
+
   })),
   isEmpty: state.isEmpty,
   totalItems: state.totalItems,

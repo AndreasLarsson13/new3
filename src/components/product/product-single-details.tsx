@@ -263,6 +263,7 @@ const ProductSingleDetails: React.FC = () => {
       console.log(AttributeArray)
       AttributeArray.forEach(itemAttributes => {
         if (!itemAttributes.produktvariation) {
+          console.log(itemAttributes)
           int++
           /*  console.log("fejesfj", itemAttributes, int) */
           const test = generateCartItemOptions(itemAttributes)
@@ -270,11 +271,12 @@ const ProductSingleDetails: React.FC = () => {
         }
         else {
 
-          variationPrice += itemAttributes.sale_price > 0 ? itemAttributes.sale_price : itemAttributes.price
+          /* variationPrice += itemAttributes.sale_price > 0 ? itemAttributes.sale_price : itemAttributes.price */
           item.name = item.name
           item.variationName = itemAttributes.value
           item.id = itemAttributes.id
-          item.price = variationPrice
+          item.price = itemAttributes.price
+          item.sale_price = itemAttributes.sale_price
           console.log(itemAttributes)
           combinedIds += `${itemAttributes.id}_`
           item.image = variationImage
@@ -394,6 +396,7 @@ const ProductSingleDetails: React.FC = () => {
 
     if (!hasProduktvariation) {
       setOptionPrice(totalProduct)
+      setOriginalPriceExeptSale(totalPriceExeptSalePrice)
     }
 
     // Update the gallery image based on the selected attribute
@@ -539,9 +542,9 @@ const ProductSingleDetails: React.FC = () => {
             {/*               {currentPrice}{locationCurrency.currency === "SEK" ? "kr" : locationCurrency.currency} Fixa till 
  */}              {currentPrice ? formatWithSeparator(currentPrice) : currentPrice} €
           </div>
-          {discount && (
+          {discount || originalPriceExeptSale && (
             <span className="line-through font-segoe text-gray-400 text-sm md:text-base lg:text-lg xl:text-xl ltr:pl-2 rtl:pr-2">
-              {originalPriceExeptSale > 0 && originalPriceExeptSale !== currentPrice && `${originalPriceExeptSale} €`}{originalPriceExeptSale === basePrice && `${basePrice}`}
+              {/* {originalPriceExeptSale > 0 && originalPriceExeptSale !== currentPrice && `${originalPriceExeptSale} €`}{originalPriceExeptSale === basePrice && `${basePrice}`} */} {`${parseInt(originalPriceExeptSale) + parseInt(data.price)} €`}
             </span>
           )}
         </div>

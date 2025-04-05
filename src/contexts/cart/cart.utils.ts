@@ -5,7 +5,7 @@ export interface Item {
   [key: string]: any;
 }
 
-export interface UpdateItemInput extends Partial<Omit<Item, "id">> {}
+export interface UpdateItemInput extends Partial<Omit<Item, "id">> { }
 
 export function addItemWithQuantity(
   items: Item[],
@@ -68,11 +68,19 @@ export function removeItem(items: Item[], id: Item["id"]) {
 export const calculateItemTotals = (items: Item[]) =>
   items.map((item) => ({
     ...item,
+    itemTotalSale: item.sale_price * item.quantity!,
     itemTotal: item.price * item.quantity!,
   }));
 
 export const calculateTotal = (items: Item[]) =>
-  items.reduce((total, item) => total + item.quantity! * item.price, 0);
+  items.reduce((total, item) => {
+    // Use the lower price between sale_price and price
+    const priceToUse = item.sale_price && item.sale_price < item.price
+      ? item.sale_price
+      : item.price;
+
+    return total + (priceToUse * (item.quantity || 0));
+  }, 0);
 
 export const calculateTotalItems = (items: Item[]) =>
   items.reduce((sum, item) => sum + item.quantity!, 0);

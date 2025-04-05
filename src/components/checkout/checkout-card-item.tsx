@@ -15,9 +15,18 @@ export const CheckoutItem: React.FC<{ item: Item }> = ({ item }) => {
     }
   }, []);
 
-  const { price } = usePrice({
+  /* const { price } = usePrice({
     amount: item.itemTotal,
     currencyCode: location?.currency || 'EUR', // Default to 'EUR' if location is unavailable
+  }); */
+
+
+  const { price: totalPrice, discount: discounttotalPrice, basePrice: basePricetotalPrice } = usePrice({
+    amount: item.itemTotalSale && item.itemTotalSale > 0 ? item.itemTotalSale : item.itemTotal,
+
+    baseAmount: item.itemTotal,
+    /*    currencyCode: item.currency, */  // Byt framöver
+    currencyCode: "EUR",
   });
 
   return (
@@ -25,7 +34,7 @@ export const CheckoutItem: React.FC<{ item: Item }> = ({ item }) => {
       {/* Product Image */}
       <div className="flex border rounded-md border-gray-300 w-16 h-16 flex-shrink-0">
         <img
-          src={item?.image?.length > 0 ? item.image : '/assets/placeholder/cart-item.svg'}
+          src={item.image.original ? item.image.original : item.image /* : '/assets/placeholder/cart-item.svg' */}
           alt={item.name || 'Product Image'}
           className="object-fit w-full h-full"
         />
@@ -72,7 +81,20 @@ export const CheckoutItem: React.FC<{ item: Item }> = ({ item }) => {
       {/* Quantity and Price */}
       <div className="flex items-center ltr:ml-auto rtl:mr-auto text-heading text-sm gap-5">
         <span>x {item.quantity}</span>
-        <span>{price}</span>
+
+
+
+        <span className="text-sm  leading-5 md:text-base text-heading">
+          {/* {totalPrice} */}
+          {totalPrice !== basePricetotalPrice && discounttotalPrice ? (
+            <>
+              <span className="text-red-500">{totalPrice}</span>&nbsp;
+              <del>{basePricetotalPrice}</del>
+            </>
+          ) : (
+            <>{totalPrice}</>
+          )}
+        </span>
       </div>
     </div>
   );

@@ -21,18 +21,24 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
   console.log(item)
 
 
-  const { price } = usePrice({
-    amount: item.price,
+  const { price, discount, basePrice } = usePrice({
+
+    amount: item.sale_price ? item.sale_price : item.price,
+    baseAmount: item.price,
     /*  currencyCode: item.currency,  */ // Byt framöver
     currencyCode: "EUR",
   });
-  const { price: totalPrice } = usePrice({
-    amount: item.itemTotal,
+
+
+  const { price: totalPrice, discount: discounttotalPrice, basePrice: basePricetotalPrice } = usePrice({
+    amount: item.itemTotalSale && item.itemTotalSale > 0 ? item.itemTotalSale : item.itemTotal,
+
+    baseAmount: item.itemTotal,
     /*    currencyCode: item.currency, */  // Byt framöver
     currencyCode: "EUR",
   });
 
-  console.log(item.attributes)
+  console.log(basePrice, price)
 
   return (
     <motion.div
@@ -90,7 +96,15 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
         ))}
 
         <span className="text-sm text-gray-400 mb-2.5">
-          {t('text-unit-price')} : &nbsp; {price}
+          {t('text-unit-price')} :&nbsp;
+          {price !== basePrice && discount ? (
+            <>
+              <span className="text-red-500">{price}</span>&nbsp;
+              <del>{basePrice}</del>
+            </>
+          ) : (
+            <>{price}</>
+          )}
         </span>
 
         <div className="flex items-end justify-between">
@@ -101,7 +115,15 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
             variant="dark"
           />
           <span className="text-sm font-semibold leading-5 md:text-base text-heading">
-            {totalPrice}
+            {/* {totalPrice} */}
+            {totalPrice !== basePricetotalPrice && discounttotalPrice ? (
+              <>
+                <span className="text-red-500">{totalPrice}</span>&nbsp;
+                <del>{basePricetotalPrice}</del>
+              </>
+            ) : (
+              <>{totalPrice}</>
+            )}
           </span>
         </div>
       </div>

@@ -73,7 +73,7 @@ function ProductFlashSaleWrapper({
 const renderer = ({ days, hours, minutes, seconds, completed, t }: any) => {
   if (completed) {
     // Render a completed state
-    return <span>Time Over!</span>;
+    return <span>{t('text-time-over')}</span>;
   } else {
     // Render a countdown
     return (
@@ -110,7 +110,7 @@ const renderer = ({ days, hours, minutes, seconds, completed, t }: any) => {
 const ProductsFlashSaleBlock: React.FC<ProductsProps> = ({
   sectionHeading = 'text-flash-sale',
   className = 'mb-12 md:mb-14 xl:mb-16',
-  date = '2024-10-01T01:02:03',
+  date = '2025-04-04T01:02:03', // Datum när sales slutar
   disableSectionPadding = false,
   disableSectionBorder = false,
   hideCountdown = false,
