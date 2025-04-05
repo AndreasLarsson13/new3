@@ -22,7 +22,7 @@ export default function ConfirmationPage() {
 
     const fetchOrderDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/confirmation?order_id=${order_id}`);
+        const response = await axios.get(`https://service-dot-natbutiken.lm.r.appspot.com/confirmation?order_id=${order_id}`);
         setOrderDetails(response.data.orderDetails);
         console.log(response.data.orderDetails)
       } catch (err) {
