@@ -1,24 +1,24 @@
-import { QueryOptionsType } from '@framework/types';
+import { QueryOptionsType, Product } from '@framework/types';
 import http from '@framework/utils/http';
 import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
 import { useQuery } from '@tanstack/react-query';
 
-export const fetchFlashSaleProducts = async () => {
+export const fetchFlashSaleProducts = async ({ queryKey }: any) => {
 
-  const clickedLocation = "clickedLocation"
-  const location = JSON.parse(localStorage.getItem(clickedLocation));
+  const location = JSON.parse(localStorage.getItem('clickedLocation'));
 
 
-  const currency = location.value
 
-  if (location) {
-    const { data } = await http.get(`${API_ENDPOINTS.FLASH_SALE_PRODUCTS}?currency=${currency}`);
-    return data;
-  } else {
-    const { data } = await http.get(`${API_ENDPOINTS.FLASH_SALE_PRODUCTS}?currency=se`);
-    return data;
-  }
 
+  const [_key, options] = queryKey;
+  const { data } = await http.get(API_ENDPOINTS.FLASH_SALE_PRODUCTS, {
+    params: {
+      ...options,
+      location: location.value
+    },
+  });
+  console.log(data)
+  return data as Product[];
 };
 
 

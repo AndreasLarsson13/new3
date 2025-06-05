@@ -3,15 +3,24 @@ import http from '@framework/utils/http';
 import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
 import { useQuery } from '@tanstack/react-query';
 
-export const fetchFeaturedProducts = async () => {
-
-  const clickedLocation = "clickedLocation"
-  const location = JSON.parse(localStorage.getItem(clickedLocation));
+export const fetchFeaturedProducts = async ({ queryKey }: any) => {
 
 
-  const currency = location.value
+  const location = JSON.parse(localStorage.getItem('clickedLocation'));
 
-  const { data } = await http.get(`${API_ENDPOINTS.FEATURED_PRODUCTS}?currency=${currency}`);
+
+
+
+
+  const [_key, options] = queryKey;
+  const { data } = await http.get(API_ENDPOINTS.FEATURED_PRODUCTS, {
+    params: {
+      ...options,
+      location: location.value
+    },
+  });
+  console.log(data)
+
 
   return data as Product[];
 };
@@ -24,9 +33,8 @@ export const useFeaturedProductsQuery = (options: QueryOptionsType) => {
        queryFn: fetchAncientFeaturedProducts
      });
    } */
-
-  return useQuery<Product[], Error>({
-    queryKey: [API_ENDPOINTS.FEATURED_PRODUCTS, options],
+  return useQuery<any, Error>({
+    queryKey: [API_ENDPOINTS.FLASH_SALE_PRODUCTS, options],
     queryFn: fetchFeaturedProducts
   });
 };

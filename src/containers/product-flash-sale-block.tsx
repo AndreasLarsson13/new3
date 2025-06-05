@@ -110,7 +110,7 @@ const renderer = ({ days, hours, minutes, seconds, completed, t }: any) => {
 const ProductsFlashSaleBlock: React.FC<ProductsProps> = ({
   sectionHeading = 'text-flash-sale',
   className = 'mb-12 md:mb-14 xl:mb-16',
-  date = '2025-04-04T01:02:03', // Datum när sales slutar
+  date = '2025-05-10T01:02:03', // Datum när sales slutar
   disableSectionPadding = false,
   disableSectionBorder = false,
   hideCountdown = false,
@@ -127,8 +127,8 @@ const ProductsFlashSaleBlock: React.FC<ProductsProps> = ({
     demoVariant,
   });
 
-  const filterProduct = data && data.map(item => ({ ...item }));
-  console.log(filterProduct)
+  /*  const filterProduct = data && data.map(item => ({ ...item }));
+   console.log(filterProduct) */
   if (isLoading) {
     return (
       <ProductFlashSaleWrapper

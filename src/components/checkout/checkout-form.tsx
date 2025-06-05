@@ -42,7 +42,8 @@ const defaultCheckoutValues: CheckoutInputType = {
 };
 
 const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbillingInfo }) => {
-  const cosy = useLocalStorage(`chawkbazar-cart`);
+  const [cosyNew, setCozyNew] = useLocalStorage('chawkbazar-cart', [])
+
   const { t } = useTranslation();
   const { mutate: updateUser, isPending } = useCheckoutMutation();
   /* const { register, handleSubmit, formState: { errors } } = useForm<CheckoutInputType>(); */
@@ -57,11 +58,21 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
       setLocation(JSON.parse(storedLocation));
     }
   }, []);
-
+  useEffect(() => {
+    const storedLocation = localStorage.getItem('clickedLocation');
+    if (storedLocation) {
+      setLocation(JSON.parse(storedLocation));
+    }
+  }, []);
 
   const fetchSnippet = async (input: CheckoutInputType) => {
+    const rawCart = localStorage.getItem('chawkbazar-cart');
+    const productsCart = rawCart ? JSON.parse(rawCart) : [];
 
-    const productsCart = JSON.parse(cosy[0]);
+
+
+    /*     const productsCart = JSON.parse(localStorage.getItem('chawkbazar-cart') || '[]');
+     */
 
     input.orderData = productsCart;
     input.country = location.name
@@ -76,7 +87,7 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
       "zipCode": "00100",
       "country": "FI",
       "note": "",
-      "orderData": productsCart
+      "orderData": JSON.parse(productsCart)
     }
 
     const config = {
@@ -91,7 +102,7 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
         
      */
     try {
-      const response = await http.post('https://service-dot-natbutiken.lm.r.appspot.com/open-payment-session', text, config);
+      const response = await http.post('http://localhost:8080/open-payment-session', text, config);
       console.log(response.data);
 
       if (response && response.data) {

@@ -26,9 +26,17 @@ const CheckoutCard: React.FC = () => {
 
 
   let shippingPrice = 0
-
+  console.log(items)
   items.forEach(item => {
-    const price = item.quantity * item.shipping
+    let price = 0
+    if (item.shippingSpecial) {
+      if (item.quantity >= item.shippingSpecial.units) {
+        price = item.shipping
+      }
+    } else {
+      price = item.quantity * item.shipping
+    }
+
     shippingPrice += price
   })
 

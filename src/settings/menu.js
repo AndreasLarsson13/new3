@@ -7,17 +7,20 @@ const menuData = [
                 child: [
                     {
                         slug: "taljstenskaminer",
-                        subChildItems: ["tillbehor-taljstenskaminer"], // Add subchildren here
+
                     },
                     {
                         slug: "kaminer",
-                        subChildItems: ["tillbehor-kaminer"], // Add subchildren here
+
                     },
                     {
                         slug: "eldstader/murspis", // No subChildItems here
                     },
                     {
                         slug: "gjutjarnskaminer", // No subChildItems here
+                    },
+                    {
+                        slug: "tillbehor", // No subChildItems here
                     },
                 ],
             },
@@ -1000,6 +1003,7 @@ const mobileData = [
 
 
 let menu = [];
+const unfiledsMenu = menuData
 
 menuData.forEach((element, index) => {
     let columnGroups = [];
@@ -1009,17 +1013,17 @@ menuData.forEach((element, index) => {
     element.child.forEach((child, childIndex) => {
         const columnItem = {
             id: childIndex + 1,
-            path: `/search?q=${child.slug}`,
+            path: `/store/${child.slug}`,
             label: child.slug,
             columnItemItems: child.child
                 ? child.child.map((subChild, subChildIndex) => ({
                     id: subChildIndex + 1,
-                    path: `/search?q=${subChild.slug}`,
+                    path: `/store/${child.slug}/${subChild.slug}`,
                     label: subChild.slug,
                     subMenu: subChild.subChildItems
                         ? subChild.subChildItems.map((subSubChild, subSubChildIndex) => ({
                             id: subSubChildIndex + 1,
-                            path: `/search?q=${subSubChild}`,
+                            path: `/store//${child.slug}/${subChild.slug}/${subSubChild}`,
                             label: subSubChild,
                         }))
                         : [],
@@ -1054,7 +1058,7 @@ menuData.forEach((element, index) => {
     // Create the final menu structure
     const menuItem = {
         id: index + 1, // Unique ID for each menu item
-        path: `/search?q=${element.slug}`, // Generate path from slug
+        path: `/store?q=${element.slug}`, // Generate path from slug
         label: element.slug, // Use slug as label
         columns: columnGroups, // Push the groups into columns
     };
@@ -1062,5 +1066,9 @@ menuData.forEach((element, index) => {
     menu.push(menuItem);
 });
 
+
+
+
+
 // Export the menu data
-export default { menu, mobileData };
+export default { menu, mobileData, unfiledsMenu };

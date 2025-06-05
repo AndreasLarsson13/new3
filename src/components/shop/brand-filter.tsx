@@ -4,10 +4,10 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useTranslation } from "next-i18next";
 import { useFilteredData } from './../../FilteredDataContext';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa'; // Importera pilikoner
 
 export const BrandFilter = () => {
-	const { filteredData, setFilteredData } = useFilteredData();
-
+	const { filteredData } = useFilteredData();
 	const { t } = useTranslation("common");
 	const router = useRouter();
 	const { query } = router;
@@ -17,6 +17,7 @@ export const BrandFilter = () => {
 
 	const selectedBrands = query?.brand ? (query.brand as string).split(",") : [];
 	const [formState, setFormState] = React.useState<string[]>(selectedBrands);
+	const [isOpen, setIsOpen] = React.useState<boolean>(false); // State för att toggla öppning/stängning
 
 	useEffect(() => {
 		setFormState(selectedBrands);
@@ -25,6 +26,7 @@ export const BrandFilter = () => {
 	if (isLoading) return <p>Laddar...</p>;
 	if (error) return <p>{error.message}</p>;
 
+	// Hantera varumärkesfilterändringar
 	function handleItemClick(e: React.FormEvent<HTMLInputElement>): void {
 		const { value } = e.currentTarget;
 		const currentFormState = formState.includes(value)
@@ -44,29 +46,44 @@ export const BrandFilter = () => {
 		);
 	}
 
-	// Filter brands based on products
+	// Filtrera varumärken baserat på produkter
 	const arrayProductBrands = filteredData.map((item: any) => item.brand);
 	const finalFilteredItems = data.filter((item) =>
 		arrayProductBrands.includes(item.slug)
 	);
 
+	const toggleBrandFilter = () => {
+		setIsOpen(prevState => !prevState);
+	};
+
 	return (
-		<div className="block border-b border-gray-300 pb-7 mb-7">
-			<h3 className="text-heading text-sm md:text-base font-semibold mb-7">
-				{t("text-brands")}
+		<div className="block border-b border-gray-300 pb-5 mb-7">
+			<h3
+				className="text-heading text-sm md:text-base font-semibold mb-3 cursor-pointer flex items-center space-x-2"
+				onClick={toggleBrandFilter}
+			>
+				{/* Pilikoner för öppning/stängning */}
+				{isOpen ? (
+					<FaChevronUp className="text-primary" />
+				) : (
+					<FaChevronDown className="text-primary" />
+				)}
+				<span>{t("text-brands")}</span>
 			</h3>
-			<div className="mt-2 flex flex-col space-y-4">
-				{finalFilteredItems.map((item: any) => (
-					<CheckBox
-						key={item.id}
-						label={item.name}
-						name={item.name.toLowerCase()}
-						checked={formState.includes(item.slug)}
-						value={item.slug}
-						onChange={handleItemClick}
-					/>
-				))}
-			</div>
+			{isOpen && (
+				<div className="mt-2 flex flex-col space-y-4">
+					{finalFilteredItems.map((item: any) => (
+						<CheckBox
+							key={item.id}
+							label={item.name}
+							name={item.name.toLowerCase()}
+							checked={formState.includes(item.slug)}
+							value={item.slug}
+							onChange={handleItemClick}
+						/>
+					))}
+				</div>
+			)}
 		</div>
 	);
 };

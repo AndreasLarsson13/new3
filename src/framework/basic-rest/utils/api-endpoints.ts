@@ -5,17 +5,19 @@ export const API_ENDPOINTS = {
   LOGOUT: '/logout',
   FORGET_PASSWORD: '/forget-password',
   CATEGORIES: '/katergorier',
-  CATEGORIES_2: '/categories.json',
-  CATEGORIES_ANCIENT: '/categories_ancient.json',
+  /*  CATEGORIES_2: '/categories.json',
+   CATEGORIES_ANCIENT: '/categories_ancient.json', */
   FEATURED_CATEGORIES: '/featured_categories.json',
   COLLECTIONS: '/collections.json',
   BRANDS: '/brands',
   PRODUCTS: '/products',
-  PRODUCTS_2: '/products_2.json',
-  PRODUCTS_ANCIENT: '/products_ancient.json',
+  FILTERPAGE: '/filterFetch',
+  CATEGORIESPRODUCTS: '/categoryProducts',
+  /*   PRODUCTS_2: '/products_2.json',
+    PRODUCTS_ANCIENT: '/products_ancient.json', */
   FEATURED_PRODUCTS: '/featured',
-/*   FEATURED_PRODUCTS_ANCIENT: '/featured_products_ancient.json',
- */  TOP_SELLER_PRODUCTS: '/products_top_seller.json',
+  /* 
+   TOP_SELLER_PRODUCTS: '/products_top_seller.json', */
   ON_SELLING_PRODUCTS: '/saleProdukter',
   PRODUCT: '/produkt/',
   RELATED_PRODUCTS: '/related',

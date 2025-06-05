@@ -54,7 +54,12 @@ export default function LanguageSwitcher() {
   function handleLocationChange(option: Option) {
     if (option.value === "se") {
       alert("Vi säljer inte till Sverige än tyvärr");
-    } else {
+    }
+    else if (option.value === "fi") {
+      alert("Vi säljer inte till Finland än tyvärr");
+    }
+
+    else {
       setClickedLocation(option);
       localStorage.setItem('clickedLocation', JSON.stringify(option));
       setIsLocationDropdownOpen(false);

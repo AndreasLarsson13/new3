@@ -7,6 +7,8 @@ import { useBrandsQuery } from '@framework/brand/get-all-brands';
 import { ROUTES } from '@utils/routes';
 import Alert from '@components/ui/alert';
 import { Brand } from '@framework/types';
+import { useRouter } from 'next/router';
+
 
 interface BrandProps {
   sectionHeading: string;
@@ -50,6 +52,9 @@ const BrandBlock: React.FC<BrandProps> = ({
     },
   };
 
+
+  const { locale } = useRouter();
+
   const { data, isLoading, error } = useBrandsQuery({
     limit: 8,
     demoVariant,
@@ -85,9 +90,10 @@ const BrandBlock: React.FC<BrandProps> = ({
                   variant="rounded"
                   size="medium"
                   href={{
-                    pathname: "/search",
-                    query: { brand: brand.slug },
+                    pathname: /* `/${locale === 'se' ? 'butik' : 'store'}/${brand.slug}`, */ "/store",
+                    query: { brand: 'contura' }
                   }}
+
                   imgSize="large"
                   disableBorderRadius={disableBorderRadius}
                 />

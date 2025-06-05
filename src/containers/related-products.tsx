@@ -9,19 +9,22 @@ import { useRouter } from 'next/router';
 interface ProductsProps {
 	sectionHeading: string;
 	className?: string;
+	productRelated: object;
 }
 
 const RelatedProducts: React.FC<ProductsProps> = ({
 	sectionHeading,
 	className = "mb-9 lg:mb-10 xl:mb-14",
+	productRelated
 }) => {
 	const router = useRouter();
 	const { slug } = router.query;
-	/* 	console.log(slug)
-	 */
+	console.log(productRelated)
+
 	const { data, isLoading, error } = useRelatedProductsQuery({
 		limit: 10,
-		id: slug
+		related: productRelated.relatedProducts,
+		category: productRelated.categoryPath
 	});
 
 	return (

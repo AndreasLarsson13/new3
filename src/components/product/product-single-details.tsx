@@ -24,7 +24,6 @@ import { FaInfoCircle } from 'react-icons/fa';
 
 
 
-
 let options; // Till logikem
 let textObjekt = [];
 
@@ -57,7 +56,7 @@ const ProductSingleDetails: React.FC = () => {
 
 
   const { width } = useSsrCompatible(useWindowSize(), { width: 0, height: 0 });
-  const { data, isLoading } = useProductQuery(slug as string,);
+  const { data, isLoading } = useProductQuery(slug as string,); // Ändra
   const { addItemToCart } = useCart();
   const [attributes, setAttributes] = useState<{ [key: string]: string }>({});
   const [quantity, setQuantity] = useState(1);
@@ -70,7 +69,7 @@ const ProductSingleDetails: React.FC = () => {
   const [locationCurrency, setlocationCurrency] = useState(null);
   const [customOrder, setcustomOrder] = useState(false);
   const [resetInputFields, setresetInputFields] = useState(false);
-  const [variationImage, setVariationImage] = useState(data.gallery[activeIndex].original)
+  const [variationImage, setVariationImage] = useState<string | null>(null);
 
   const { price, basePrice, discount } = usePrice(
     data && {
@@ -82,119 +81,50 @@ const ProductSingleDetails: React.FC = () => {
   const { t, i18n } = useTranslation('common');
 
 
+
   useEffect(() => {
-
-    const location = JSON.parse(localStorage.getItem('clickedLocation'))
-    setlocationCurrency(location)
-    /*     const countyCode = i18n.language
-     */
-    if (!isLoading && data && data.meta) {
-
-      // Kontrollera om datan har laddats och om den innehåller meta-information
-      const translatedData = data.meta.map((item) => {
-        // Hämta översättningen för titeln baserat på språknyckeln
-        const countyCode = i18n.language
-
-        let translatedContent;
-        if (!item.PDF && !item.tecnical) {
-          translatedContent = item.content[countyCode]
-        }
-
-        const translatedTitle = t(`common:${item.title}`)
-
-
-
-        // Returnera en kopia av objektet med den översatta titeln
-        return { ...item, title: translatedTitle, content: translatedContent };
-      });
-      setfilterDataLanguage(translatedData);
-    }
-
-
-
-
-    if (!isLoading && data) {
-      // Loop through each item in the variations array
-      let dataNew = []
-      let dataNewOptions = []
-      data.variations.forEach((item) => {
-
-        // Hämta översättningen för titeln baserat på språknyckeln
-        const countyCode = i18n.language;
-
-        const translatedName = item.attribute.name; //Testa ta
-        const translatedSlug = item.attribute.slug;
-
-        // Create a new object or deep clone the item object to avoid modifying the original
-
-        const newItem = {
-          ...item,
-          attribute: { ...item.attribute, name: translatedName, slug: translatedSlug },
-          value: item.value // Deep clone the attribute object
-        };
-        // Push the modified item to the dataNy array
-        dataNew.push(newItem)
-      });
-
-      data.options.forEach((item) => {
-        /*    console.log(item) */
-
-        // Hämta översättningen för titeln baserat på språknyckeln
-        const countyCode = i18n.language;
-
-        const translatedName = item.attribute.name; //Testa ta
-        const translatedSlug = item.attribute.slug;
-
-        // Create a new object or deep clone the item object to avoid modifying the original
-
-        const newItem = {
-          ...item,
-          attribute: { ...item.attribute, name: translatedName, slug: translatedSlug },
-          value: item.value // Deep clone the attribute object
-        };
-        // Push the modified item to the dataNy array
-        dataNewOptions.push(newItem)
-      });
-      setFilterDataLanguageOptions(dataNewOptions)
-      /*  console.log(dataNewOptions) */
-      setFilterDataLanguageAttributes(dataNew)
+    if (data?.gallery?.length > 0) {
+      setVariationImage(data.gallery[activeIndex].original);
 
     }
-  }, [data, i18n.language]);
+  }, [data, activeIndex]);
+
+
+
+
 
   function formatWithSeparator(price) {
-    console.log(price)
-    if (price < 100) {
-      return price.toFixed(2).replace('.', ','); // Ensure two decimals & replace '.' with ','
-    } else if (price >= 1000) {
-      return price
-        .toFixed(2) // Remove decimals
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ' ').replace('.', ','); // Add spaces as thousand separators
-    }
-    return price.toString(); // Default for numbers between 100 and 999 (no changes)
+    const formatted = price
+      .toFixed(2) // Always two decimals
+      .replace('.', ',') // Use comma for decimal
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ' '); // Add space as thousand separator
+
+    return formatted;
   }
 
-  /*   setfilterDataLanguage(data) */
 
-  const [currentPrice, setCurrentPrice] = useState();
-  const [optionPrice, setOptionPrice] = useState();
-  const [originalPriceExeptSale, setOriginalPriceExeptSale] = useState(basePrice);
 
-  useEffect(() => {
-    if (price !== null && price !== undefined) {
-      if (data && data.sale_price <= 0) {
-        setCurrentPrice(data && price);
-      } else {
-        setCurrentPrice(data && data.sale_price);
+  const [currentPrice, setCurrentPrice] = useState(0);
+  const [optionPrice, setOptionPrice] = useState(0);
+  const [originalPriceExeptSale, setOriginalPriceExeptSale] = useState(0);
+
+  /*   useEffect(() => {
+      if (price !== null && price !== undefined) {
+        if (data && data.sale_price <= 0) {
+          setCurrentPrice(data && price);
+        } else {
+          setCurrentPrice(data && data.sale_price);
+        }
       }
-    }
-  }, [price]);
+    }, [price]); */
 
   if (isLoading) return <p>Laddar...</p>;
 
-  const variations = getVariations(filterDataLanguageAttributes);
+  const variations = getVariations(data.variations);
+
 /*   console.log(variations)
- */  const productOptions = getVariations(filterDataLanguagOptions)
+ */  const productOptions = getVariations(data.options)
+
   /*   console.log(productOptions) */
   const isSelected = !isEmpty(variations)
     ? Object.keys(variations).every((variation) => {
@@ -238,7 +168,7 @@ const ProductSingleDetails: React.FC = () => {
     console.log(data)
     const item = generateCartItem(data, attributes, AttributeArray, currentPrice, storedLocation);
 
-    console.log(item)
+    /*  console.log(item) */
     /*     console.log(item)
      */
     // Handle image selection
@@ -251,8 +181,8 @@ const ProductSingleDetails: React.FC = () => {
 
     // Debugging: Check the item before adding
     // Add to cart
-    console.log(data?.variations)
     if (data.variations.length === 0) {
+
       addItemToCart(item, quantity)
       console.log("true")
     }
@@ -272,7 +202,7 @@ const ProductSingleDetails: React.FC = () => {
         else {
 
           /* variationPrice += itemAttributes.sale_price > 0 ? itemAttributes.sale_price : itemAttributes.price */
-          item.name = item.name
+          item.name = item.productName
           item.variationName = itemAttributes.value
           item.id = itemAttributes.id
           item.price = itemAttributes.price
@@ -281,42 +211,18 @@ const ProductSingleDetails: React.FC = () => {
           combinedIds += `${itemAttributes.id}_`
           item.image = variationImage
           item.sku = itemAttributes.sku
-
+          console.log(item)
 
           addItemToCart(item, quantity)
         }
       })
-      // After the loop finishes, call `addItemToCart` once with the combined data
-      /* if (combinedIds) {
-        // Remove the trailing underscore from the combined IDs
-        combinedIds = combinedIds.slice(0, -1);
 
-        // Add the item with the accumulated price and combined IDs to the cart
-        item.id = combinedIds; // Assign the combined IDs to the item
-        item.name = `${item.name} - ${combinedIds}`
-        
-        // Now call `addItemToCart` only once with the final data
-        addItemToCart(item, quantity);
-      } */
     }
 
 
 
 
-    // Börja här
-    /*  console.log("attributarray", AttributeArray)
-     AttributeArray.forEach(variation => {
-       if (variation.produktvariation) {
-         addItemToCart(item, quantity);
-       }
-     }) */
-    /*     addItemToCart(item, quantity);
-     */
 
-
-    /*     console.log("testa122", attributes)
-     */    /* addItemToCart(item2, quantity); */
-    // Reset the attribute array
     AttributeArray = [];
 
     // Display success message
@@ -333,48 +239,45 @@ const ProductSingleDetails: React.FC = () => {
       setresetInputFields(false); // Reset back to false after clearing
       if (data.sale_price > 0) {
         setCurrentPrice(data.sale_price); // Use sale price plus attribute prices if no variation
+        setOptionPrice(0)
         setOriginalPriceExeptSale(data.price)
       } else {
         setCurrentPrice(data.price); // Use default price plus attribute prices
+        setOptionPrice(0)
       }
     }, 500);
 
   }
 
 
-
-
-
-
-
-
-
   function handleAttribute(attribute: any, variation: any, attribut: any) {
-
-
 
     const index = AttributeArray.findIndex((attr) => attr.group === attribute.group);
 
     // Update or remove the attribute in AttributeArray
+    const shouldRemove = attribute.value === false || attribute.id === undefined;
+
     if (index !== -1) {
-      if (attribute.value !== false) {
+      if (!shouldRemove) {
         // Update existing attribute
         AttributeArray[index] = attribute;
       } else {
-        // Remove the attribute if the value is false
+        // Remove the attribute
         AttributeArray.splice(index, 1);
       }
     } else {
-      if (attribute.value !== false) {
-        // Add the attribute if it doesn't exist
+      if (!shouldRemove) {
+        // Add new attribute
         AttributeArray.push(attribute);
       }
     }
 
+
     // Check if any `produktvariation` is selected
-    const hasProduktvariation = AttributeArray.some((attr) => attr.produktvariation);
-    /* console.log("pristest", AttributeArray) */
+    const hasProduktvariation = AttributeArray.some((attr) => attr.itsaVariation === true);
+
     // Calculate the total price based on selected attributes
+
     let totalProduct = 0;
     let totalPriceExeptSalePrice = 0;
     AttributeArray.forEach((attr) => {
@@ -382,33 +285,31 @@ const ProductSingleDetails: React.FC = () => {
       totalPriceExeptSalePrice += attr.price || 0
     });
 
+
+
     console.log("aaa", attribute)
+    console.log("mega", hasProduktvariation)
     // Update currentPrice based on the selection
     if (hasProduktvariation) {
       setCurrentPrice(totalProduct)
-      setOriginalPriceExeptSale(totalPriceExeptSalePrice); // Use total product price if a product variation is selected
-    } else if (data.sale_price > 0) {
-      setCurrentPrice(totalProduct); // Use sale price plus attribute prices if no variation
-
-    } else {
-      setCurrentPrice(data.price + totalProduct); // Use default price plus attribute prices
+      setOriginalPriceExeptSale(totalPriceExeptSalePrice);
+      // Use total product price if a product variation is selected
     }
+
+    console.log(currentPrice)
 
     if (!hasProduktvariation) {
       setOptionPrice(totalProduct)
       setOriginalPriceExeptSale(totalPriceExeptSalePrice)
     }
-
+    console.log(optionPrice)
     // Update the gallery image based on the selected attribute
-    if (attribute.produktvariation) {
+    console.log(attribute)
+    if (attribute.itsaVariation) {
       // Set the gallery's active image to the variation's image
       data.gallery[activeIndex].original = attribute.url;
       setVariationImage(attribute.url)
     }
-
-
-
-    // Debugging: Log the active image to confirm
 
     // Update the attributes state
     setAttributes((prev) => ({
@@ -416,13 +317,6 @@ const ProductSingleDetails: React.FC = () => {
       attribute,
     }));
   }
-
-
-
-
-
-
-
 
   const handleClick = (index: number) => {
     if (data?.gallery?.[index]) {
@@ -469,19 +363,19 @@ const ProductSingleDetails: React.FC = () => {
               {data?.gallery?.map((item, index) => (
                 <div
                   key={index}
-                  className="flex-shrink-0 w-24 h-24 transition duration-150 ease-in hover:opacity-90 cursor-pointer"
+                  className="flex-shrink-0 w-24 h-24 flex justify-center items-center overflow-hidden transition duration-150 ease-in hover:opacity-90 cursor-pointer"
                   onClick={() => handleClick(index)}
+
                 >
                   <img
                     src={item?.original ?? '/assets/placeholder/products/product-gallery.svg'}
                     alt={`${data?.name}--${index}`}
-                    className="object-fit w-full h-full"
+                    className="object-fit w-full h-auto"
                   />
                 </div>
               ))}
             </div>
           </div>
-
         )}
 
       <div className="col-span-5 pt-8 lg:pt-0">
@@ -493,11 +387,10 @@ const ProductSingleDetails: React.FC = () => {
             <div className="description-content" dangerouslySetInnerHTML={{ __html: data.description[i18n.language] }} />
           }
 
-
-
         </div>
 
-        {variations && <div className={`${productOptions ? 'pb-5 border-b border-gray-300' : ''}`}>
+        {variations && Object.keys(variations).length > 0 && <div className={`${productOptions ? 'pb-5 border-b border-gray-300' : ''}`}>
+          <h3 className="text-base md:text-lg text-heading font-semibold capitalize pb-3">Variationer</h3>
           {Object.keys(variations).map((variation) => {
             /*  console.log(variation) */
             return (
@@ -511,14 +404,12 @@ const ProductSingleDetails: React.FC = () => {
                 onClick={(attribute: any) => handleAttribute(attribute, variation, attributes[variation])}
                 resetInputFields={resetInputFields}
               />
-
-
             );
           })}
         </div>}
 
-        {productOptions && <div className="pb-3 border-b border-gray-300 pt-5">
-          <h2 className='font-size: 30px'>Tillbehör (ändra storlek)</h2>
+        {productOptions && Object.keys(productOptions).length > 0 && <div className="pb-3 border-b border-gray-300 pt-5">
+          <h3 className="text-base md:text-lg text-heading font-semibold capitalize pb-3">Tillbehör</h3>
 
           {Object.keys(productOptions).map((option) => {
             /* console.log("tillbehör attribut", productOptions) */
@@ -539,14 +430,26 @@ const ProductSingleDetails: React.FC = () => {
 
         <div className="flex items-center mt-5">
           <div className="text-heading font-bold text-base md:text-xl lg:text-2xl 2xl:text-4xl ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
-            {/*               {currentPrice}{locationCurrency.currency === "SEK" ? "kr" : locationCurrency.currency} Fixa till 
- */}              {currentPrice ? formatWithSeparator(currentPrice) : currentPrice} €
+
+            {(currentPrice === 0 && optionPrice === 0)
+              ? price
+              : formatWithSeparator(currentPrice === 0 ? parseInt(price) + optionPrice : currentPrice + optionPrice)
+            }
+
+
           </div>
-          {discount || originalPriceExeptSale && (
-            <span className="line-through font-segoe text-gray-400 text-sm md:text-base lg:text-lg xl:text-xl ltr:pl-2 rtl:pr-2">
-              {/* {originalPriceExeptSale > 0 && originalPriceExeptSale !== currentPrice && `${originalPriceExeptSale} €`}{originalPriceExeptSale === basePrice && `${basePrice}`} */} {`${parseInt(originalPriceExeptSale) + parseInt(data.price)} €`}
-            </span>
-          )}
+
+          <span className="line-through font-segoe text-gray-400 text-sm md:text-base lg:text-lg xl:text-xl ltr:pl-2 rtl:pr-2">
+            {/*  {originalPriceExeptSale === 0 ? basePrice : originalPriceExeptSale}
+ */}
+
+
+            {originalPriceExeptSale !== 0 && originalPriceExeptSale !== currentPrice && parseInt(originalPriceExeptSale)
+            }
+            {basePrice}
+
+          </span>
+
         </div>
         <div className="flex items-center gap-x-4 ltr:md:pr-32 rtl:md:pl-32 ltr:lg:pr-12 rtl:lg:pl-12 ltr:2xl:pr-32 rtl:2xl:pl-32 ltr:3xl:pr-48 rtl:3xl:pl-48  py-8">
           <Counter
@@ -594,43 +497,26 @@ const ProductSingleDetails: React.FC = () => {
               <span className="font-semibold text-heading inline-block ltr:pr-2 rtl:pl-2">
                 {t('text-category')}:
               </span>
-              {data?.category.map((cat, index) => (
-                <div key={index} className="inline-flex items-center">
-                  <>
+              {data?.categoryPath.reduce((acc, cat, index) => {
+                const path = `${acc.currentPath}/${cat}`;
+                acc.currentPath = path;
+
+                acc.breadcrumbs.push(
+                  <div key={index} className="inline-flex items-center">
                     <Link
-                      href={`/search?q=${cat.slug}`}
+                      href={path}
                       className="transition hover:underline hover:text-heading"
                     >
-                      {t(`menu:${cat.slug}`)}
+                      {t(`menu:${cat}`)}
                     </Link>
-                    <span className="text-heading inline-block pr-1 pl-1">></span>
-                  </>
-                  {cat.child &&
-                    cat.child.map((cat2, index) => (
-                      <>
-                        <Link
-                          href={`/search?q=${cat2.slug}`}
-                          className="transition hover:underline hover:text-heading"
-                        >
-                          {t(`menu:${cat2.slug}`)}
-                        </Link>
-                        {
-                          cat2.child && <span className="text-heading inline-block pr-1 pl-1">></span>
-                        }
-                        {
-                          cat2.child && cat2.child.map((cat3, index) => (
-                            <Link
-                              href={`/search?q=${cat3.slug}`}
-                              className="transition hover:underline hover:text-heading"
-                            >
-                              {t(`menu:${cat3.slug}`)}
-                            </Link>
-                          ))
-                        }
-                      </>
-                    ))}
-                </div>
-              ))}
+                    {index < data.categoryPath.length - 1 && (
+                      <span className="text-heading inline-block pr-1 pl-1">{'>'}</span>
+                    )}
+                  </div>
+                );
+
+                return acc;
+              }, { currentPath: '', breadcrumbs: [] }).breadcrumbs}
 
 
 
@@ -639,7 +525,7 @@ const ProductSingleDetails: React.FC = () => {
           </ul>
         </div>
 
-        <ProductMetaReview data={filterDataLanguage} />
+        <ProductMetaReview data={data.meta} />
       </div>
     </div >
   );

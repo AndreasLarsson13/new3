@@ -34,7 +34,7 @@ export default function ProductPage() {
 					<Breadcrumb product={product} />
 				</div>
 				<ProductSingleDetails product={product} />
-				<RelatedProducts sectionHeading="text-related-products" />
+				<RelatedProducts productRelated={product} sectionHeading="text-related-products" />
 				<Subscription />
 			</Container>
 		</>

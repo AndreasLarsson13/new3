@@ -19,4 +19,5 @@ export const ROUTES = {
   COLLECTIONS: "/collections",
   CATEGORY: "/category",
   ORDER: "/order",
+  BUTIk: "/butik:"
 };

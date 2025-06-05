@@ -34,7 +34,7 @@ export const Collapse: React.FC<CollapseProps> = ({
   const isOpen = i === expanded;
 
   const { t, i18n } = useTranslation(translatorNS);
-
+  console.log(pdf)
   return (
     <div
       className={cn({
@@ -94,7 +94,8 @@ export const Collapse: React.FC<CollapseProps> = ({
                   className={`flex gap-2 justify-between px-2 ${index % 2 === 0 ? 'bg-gray-300' : ''
                     }`}
                 >
-                  <h4 className='font-semibold'>{t(`common:${item.title}`)}</h4>
+                  <h4 className='font-semibold'>{item.title}</h4>
+
                   {Array.isArray(item.data) ? (
                     <h4>
                       {item.data.map((subItem, index) => (

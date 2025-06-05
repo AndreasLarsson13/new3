@@ -12,7 +12,6 @@ import { Product } from '@framework/types';
 // import ProductIcon1 from '../../../public/assets/images/products/icons/product-icon1.svg'
 // import ProductIcon2 from '../../../public/assets/images/products/icons/product-icon2.svg'
 // import ProductIcon3 from '../../../public/assets/images/products/icons/product-icon3.svg'
-import ProductViewIcon from '@components/icons/product-view-icon';
 import ProductWishIcon from '@components/icons/product-wish-icon';
 import ProductCompareIcon from '@components/icons/product-compare-icon';
 import RatingDisplay from '@components/common/rating-display';
@@ -65,17 +64,47 @@ const ProductCard: FC<ProductProps> = ({
 }) => {
   const { openModal, setModalView, setModalData } = useUI();
   const placeholderImage = `/assets/placeholder/products/product-${variant}.svg`;
+  /*  const { price, basePrice, discount } = usePrice({
+     amount: product.salePrice > 0 ? product.salePrice : product.lowestPrice,
+     baseAmount: product.salePrice > 0 ? product.price : null,
+     currencyCode: "EUR",
+   }); */
+
+  console.log(product)
+
+
+  let amounts = product.lowestPrice;
+  let basePrices = product.price
+
+  console.log(basePrices)
+  /* 
+    if (product.variationPrices && product.variationPrices.length > 0) {
+       amounts = product.lowestPrice
+       basePrices = product.lowestPrice
+}
+
+  else {
+  amounts = product.salePrice > 0 ? product.salePrice : product.price
+  basePrices = product.price
+}
+
+ */
+  console.log(product)
+
+
+
+
+
   const { price, basePrice, discount } = usePrice({
-    amount: product.sale_price ? product.sale_price : product.price,
-    baseAmount: product.price,
+    amount: amounts,
+    baseAmount: /* product.price */basePrices,
     currencyCode: "EUR",
   });
+
   const { i18n } = useTranslation();
   const router = useRouter();
 
 
-  /*  product.description = "product.description[i18n.language]";
-   */
 
 
 
@@ -92,13 +121,7 @@ const ProductCard: FC<ProductProps> = ({
 
 
 
-  /* function navigateToProductPage() {
-    router.push(`${ROUTES.PRODUCT}/${product.name}/`, undefined, {
-      locale: router.locale,
-      productId: product._id
-    });
-  }
- */
+
 
   function navigateToProductPage() {
     router.push({
@@ -191,7 +214,7 @@ const ProductCard: FC<ProductProps> = ({
           )}
         />
 
-        <div className="absolute top-3.5 md:top-5 3xl:top-7 ltr:left-3.5 rtl:right-3.5 ltr:md:left-5 rtl:md:right-5 ltr:3xl:left-7 rtl:3xl:right-7 flex flex-col gap-y-1 items-start">
+        {/*    <div className="absolute top-3.5 md:top-5 3xl:top-7 ltr:left-3.5 rtl:right-3.5 ltr:md:left-5 rtl:md:right-5 ltr:3xl:left-7 rtl:3xl:right-7 flex flex-col gap-y-1 items-start">
           {discount &&
             (variant === 'gridModernWide' ||
               variant === 'gridModern' ||
@@ -204,25 +227,9 @@ const ProductCard: FC<ProductProps> = ({
               </span>
             )}
 
-          {/*    {product?.isNewArrival &&
-            (variant === 'gridModernWide' ||
-              variant === 'gridModern' ||
-              variant === 'gridTrendy') && (
-              <span className="bg-[#B26788] text-white text-10px md:text-xs leading-5 rounded-md inline-block px-1.5 sm:px-1.5 xl:px-2 py-0.5 sm:py-1">
-                <p>
-                  New <span className="hidden sm:inline">Arrival</span>
-                </p>
-              </span>
-            )} */}
-        </div>
+        </div> */}
 
-        {/*  {variant === 'gridModernWide' && (
-          <div className="absolute ltr:right-2 rtl:left-2 ltr:sm:right-3 rtl:sm:left-3 bottom-6 space-y-2 w-[32px] sm:w-[42px] lg:w-[52px]">
-            <ProductViewIcon className="w-full transition duration-300 ease-in delay-100 bg-white rounded-md sm:opacity-0 group-hover:opacity-100" />
-            <ProductWishIcon className="w-full transition duration-300 ease-in delay-200 bg-white rounded-md sm:opacity-0 group-hover:opacity-100" />
-            <ProductCompareIcon className="w-full transition duration-300 ease-in delay-300 bg-white rounded-md sm:opacity-0 group-hover:opacity-100" />
-          </div>
-        )} */}
+
       </div>
       <div
         className={cn(
@@ -241,7 +248,7 @@ const ProductCard: FC<ProductProps> = ({
           contactClassName
         )}
       >
-        {(variant === 'gridModern' ||
+        {/*  {(variant === 'gridModern' ||
           variant === 'gridModernWide' ||
           variant === 'gridTrendy') && (
             <div className="flex items-center py-2 gap-x-2">
@@ -262,7 +269,7 @@ const ProductCard: FC<ProductProps> = ({
                 </span>
               )}
             </div>
-          )}
+          )} */}
         {!!(showCategory || showRating) && (
           <div className="flex flex-col md:flex-row md:items-center lg:flex-row xl:flex-row 2xl:flex-row  mb-0.5 items-start">
             {!!showCategory && (
@@ -322,7 +329,7 @@ const ProductCard: FC<ProductProps> = ({
             className={`inline-block ${demoVariant === 'ancient' && 'font-bold text-gray-900 text-lg'
               }`}
           >
-            {price}
+            {product.hasVariations ? "Från" : ""} {price}
           </span>
           {discount && (
             <del
@@ -335,12 +342,12 @@ const ProductCard: FC<ProductProps> = ({
         </div>
       </div>
 
-      {(variant === 'gridTrendy' || variant === 'gridModern') && (
+      {/*  {(variant === 'gridTrendy' || variant === 'gridModern') && (
         <div className="absolute flex ltr:right-2 rtl:left-2 bottom-2 gap-x-2">
           <ProductWishIcon className="transition ease-in duration-300 sm:opacity-0 group-hover:opacity-100 delay-200 w-[35px] sm:w-[42px] lg:w-[52px] bg-[#F1F3F4] rounded-md" />
           <ProductCompareIcon className="transition ease-in duration-300 sm:opacity-0 group-hover:opacity-100 delay-300 w-[35px] sm:w-[42px] lg:w-[52px] bg-[#F1F3F4] rounded-md" />
         </div>
-      )}
+      )} */}
     </div>
   );
 };

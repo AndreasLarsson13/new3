@@ -26,14 +26,14 @@ export default function SearchTopBar() {
   })
   const router = useRouter();
   const { query } = router;
-
-  console.log(Object.keys(query)[0])
+  console.log(query)
 
   return (
     <div className="flex justify-between items-center mb-7">
       <Text variant="pageHeading" className="hidden lg:inline-flex pb-1">
-        {Object.values(query)[0] ? t(`common:${Object.values(query)[0]}`, { defaultValue: '' }) || t(`menu:${Object.values(query)[0]}`) : ''}
 
+        {/*         {query.slug ?? Object.values(query)[0] ? t(`common:${Object.values(query)[0]}`, { defaultValue: '' }) || t(`menu:${query.slug[query.slug?.length - 1]}`) : ''}
+ */}
       </Text>
       <button
         className="lg:hidden text-heading text-sm px-4 py-2 font-semibold border border-gray-300 rounded-md flex items-center transition duration-200 ease-in-out focus:outline-none hover:bg-gray-200"

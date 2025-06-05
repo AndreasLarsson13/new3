@@ -210,7 +210,8 @@ export const homeThreeProductsBanner = [
   {
     id: 1,
     title: 'Sale Offer',
-    slug: 'sale-offer',
+    slug: 'sale',
+    sale: 50,
     image: {
       mobile: {
         url: '/assets/images/banner/banner-sale-offer.jpg',

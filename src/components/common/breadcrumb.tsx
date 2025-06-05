@@ -28,7 +28,7 @@ const BreadcrumbSeparator: React.FC<Props> = ({ children, ...props }) => {
 
 export const BreadcrumbItems = (props: any) => {
   let children: any = React.Children.toArray(props.children);
-
+  console.log(props.children)
   children = children.map((child: string, index: number) => (
     <BreadcrumbItem key={`breadcrumb_item${index}`}>{child}</BreadcrumbItem>
   ));
@@ -60,8 +60,12 @@ export const BreadcrumbItems = (props: any) => {
 const Breadcrumb: React.FC<{ separator?: string; product?: any }> = ({ separator = '/', product }) => {
   const breadcrumbs = useBreadcrumb();
   const { t } = useTranslation('common');
-
+  console.log(product.category.forEach(item => {
+    console.log(item.slug)
+  }))
   // Remove unnecessary breadcrumbs if needed
+
+  let currentPath = "";
 
   return (
     <BreadcrumbItems separator={separator}>
@@ -70,16 +74,35 @@ const Breadcrumb: React.FC<{ separator?: string; product?: any }> = ({ separator
       </ActiveLink>
 
 
-      {breadcrumbs && <ActiveLink
-        href={breadcrumbs[0].href}
-        activeClassName="font-semibold text-heading"
-        key={breadcrumbs[0].href}
-      >
-        <a className="capitalize">
-          {t(`${convertBreadcrumbTitle(breadcrumbs[0].breadcrumb)}`)}
-        </a>
+      {product.category.map(link => {
+        currentPath += `/${link.slug}`;
 
-      </ActiveLink>}
+        return (
+          <ActiveLink
+            href={currentPath}
+            activeClassName="font-semibold text-heading"
+            key={link.slug}
+          >
+            <a className="capitalize">
+              {/* t(`${convertBreadcrumbTitle(link)}`) */ link.slug}
+            </a>
+          </ActiveLink>
+        );
+      })}
+      {/*   {breadcrumbs &&
+
+
+
+        <ActiveLink
+          href={breadcrumbs[0].href}
+          activeClassName="font-semibold text-heading"
+          key={breadcrumbs[0].href}
+        >
+          <a className="capitalize">
+            {t(`${convertBreadcrumbTitle(breadcrumbs[0].breadcrumb)}`)}
+          </a>
+
+        </ActiveLink>} */}
 
 
 

@@ -102,7 +102,7 @@ export const footer = {
         {
           id: 3,
           title: 'link-braskamin',
-          path: '/search?q=braskaminer',
+          path: '/hushall/braskaminer',
         },
         {
           id: 4,

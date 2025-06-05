@@ -1,7 +1,7 @@
 import ProductCard from "@components/product/product-card";
 import Button from "@components/ui/button";
 import type { FC } from "react";
-import { useProductsQuery } from "@framework/product/get-all-products";
+import { useProductsQuery } from "@framework/product/get-all-products-2";
 import { useRouter } from "next/router";
 import ProductFeedLoader from "@components/ui/loaders/product-feed-loader";
 import { useTranslation } from "next-i18next";
@@ -16,21 +16,22 @@ interface ProductGridProps {
 
 export const ProductGrid: FC<ProductGridProps> = ({ className = "" }) => {
 	const { t, i18n } = useTranslation("common");
-	const { query, route } = useRouter();
-/* 	console.log(useRouter())
- */	const {
-		isFetching: isLoading,
-		isFetchingNextPage: loadingMore,
-		fetchNextPage,
-		hasNextPage,
-		data,
-		error,
-	} = useProductsQuery({ limit: 10, ...query, route });
-	if (error) return <p>{error.message}</p>;
+	/* const { query, route } = useRouter(); */
+	/* 	console.log(useRouter())
+	 */	/* const {
+isFetching: isLoading,
+isFetchingNextPage: loadingMore,
+fetchNextPage,
+hasNextPage,
+data,
+error,
+} = useProductsQuery({ limit: 10, ...query, route });
+if (error) return <p>{error.message}</p>; */
 
-	const { filteredData, setFilteredData } = useFilteredData();
+	const { filteredData, isLoading, loadingMore, hasNextPage, fetchNextPage, error } = useFilteredData();
 
-	useEffect(() => {
+	console.log(filteredData)
+	/* useEffect(() => {
 		if (!isLoading && data) {
 			const filterProducts = (products, categoryQuery, priceQuery, colorQuery, brandQuery) => {
 				if (!products || !Array.isArray(products)) {
@@ -105,6 +106,8 @@ export const ProductGrid: FC<ProductGridProps> = ({ className = "" }) => {
 			setFilteredData(filteredProducts);
 		}
 	}, [isLoading, data]);
+*/
+
 
 	return (
 		<>
@@ -114,7 +117,7 @@ export const ProductGrid: FC<ProductGridProps> = ({ className = "" }) => {
 				{isLoading && !filteredData?.length ? (
 					<ProductFeedLoader limit={20} uniqueKey="search-product" />
 				) : (
-					filteredData?.map((product: Product) => (
+					filteredData && filteredData?.map((product: Product) => (
 						<ProductCard
 							key={`product--key${product.id}`}
 							product={product}

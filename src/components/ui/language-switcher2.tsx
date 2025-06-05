@@ -38,7 +38,7 @@ export default function LanguageSwitcher() {
 
   // Handle location click event
   const locationClick = (option) => {
-    if (option.id === "se") {
+    if (option.id === "SE") {
       alert("Vi levererar inte till Sverige än");
     } else {
       setClickedLocation(option);

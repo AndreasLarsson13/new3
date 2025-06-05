@@ -25,7 +25,7 @@ export default function Collections() {
               <StickyBox offsetTop={50} offsetBottom={20}>
                 <div className="pb-7">
                   <BreadcrumbItems separator="/">
-                    <ActiveLink
+                    {/*  <ActiveLink
                       href={'/'}
                       activeClassName="font-semibold text-heading"
                     >
@@ -36,7 +36,7 @@ export default function Collections() {
                       activeClassName="font-semibold text-heading"
                     >
                       <a className="capitalize">{t('breadcrumb-collection')}</a>
-                    </ActiveLink>
+                    </ActiveLink> */}
                   </BreadcrumbItems>
                 </div>
                 <CollectionFilters />

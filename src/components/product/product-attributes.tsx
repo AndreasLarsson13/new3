@@ -33,7 +33,7 @@ interface Props {
     image: { original: string; } | string;
     _id: string;
     shipping: number;
-
+    itsaVariation: boolean;
   }[];
   resetInputFields: boolean;
   active: string;
@@ -113,10 +113,24 @@ export const ProductAttributes: React.FC<Props> = ({
       },
     }),
   };
+  console.log(attributes)
 
+  function getLowestPriceAttribute(attributes) {
+    if (!attributes || attributes.length === 0) return '';
+    let lowest = attributes[0];
+    for (let attr of attributes) {
+      const price = attr.sale_price || attr.price || 0;
+      const lowestPrice = lowest.sale_price || lowest.price || 0;
+      if (price < lowestPrice) {
+        lowest = attr;
+      }
+    }
+    console.log(lowest.value)
+    return lowest.value; // Or lowest.id, depending on what identifies the selection
+  }
 
-/*   console.log(attributes)
- */  return (
+  console.log(attributes)
+  return (
     <div className={className}>
       <h3 className="text-base md:text-lg text-heading font-semibold mb-2.5 capitalize flex items-center">
         {t(title) !== title ? t(title) : titleNew}
@@ -186,7 +200,7 @@ export const ProductAttributes: React.FC<Props> = ({
         isClearable={true} // Allows deselecting the input
         options={attributes
           .filter(({ mainObject }) => !mainObject) // Exclude options with the mainObject key
-          .map(({ value, meta, price, img, namn, variation, sku, option, produktvariation, image, _id, id, shipping, sale_price }) => ({
+          .map(({ value, meta, price, img, namn, variation, sku, option, produktvariation, image, _id, id, shipping, sale_price, itsaVariation }) => ({
 
             value,
             variation,
@@ -194,6 +208,7 @@ export const ProductAttributes: React.FC<Props> = ({
             sku,
             option,
             produktvariation,
+            itsaVariation,
             id,
             _id,
             shipping,
@@ -241,7 +256,8 @@ export const ProductAttributes: React.FC<Props> = ({
           const newValue = selectedOption ? selectedOption.value : null;
           const newPrice = selectedOption ? selectedOption.price : 0;
 
-
+          console.log(selectedOption)
+          const itsaVariation = selectedOption?.itsaVariation
           // Check if selectedOption has an img URL before trying to access it
           const imageUrl = selectedOption
             ? selectedOption.img?.url || selectedOption.image?.original || null
@@ -262,6 +278,7 @@ export const ProductAttributes: React.FC<Props> = ({
             sale_price: selectedOption?.sale_price,
             customOrder: selectedOption?.customOrder || false,
             value: newValue,
+            itsaVariation,
             produktvariation: selectedOption?.produktvariation || selectedOption?.variation || false,
             name: title === 'color' ? title : selectedOption?.translation?.se,
             url: imageUrl, // Use the URL only if img exists

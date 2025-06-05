@@ -31,14 +31,14 @@ const LocationOption: React.FC<LocationOptionProps> = ({
   const locationClick = (e: any) => {
 
 
-    if (e.id === "ax") {
+    if (e.id === "AX") {
       localStorage.setItem('clickedLocation', JSON.stringify(e))
       document.getElementById("locationContainerStart")?.classList.add("hidden");
     }
 
 
 /*     console.log(e)
- */    if (e.id === "se") {
+ */    if (e.id === "SE") {
       alert("VI säljer inte till sverige än")
     }
 

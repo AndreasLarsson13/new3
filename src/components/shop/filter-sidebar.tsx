@@ -33,6 +33,7 @@ const FilterSidebar = () => {
       <Scrollbar className="menu-scrollbar flex-grow mb-auto">
         <div className="flex flex-col py-7 px-5 md:px-7 text-heading">
           <ShopFilters />
+          Hejs
         </div>
       </Scrollbar>
 

@@ -7,6 +7,7 @@ interface Props {
 }
 
 const ProductMetaReview: React.FC<Props> = ({ data }) => {
+	console.log(data)
 	const [expanded, setExpanded] = useState<number>(0);
 	return (
 		<>

@@ -90,9 +90,18 @@ const Header: React.FC = () => {
 
   // Handle location selection change
   function handleLocationChange(option: Option) {
-    if (option.value === "se") {
+    if (option.value === "SE") {
       alert("Vi säljer inte till Sverige än tyvärr");
-    } else {
+    } else if (option.value === "FI") {
+      alert("Vi säljer inte till Finland än tyvärr");
+    }
+    else if (option.value === "EU") {
+      alert("Vi säljer inte till EU än tyvärr");
+    }
+    else if (option.value === "WORLD") {
+      alert("Vi säljer inte till resten av världen än tyvärr");
+    }
+    else {
       setClickedLocation(option);
       localStorage.setItem('clickedLocation', JSON.stringify(option));
       setIsLocationDropdownOpen(false);

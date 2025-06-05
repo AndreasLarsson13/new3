@@ -44,7 +44,7 @@ const serializeAttributes = (attributes: any[]) => {
 // Main function to serialize state for localStorage
 const serializeState = (state: State) => ({
   items: state.items.map((item) => ({
-    id: item.id,
+    id: item.id ? item.id : item._id,
     name: item.name,
     price: item.price,
     quantity: item.quantity,
@@ -52,6 +52,7 @@ const serializeState = (state: State) => ({
     location: "item.location",
     attributes: "item.attributes ? serializeAttributes(item.attributes) : []",
     sku: item.sku,
+    shippingSpecial: item.shippingSpecial
 
   })),
   isEmpty: state.isEmpty,
