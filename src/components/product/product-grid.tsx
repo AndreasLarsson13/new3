@@ -140,4 +140,7 @@ if (error) return <p>{error.message}</p>; */
 			</div>
 		</>
 	);
+
+
 };
+export default ProductGrid;
