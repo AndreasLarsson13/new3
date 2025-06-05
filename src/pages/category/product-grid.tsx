@@ -72,3 +72,4 @@ export const ProductGrid: FC<ProductGridProps> = ({ className = "" }) => {
 	);
 };
 
+export default ProductGrid;
