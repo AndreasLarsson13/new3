@@ -23,7 +23,7 @@ const menuData = [
                         slug: "skorsten", // No subChildItems here
                     },
                     {
-                        slug: "tillbehor", // No subChildItems here
+                        slug: "tillbehor-kamin", // No subChildItems here
                     },
                 ],
             },
@@ -1168,12 +1168,12 @@ menuData.forEach((element, index) => {
             columnItemItems: child.child
                 ? child.child.map((subChild, subChildIndex) => ({
                     id: subChildIndex + 1,
-                    path: `/store/${child.slug}/${subChild.slug}`,
+                    path: `/store/${element.slug}/${child.slug}/${subChild.slug}`,
                     label: subChild.slug,
                     subMenu: subChild.subChildItems
                         ? subChild.subChildItems.map((subSubChild, subSubChildIndex) => ({
                             id: subSubChildIndex + 1,
-                            path: `/store/${child.slug}/${subChild.slug}/${subSubChild}`,
+                            path: `/store/${element.slug}/${child.slug}/${subChild.slug}/${subSubChild}`,
                             label: subSubChild,
                         }))
                         : [],

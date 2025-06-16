@@ -15,6 +15,7 @@ export const fetchProducts = async ({ queryKey, pageParam = 1 }: any) => {
       ...options,
       page: pageParam,
       location: location.value
+
     },
   });
   console.log(data)
