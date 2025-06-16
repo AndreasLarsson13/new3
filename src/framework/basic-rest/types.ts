@@ -29,6 +29,7 @@ export type QueryOptionsType = {
   status?: string;
   limit?: number;
   demoVariant?: 'ancient';
+  language?: string;
 };
 
 export type ShopsQueryOptionsType = {

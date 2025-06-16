@@ -6,6 +6,7 @@ import Text from '@components/ui/text';
 import cn from 'classnames';
 import { useTranslation } from 'next-i18next';
 import _ from 'lodash';
+import Link from 'next/link';
 
 
 interface ProductProps {
@@ -56,58 +57,68 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
   });
   const { i18n } = useTranslation();
 
-  const filterProduct = product;
 
 
   const tempElement = document.createElement('div');
 
-  tempElement.innerHTML = filterProduct.description
+  tempElement.innerHTML = product.description
 
   const desriptionData = tempElement.firstChild?.textContent
-  /* 
-    filterProduct.variations.forEach(items => {
-      items.value = items.value
-      items.attribute.name = items.attribute.name[i18n.language]
-      items.attribute.slug = items.attribute.slug
-    })
-   */
+
+
+
+  /*  function handlePopupView() {
+     setModalData({ data: product });
+     setModalView('PRODUCT_VIEW');
+     return openModal();
+   } */
 
   function handlePopupView() {
-    setModalData({ data: filterProduct });
+    setModalData({ data: product });
     setModalView('PRODUCT_VIEW');
     return openModal();
   }
-
-
-
+  function navigateToProductPage() {
+    router.push(`${ROUTES.PRODUCT}/${product._id}/`)
+  }
 
   return (
-    <div
-      onClick={handlePopupView}
-      className={`${classes} cursor-pointer group flex flex-col bg-gray-200 ${!disableBorderRadius && 'rounded-md'
-        } relative items-center justify-between overflow-hidden`}
+    <Link
+      href={`products/${product._id}`}
+      className={`
+    ${classes} group flex flex-col relative items-center justify-between overflow-hidden
+    ${!disableBorderRadius ? 'rounded-xl' : ''} 
+    border border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)]
+    transition-shadow duration-300 bg-white
+  `}
     >
+
       <div
-        className={cn(
-          'flex justify-center p-4 h-full 3xl:min-h-[330px]',
-        )}
-        title={product?.name}
+        /*  onClick={navigateToProductPage} */
+        className={`${classes} cursor-pointer group flex flex-col  ${!disableBorderRadius && 'rounded-md'
+          } relative items-center justify-between overflow-hidden`}
       >
-        <Image
-          src={
-            product?.image?.original ??
-            '/assets/placeholder/products/product-featured.png'
-          }
-          width={size}
-          height={size}
+        <div
+          className={cn(
+            'flex justify-center p-7 h-full 3xl:min-h-[330px]',
+          )}
+          title={product?.name}
+        >
+          <Image
+            src={
+              product?.image?.original ??
+              '/assets/placeholder/products/product-featured.png'
+            }
+            width={size}
+            height={size}
 /*           objectFit="fit"
  */          loading={imgLoading}
-          alt={product?.name || 'Product Image'}
-          className="transition duration-500 ease-in-out transform group-hover:scale-110"
-        />
-      </div>
+            alt={product?.name || 'Product Image'}
+            className="transition duration-500 ease-in-out transform group-hover:scale-110"
+          />
+        </div>
 
-      {/* {variant === 'modern' && (
+        {/* {variant === 'modern' && (
         <span
           className={cn(
             'absolute top-3.5 md:top-5 3xl:top-7 ltr:left-3.5 rtl:right-3.5 ltr:md:left-5 rtl:md:right-5 ltr:3xl:left-7 rtl:3xl:right-7 bg-[#B26788] text-white text-10px md:text-sm leading-5 inline-block px-2 xl:px-3 pt-0.5 pb-1',
@@ -121,49 +132,50 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
         </span>
       )} */}
 
-      {discount && (
-        <span
-          className={cn(
-            'absolute top-3.5 md:top-5 3xl:top-7 ltr:left-3.5 rtl:right-3.5 ltr:md:left-5 rtl:md:right-5 ltr:3xl:left-7 rtl:3xl:right-7 bg-heading text-white text-10px md:text-sm leading-5 rounded-md inline-block px-2 xl:px-3 pt-0.5 pb-1',
-            {
-              'text-[#22C55E] bg-transparent ltr:!left-auto rtl:!right-auto right-3.5 md:right-5 3xl:right-7 font-bold':
-                variant === 'modern',
-            }
-          )}
+        {discount && (
+          <span
+            className={cn(
+              'absolute top-3.5 md:top-5 3xl:top-7 ltr:left-3.5 rtl:right-3.5 ltr:md:left-5 rtl:md:right-5 ltr:3xl:left-7 rtl:3xl:right-7 bg-heading text-white text-10px md:text-sm leading-5 rounded-md inline-block px-2 xl:px-3 pt-0.5 pb-1',
+              {
+                'text-[#22C55E] bg-transparent ltr:!left-auto rtl:!right-auto right-3.5 md:right-5 3xl:right-7 font-bold':
+                  variant === 'modern',
+              }
+            )}
+          >
+            {discount} {variant === 'modern' && ' off'}
+          </span>
+        )}
+
+        <div
+          className="flex flex-col w-full px-4 pb-4 md:flex-row lg:flex-col 2xl:flex-row md:justify-between md:items-center lg:items-start 2xl:items-center md:px-5 3xl:px-7 md:pb-5 3xl:pb-7"
+          title={product?.name}
         >
-          {discount} {variant === 'modern' && ' off'}
-        </span>
-      )}
-
-      <div
-        className="flex flex-col w-full px-4 pb-4 md:flex-row lg:flex-col 2xl:flex-row md:justify-between md:items-center lg:items-start 2xl:items-center md:px-5 3xl:px-7 md:pb-5 3xl:pb-7"
-        title={filterProduct?.name}
-      >
-        <div className="overflow-hidden ltr:md:pr-2 rtl:md:pl-2 ltr:lg:pr-0 rtl:lg:pl-0 ltr:2xl:pr-2 rtl:2xl:pl-2">
-          <h2 className="mb-1 text-sm font-semibold truncate text-heading md:text-base xl:text-lg">
-            {filterProduct?.name}
-          </h2>
+          <div className="overflow-hidden ltr:md:pr-2 rtl:md:pl-2 ltr:lg:pr-0 rtl:lg:pl-0 ltr:2xl:pr-2 rtl:2xl:pl-2">
+            <h2 className="mb-1 text-sm font-semibold truncate text-heading md:text-base xl:text-lg">
+              {product?.name}
+            </h2>
 
 
-          <p className="text-body text-xs xl:text-sm leading-normal xl:leading-relaxed truncate max-w-[250px]">
-            {desriptionData}
-          </p>
+            <p className="text-body text-xs xl:text-sm leading-normal xl:leading-relaxed truncate max-w-[250px]">
+              {desriptionData}
+            </p>
 
-        </div>
-        <div className="flex-shrink-0 flex flex-row-reverse md:flex-col lg:flex-row-reverse 2xl:flex-col items-center md:items-end lg:items-start 2xl:items-end justify-end ltr:md:text-right rtl:md:text-left lg:ltr:text-left rtl:text-right ltr:xl:text-right rtl:xl:text-left mt-2 md:-mt-0.5 lg:mt-2 2xl:-mt-0.5">
-          {discount && (
-            <del className="text-sm md:text-base lg:text-sm xl:text-base 3xl:text-lg">
-              {basePrice}
-            </del>
-          )}
-          <div className="text-heading font-segoe font-semibold text-base md:text-xl lg:text-base xl:text-xl 3xl:text-2xl 3xl:mt-0.5 ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
-            {price}
           </div>
+          <div className="flex-shrink-0 flex flex-row-reverse md:flex-col lg:flex-row-reverse 2xl:flex-col items-center md:items-end lg:items-start 2xl:items-end justify-end ltr:md:text-right rtl:md:text-left lg:ltr:text-left rtl:text-right ltr:xl:text-right rtl:xl:text-left mt-2 md:-mt-0.5 lg:mt-2 2xl:-mt-0.5">
+            {discount && (
+              <del className="text-sm md:text-base lg:text-sm xl:text-base 3xl:text-lg">
+                {basePrice}
+              </del>
+            )}
+            <div className="text-heading font-segoe font-semibold text-base md:text-xl lg:text-base xl:text-xl 3xl:text-2xl 3xl:mt-0.5 ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
+              {price}
+            </div>
+          </div>
+
+
         </div>
-
-
       </div>
-    </div>
+    </Link>
   );
 };
 

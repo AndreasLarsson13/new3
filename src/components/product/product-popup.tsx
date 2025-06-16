@@ -100,7 +100,7 @@ export default function ProductPopup() {
 
     setCurrentPrice(data.sale_price > 0 ? data.sale_price + totalProduct : data.price + totalProduct);
 
-    data?.gallery.forEach(item => {
+    /* data?.gallery.forEach(item => {
       if (item.extraColor) {
         if (attribute.value === "green") {
           item.original = item.extraColor.green;
@@ -115,7 +115,7 @@ export default function ProductPopup() {
           data.image.original = item.extraColor.white;
         }
       }
-    });
+    }); */
 
     if (attribute.customOrder) {
       setcustomOrder(true);
@@ -169,7 +169,7 @@ export default function ProductPopup() {
             </div>
           </div>
 
-          {Object.keys(variations).map((variation) => (
+          {/*  {Object.keys(variations).map((variation) => (
             <ProductAttributes
               key={variation}
               title={variation}
@@ -178,7 +178,7 @@ export default function ProductPopup() {
               clicked={attributes}
               onClick={(attribute: any) => handleAttribute(attribute, variation)}
             />
-          ))}
+          ))} */}
 
           <div className="pt-2 md:pt-4">
             <div className="flex items-center justify-between mb-4 gap-x-3 sm:gap-x-4">

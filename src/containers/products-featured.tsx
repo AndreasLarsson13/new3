@@ -37,17 +37,17 @@ const ProductsFeatured: React.FC<ProductsProps> = ({
 
   const { i18n } = useTranslation();
 
-
-  const filterProduct = data && data.map(item => ({ ...item }));
-
-
-  filterProduct && filterProduct.forEach(item => {
-    item.description = item.description[i18n.language]
-
-  })
-
-  console.log(filterProduct)
-
+  /* 
+    const filterProduct = data && data.map(item => ({ ...item }));
+  
+  
+    filterProduct && filterProduct.forEach(item => {
+      item.description = item.description[i18n.language]
+  
+    })
+  
+    console.log(filterProduct)
+   */
   return (
     <div className={className}>
       <SectionHeader
@@ -67,7 +67,7 @@ const ProductsFeatured: React.FC<ProductsProps> = ({
             }
           )}
         >
-          {filterProduct && filterProduct.slice(0, limit).map((product: Product, idx: number) => (
+          {data && data.slice(0, limit).map((product: Product, idx: number) => (
             <ProductOverlayCard
               disableBorderRadius={disableBorderRadius}
               key={`product--key${product.id}`}

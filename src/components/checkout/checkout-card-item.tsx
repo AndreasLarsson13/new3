@@ -34,7 +34,11 @@ export const CheckoutItem: React.FC<{ item: Item }> = ({ item }) => {
       {/* Product Image */}
       <div className="flex border rounded-md border-gray-300 w-16 h-16 flex-shrink-0">
         <img
-          src={item.image.original ? item.image.original : item.image /* : '/assets/placeholder/cart-item.svg' */}
+          src={
+            item.image?.original
+            ?? item.image
+            ?? '/assets/placeholder/cart-item.svg'
+          }
           alt={item.name || 'Product Image'}
           className="object-fit w-full h-full"
         />
