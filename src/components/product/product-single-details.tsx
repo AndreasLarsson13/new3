@@ -21,6 +21,7 @@ import { RiTyphoonLine } from 'react-icons/ri';
 import { forEach, pick } from 'lodash';
 import Alert from '@components/ui/alert';
 import { FaInfoCircle } from 'react-icons/fa';
+import ProductAccessoryOptions from './product-accessory-options'; // <--- Importera den nya komponenten
 
 
 
@@ -390,7 +391,7 @@ const ProductSingleDetails: React.FC = () => {
         </div>
 
         {variations && Object.keys(variations).length > 0 && <div className={`${productOptions ? 'pb-5 border-b border-gray-300' : ''}`}>
-          <h3 className="text-base md:text-lg text-heading font-semibold capitalize pb-3">Variationer</h3>
+          {/* <h3 className="text-base md:text-lg text-heading font-semibold capitalize pb-3">Variationer</h3> */}
           {Object.keys(variations).map((variation) => {
             /*  console.log(variation) */
             return (
@@ -427,6 +428,7 @@ const ProductSingleDetails: React.FC = () => {
             );
           })}
         </div>}
+
 
         <div className="flex items-center mt-5">
           <div className="text-heading font-bold text-base md:text-xl lg:text-2xl 2xl:text-4xl ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
@@ -477,7 +479,7 @@ const ProductSingleDetails: React.FC = () => {
           <h3 className="text-base md:text-lg text-heading font-semibold capitalize">
             Förväntad leveranstid:
           </h3>
-          <p className="text-gray-400">{data?.deliveryTime} dagar</p>
+          <p className="text-gray-400">{data?.deliveryTime}</p>
           <div className="relative group">
             <FaInfoCircle className="text-gray-400 cursor-pointer" />
             <div className="absolute bottom-full left-0 mb-2 hidden group-hover:block w-64 bg-white text-gray-700 text-sm border border-gray-200 rounded shadow-md p-2">
@@ -496,8 +498,8 @@ const ProductSingleDetails: React.FC = () => {
             <li>
               <span className="font-semibold text-heading inline-block ltr:pr-2 rtl:pl-2">
                 {t('text-category')}:
-              </span>
-              {data?.categoryPath.reduce((acc, cat, index) => {
+              </span> //fixa
+              {/* {data?.categoryPath.reduce((acc, cat, index) => {
                 const path = `${acc.currentPath}/${cat}`;
                 acc.currentPath = path;
 
@@ -517,7 +519,7 @@ const ProductSingleDetails: React.FC = () => {
 
                 return acc;
               }, { currentPath: '', breadcrumbs: [] }).breadcrumbs}
-
+ */}
 
 
             </li>

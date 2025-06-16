@@ -5,7 +5,7 @@ export function getVariations(variations: object | undefined) {
 
 
 
-  return groupBy(variations, "attribute.slug");
+  return groupBy(variations, "attribute.group");
 
 
 }

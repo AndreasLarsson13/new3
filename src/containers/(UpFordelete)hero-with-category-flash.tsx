@@ -78,36 +78,36 @@ export function CategoryListCardSection() {
           >
             {isLoading
               ? Array.from({ length: 7 }).map((_, idx) => (
-                  <SwiperSlide key={idx}>
-                    <CategoryListCardLoader
-                      uniqueKey={`category-list-${idx}`}
-                    />
-                  </SwiperSlide>
-                ))
+                <SwiperSlide key={idx}>
+                  <CategoryListCardLoader
+                    uniqueKey={`category-list-${idx}`}
+                  />
+                </SwiperSlide>
+              ))
               : data?.categories.data.map((category: any) => (
-                  <SwiperSlide key={`sm-category--key${category.id}`}>
-                    <CategoryListCard category={category} />
-                  </SwiperSlide>
-                ))}
+                <SwiperSlide key={`sm-category--key${category.id}`}>
+                  <CategoryListCard category={category} />
+                </SwiperSlide>
+              ))}
           </Carousel>
         </div>
       ) : (
         <div className="col-span-full lg:col-span-2 grid grid-cols-1 gap-3 justify-between">
           {isLoading
             ? Array.from({ length: 7 }).map((_, idx) => (
-                <CategoryListCardLoader
-                  key={idx}
-                  uniqueKey={`category-list-${idx}`}
-                />
-              ))
+              <CategoryListCardLoader
+                key={idx}
+                uniqueKey={`category-list-${idx}`}
+              />
+            ))
             : data?.categories.data
-                .slice(0, 7)
-                .map((category: any) => (
-                  <CategoryListCard
-                    key={`lg-category--key${category.id}`}
-                    category={category}
-                  />
-                ))}
+              .slice(0, 7)
+              .map((category: any) => (
+                <CategoryListCard
+                  key={`lg-category--key${category.id}`}
+                  category={category}
+                />
+              ))}
         </div>
       )}
     </>

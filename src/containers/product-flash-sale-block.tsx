@@ -82,7 +82,7 @@ const renderer = ({ days, hours, minutes, seconds, completed, t }: any) => {
           <span className="bg-heading rounded-md text-white text-xs md:text-sm w-8 h-8 md:w-10 md:h-10 flex items-center justify-center mb-1">
             {days}
           </span>
-          {t("text-days")}
+          {t("text-days")} 1000
         </div>
         <div className="text-heading text-10px md:text-xs text-center uppercase">
           <span className="bg-heading rounded-md text-white text-xs md:text-sm w-8 h-8 md:w-10 md:h-10 flex items-center justify-center mb-1">

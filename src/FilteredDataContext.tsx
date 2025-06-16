@@ -61,11 +61,13 @@ export const FilteredDataProvider: React.FC<ProviderProps> = ({ children }) => {
 
   useEffect(() => {
     if (data) {
+      console.log(data)
       const allProducts = data.pages.flatMap((page: PaginatedProductResponse) => page.data);
       const allFilters = data.pages.flatMap((page: PaginatedProductResponse) => page.filters);
       setfiltersData(allFilters[0]);
       console.log(allFilters); // Optional, remove if not needed for production
       setFilteredData(allProducts);
+      console.log(allProducts)
     }
   }, [query, data]); // `data` already includes query updates
 

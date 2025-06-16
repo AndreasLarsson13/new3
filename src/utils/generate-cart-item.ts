@@ -18,14 +18,14 @@ interface Item {
   widthPack: number;
   heightPack: number;
   lengthPack: number;
-  shipping: number;
+  shippingCosts: number;
   variationName: string;
   shippingSpecial: object;
 }
 
 
 export function generateCartItem(item: Item, attributes: object, attributeArray: Array<any>, currentPrice: number, locationS: string) {
-  const { id, name, slug, image, price, sale_price, currency, _id, shipping, weightPack, widthPack, heightPack, lengthPack, sku, variationName, shippingSpecial } = item;
+  const { id, name, slug, image, price, sale_price, currency, _id, shippingCosts, weightPack, widthPack, heightPack, lengthPack, sku, variationName, shippingSpecial } = item;
 
 
   const formulaShip = 9999;
@@ -50,7 +50,7 @@ export function generateCartItem(item: Item, attributes: object, attributeArray:
     sale_price,
     location: locationS,
     sku: sku ? sku : attribute?.sku,
-    shipping: shipping ? shipping : formulaShip,
+    shipping: shippingCosts ? shippingCosts : formulaShip,
     shippingSpecial
   };
 }

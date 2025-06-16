@@ -19,8 +19,7 @@ export default function NewArrivalsProductFeed({
   className = 'mb-9 md:mb-10 xl:mb-12',
 }: Props) {
   const { data, isLoading, error } = useNewArrivalProductsQuery({
-    limit: 10,
-    demoVariant,
+    limit: 10
   });
 
   return (

@@ -3,14 +3,14 @@ const menuData = [
         slug: "hushall",
         child: [
             {
-                slug: "braskaminer",
+                slug: "kaminer",
                 child: [
                     {
                         slug: "taljstenskaminer",
 
                     },
                     {
-                        slug: "kaminer",
+                        slug: "braskaminer",
 
                     },
                     {
@@ -18,6 +18,9 @@ const menuData = [
                     },
                     {
                         slug: "gjutjarnskaminer", // No subChildItems here
+                    },
+                    {
+                        slug: "skorsten", // No subChildItems here
                     },
                     {
                         slug: "tillbehor", // No subChildItems here
@@ -67,10 +70,19 @@ const menuData = [
                 slug: "vvs",
                 child: [
                     {
-                        slug: "kranar/blandare",
+                        slug: "kranar",
                     },
                     {
-                        slug: "handfat/badkar",
+                        slug: "blandare",
+                    },
+                    {
+                        slug: "handfat",
+                    },
+                    {
+                        slug: "duschar",
+                    },
+                    {
+                        slug: "badkar",
                     },
                     {
                         slug: "spabad/badtunnor", // No subChildItems here
@@ -180,7 +192,60 @@ const menuData = [
                 ],
 
             },
+            {
+                slug: "kok",
+                child: [
+                    {
+                        slug: "kokskranar",
+                    },
+                    {
+                        slug: "diskho",
+                    }
+                    ,
+                    {
+                        slug: "tillbehor",
+                    }
+                ],
 
+            },
+            {
+                slug: "badrum",
+                child: [
+                    {
+                        slug: "tvattstallskranar",
+                    },
+                    {
+                        slug: "badkarsblandare",
+                    },
+                    {
+                        slug: "handfat",
+                    }
+                    ,
+                    {
+                        slug: "dushar",
+                    }
+                ],
+
+            },
+            {
+                slug: "grovkok",
+                child: [
+                    {
+                        slug: "badrumskranar",
+                    },
+                    {
+                        slug: "badkar",
+                    },
+                    {
+                        slug: "handfat",
+                    }
+                    ,
+                    {
+                        slug: "dushar",
+                    }
+                ],
+
+            },
 
         ],
     },
@@ -507,22 +572,28 @@ const mobileData = [
                         id: 1,
                         path: "/search?q=kranar/blandare",
                         label: "kranar/blandare",
-
                     },
                     {
                         id: 2,
                         path: "/search?q=handfat/badkar",
-                        label: "handfat/badkar",
+                        label: "badkar",
+
+                    },
+
+                    {
+                        id: 3,
+                        path: "/search?q=handfat/badkar",
+                        label: "handfat",
 
                     },
                     {
-                        id: 3,
+                        id: 4,
                         path: "/search?q=spabad/badtunnor",
                         label: "spabad/badtunnor",
 
                     },
                     {
-                        id: 4,
+                        id: 5,
                         path: "/search?q=toastolar",
                         label: "toastolar",
 
@@ -688,7 +759,86 @@ const mobileData = [
 
                     }
                 ]
-            }
+            },
+            {
+                id: 10,
+                path: "/search?q=vitvaror",
+                label: "vitvaror",
+                subMenu: [
+                    {
+                        id: 1,
+                        path: "/search?q=kylar",
+                        label: "kylar",
+
+                    },
+                    {
+                        id: 2,
+                        path: "/search?q=frysar",
+                        label: "frysar",
+
+                    },
+                    {
+                        id: 3,
+                        path: "/search?q=vinkylar",
+                        label: "vinkylar",
+
+                    },
+                    {
+                        id: 4,
+                        path: "/search?q=diskmaskiner",
+                        label: "diskmaskiner",
+
+                    },
+                    {
+                        id: 5,
+                        path: "/search?q=frysboxar",
+                        label: "frysboxar",
+
+                    },
+                    {
+                        id: 6,
+                        path: "/search?q=kombineradkyl/frys",
+                        label: "kombineradkyl/frys",
+
+                    },
+                    {
+                        id: 7,
+                        path: "/search?q=flaktar",
+                        label: "flaktar",
+
+                    },
+                    {
+                        id: 8,
+                        path: "/search?q=tvattmaskiner",
+                        label: "tvattmaskiner",
+
+                    },
+                    {
+                        id: 9,
+                        path: "/search?q=torktumlare",
+                        label: "torktumlare",
+
+                    },
+                    {
+                        id: 10,
+                        path: "/search?q=microugn",
+                        label: "microugn",
+
+                    },
+                    {
+                        id: 11,
+                        path: "/search?q=hallar",
+                        label: "hallar",
+
+                    },
+                    {
+                        id: 12,
+                        path: "/search?q=ugnar",
+                        label: "ugnar",
+
+                    }
+                ]
+            },
         ]
     },
     {
@@ -1013,7 +1163,7 @@ menuData.forEach((element, index) => {
     element.child.forEach((child, childIndex) => {
         const columnItem = {
             id: childIndex + 1,
-            path: `/store/${child.slug}`,
+            path: `/store/${element.slug}/${child.slug}`,
             label: child.slug,
             columnItemItems: child.child
                 ? child.child.map((subChild, subChildIndex) => ({
@@ -1023,7 +1173,7 @@ menuData.forEach((element, index) => {
                     subMenu: subChild.subChildItems
                         ? subChild.subChildItems.map((subSubChild, subSubChildIndex) => ({
                             id: subSubChildIndex + 1,
-                            path: `/store//${child.slug}/${subChild.slug}/${subSubChild}`,
+                            path: `/store/${child.slug}/${subChild.slug}/${subSubChild}`,
                             label: subSubChild,
                         }))
                         : [],
@@ -1058,7 +1208,7 @@ menuData.forEach((element, index) => {
     // Create the final menu structure
     const menuItem = {
         id: index + 1, // Unique ID for each menu item
-        path: `/store?q=${element.slug}`, // Generate path from slug
+        path: `/store/${element.slug}`, // Generate path from slug
         label: element.slug, // Use slug as label
         columns: columnGroups, // Push the groups into columns
     };
