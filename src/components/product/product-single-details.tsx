@@ -171,17 +171,7 @@ const ProductSingleDetails: React.FC = () => {
 
     console.log(data)
     const item = generateCartItem(data, attributes, AttributeArray, currentPrice, storedLocation);
-
-    /*  console.log(item) */
-    /*     console.log(item)
-     */
-    // Handle image selection
-    /* if (data?.gallery[0]?.extraColor) {
-      item.image =
-        attributes.value in data?.gallery[0]?.extraColor
-          ? data?.gallery[0]?.extraColor[attributes.value]
-          : data?.gallery[0]?.original;
-    } */
+    console.log(item)
 
     // Debugging: Check the item before adding
     // Add to cart
