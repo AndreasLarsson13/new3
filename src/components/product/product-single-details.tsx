@@ -72,6 +72,7 @@ const ProductSingleDetails: React.FC = () => {
   const [customOrder, setcustomOrder] = useState(false);
   const [resetInputFields, setresetInputFields] = useState(false);
   const [variationImage, setVariationImage] = useState<string | null>(null);
+  const [skuNumber, setSkuNumber] = useState("")
 
   const { price, basePrice, discount } = usePrice(
     data && {
@@ -85,9 +86,10 @@ const ProductSingleDetails: React.FC = () => {
 
 
   useEffect(() => {
+    setSkuNumber(data.sku)
+
     if (data?.gallery?.length > 0) {
       setVariationImage(data.gallery[activeIndex].original);
-
     }
   }, [data, activeIndex]);
 
@@ -256,6 +258,7 @@ const ProductSingleDetails: React.FC = () => {
 
     const index = AttributeArray.findIndex((attr) => attr.group === attribute.group);
 
+
     // Update or remove the attribute in AttributeArray
     const shouldRemove = attribute.value === false || attribute.id === undefined;
 
@@ -294,6 +297,7 @@ const ProductSingleDetails: React.FC = () => {
     // Update currentPrice based on the selection
     if (hasProduktvariation) {
       setCurrentPrice(totalProduct)
+      setSkuNumber(attribute.sku)
       setOriginalPriceExeptSale(totalPriceExeptSalePrice);
       // Use total product price if a product variation is selected
     }
@@ -326,6 +330,34 @@ const ProductSingleDetails: React.FC = () => {
       setActiveIndex(index); // Uppdatera aktivt index (om du använder det någon annanstans)
     }
   };
+
+
+  const categoryPath = data?.categoryPaths[0]?.split('/') || [];
+
+  const breadcrumbs = categoryPath.reduce(
+    (acc, cat, index) => {
+      const path = `${acc.currentPath}/${cat}`;
+      acc.currentPath = path;
+
+      acc.breadcrumbs.push(
+        <div key={index} className="inline-flex items-center">
+          <Link
+            href={`/store/${path}`}
+            className="transition hover:underline hover:text-heading"
+          >
+            {t(`menu:${cat}`)}
+          </Link>
+          {index < categoryPath.length - 1 && (
+            <span className="text-heading inline-block pr-1 pl-1">{'>'}</span>
+          )}
+        </div>
+      );
+
+      return acc;
+    },
+    { currentPath: '', breadcrumbs: [] as JSX.Element[] }
+  ).breadcrumbs;
+
 
   return (
     <div className="block lg:grid grid-cols-9 gap-x-10 xl:gap-x-14 pt-7 pb-10 lg:pb-14 2xl:pb-20 items-start">
@@ -493,33 +525,13 @@ const ProductSingleDetails: React.FC = () => {
               <span className="font-semibold text-heading inline-block ltr:pr-2 rtl:pl-2">
                 {t('text-sku')}
               </span>
-              {data?.sku}
+              {skuNumber}
             </li>
             <li>
               <span className="font-semibold text-heading inline-block ltr:pr-2 rtl:pl-2">
                 {t('text-category')}:
-              </span> //fixa
-              {/* {data?.categoryPath.reduce((acc, cat, index) => {
-                const path = `${acc.currentPath}/${cat}`;
-                acc.currentPath = path;
-
-                acc.breadcrumbs.push(
-                  <div key={index} className="inline-flex items-center">
-                    <Link
-                      href={path}
-                      className="transition hover:underline hover:text-heading"
-                    >
-                      {t(`menu:${cat}`)}
-                    </Link>
-                    {index < data.categoryPath.length - 1 && (
-                      <span className="text-heading inline-block pr-1 pl-1">{'>'}</span>
-                    )}
-                  </div>
-                );
-
-                return acc;
-              }, { currentPath: '', breadcrumbs: [] }).breadcrumbs}
- */}
+              </span>
+              {breadcrumbs}
 
 
             </li>

@@ -34,7 +34,7 @@ export const Collapse: React.FC<CollapseProps> = ({
   const isOpen = i === expanded;
 
   const { t, i18n } = useTranslation(translatorNS);
-  console.log(pdf)
+  console.log(title)
   return (
     <div
       className={cn({
@@ -62,7 +62,7 @@ export const Collapse: React.FC<CollapseProps> = ({
             }
           )}
         >
-          {titleKey ? t(titleKey) : title}
+          {t(`common:${title}`)}
         </h2>
         <div className="relative flex items-center justify-center flex-shrink-0 w-4 h-4">
           <div className="w-full h-0.5 bg-heading rounded-sm" />
