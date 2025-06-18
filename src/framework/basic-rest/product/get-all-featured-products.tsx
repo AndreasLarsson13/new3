@@ -19,7 +19,6 @@ export const fetchFeaturedProducts = async ({ queryKey }: any) => {
       location: location.value
     },
   });
-  console.log(data)
 
 
   return data as Product[];

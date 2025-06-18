@@ -47,7 +47,7 @@ export const BrandFilter = () => {
 	}
 
 	// Filtrera varumärken baserat på produkter
-	console.log(filteredData)
+
 
 
 	const arrayProductBrands = filteredData.map((item: any) => item.brand);

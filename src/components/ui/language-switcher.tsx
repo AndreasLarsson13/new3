@@ -71,7 +71,7 @@ export default function LanguageSwitcher() {
     setIsModalOpen(!isModalOpen);
   }
 
-  console.log(clickedLocation)
+  /* console.log(clickedLocation) */
 
   return (
     <div>

@@ -19,8 +19,8 @@ const RelatedProducts: React.FC<ProductsProps> = ({
 }) => {
 	const router = useRouter();
 	const { slug } = router.query;
-	console.log(productRelated)
-
+	/* 	console.log(productRelated)
+	 */
 	const { data, isLoading, error } = useRelatedProductsQuery({
 		limit: 10,
 		related: productRelated.relatedProducts,

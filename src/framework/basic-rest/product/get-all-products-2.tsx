@@ -18,7 +18,6 @@ export const fetchProducts = async ({ queryKey, pageParam = 1 }: any) => {
 
     },
   });
-  console.log(data)
   return data; // no need to cast as Product[] anymore
 };
 

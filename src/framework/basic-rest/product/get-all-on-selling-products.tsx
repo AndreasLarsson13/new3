@@ -18,7 +18,6 @@ export const fetchOnSellingProducts = async ({ queryKey }: any) => {
       location: location.value
     },
   });
-  console.log(data)
   return data;
 };
 export const useOnSellingProductsQuery = (options: QueryOptionsType) => {

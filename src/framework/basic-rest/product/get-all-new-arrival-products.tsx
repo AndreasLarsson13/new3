@@ -10,18 +10,15 @@ export const fetchNewArrivalProducts = async ({ queryKey }: any) => {
 
 
 
-  console.log(location)
 
 
   const [_key, options] = queryKey;
-  console.log(queryKey)
   const { data } = await http.get(API_ENDPOINTS.NEW_ARRIVAL_PRODUCTS, {
     params: {
       ...options,
       location: location.value
     },
   });
-  console.log(data)
 
   return data as Product[];
 };

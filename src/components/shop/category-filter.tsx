@@ -107,7 +107,7 @@ export const CategoryFilter = () => {
 
 
 
-	console.log("HEJSAN", finalFilteredItems)
+
 
 	return (
 		<div className="block border-b border-gray-300 pb-7 mb-7">

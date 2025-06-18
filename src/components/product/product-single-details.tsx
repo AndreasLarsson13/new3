@@ -126,10 +126,10 @@ const ProductSingleDetails: React.FC = () => {
 
   const variations = getVariations(data.variations);
 
-/*   console.log(variations)
- */  const productOptions = getVariations(data.options)
 
-  /*   console.log(productOptions) */
+  const productOptions = getVariations(data.options)
+
+
   const isSelected = !isEmpty(variations)
     ? Object.keys(variations).every((variation) => {
       const isRequired = variations[variation][0]?.required; // Check if required
@@ -175,37 +175,38 @@ const ProductSingleDetails: React.FC = () => {
 
     // Debugging: Check the item before adding
     // Add to cart
+
     if (data.variations.length === 0) {
 
       addItemToCart(item, quantity)
-      console.log("true")
+
+
     }
     let variationPrice = 0
     let combinedIds = ""
     if (AttributeArray.length > 0) {
       let int = 0
-      console.log(AttributeArray)
+
       AttributeArray.forEach(itemAttributes => {
-        if (!itemAttributes.produktvariation) {
-          console.log(itemAttributes)
+        if (!itemAttributes.itsaVariation) {
+
           int++
-          /*  console.log("fejesfj", itemAttributes, int) */
+
           const test = generateCartItemOptions(itemAttributes)
           addItemToCart(test, 1)
         }
         else {
 
           /* variationPrice += itemAttributes.sale_price > 0 ? itemAttributes.sale_price : itemAttributes.price */
-          item.name = item.productName
+          item.name = `${item.name} - ${itemAttributes.value}`
           item.variationName = itemAttributes.value
           item.id = itemAttributes.id
-          item.price = itemAttributes.price
+          /*  */
           item.sale_price = itemAttributes.sale_price
-          console.log(itemAttributes)
+
           combinedIds += `${itemAttributes.id}_`
           item.image = variationImage
           item.sku = itemAttributes.sku
-          console.log(item)
 
           addItemToCart(item, quantity)
         }
@@ -214,7 +215,7 @@ const ProductSingleDetails: React.FC = () => {
     }
 
 
-
+    console.log(item)
 
 
     AttributeArray = [];
@@ -282,8 +283,6 @@ const ProductSingleDetails: React.FC = () => {
 
 
 
-    console.log("aaa", attribute)
-    console.log("mega", hasProduktvariation)
     // Update currentPrice based on the selection
     if (hasProduktvariation) {
       setCurrentPrice(totalProduct)
@@ -292,15 +291,13 @@ const ProductSingleDetails: React.FC = () => {
       // Use total product price if a product variation is selected
     }
 
-    console.log(currentPrice)
 
     if (!hasProduktvariation) {
       setOptionPrice(totalProduct)
       setOriginalPriceExeptSale(totalPriceExeptSalePrice)
     }
-    console.log(optionPrice)
+
     // Update the gallery image based on the selected attribute
-    console.log(attribute)
     if (attribute.itsaVariation) {
       // Set the gallery's active image to the variation's image
       data.gallery[activeIndex].original = attribute.url;
@@ -416,7 +413,7 @@ const ProductSingleDetails: React.FC = () => {
         {variations && Object.keys(variations).length > 0 && <div className={`${productOptions ? 'pb-5 border-b border-gray-300' : ''}`}>
           {/* <h3 className="text-base md:text-lg text-heading font-semibold capitalize pb-3">Variationer</h3> */}
           {Object.keys(variations).map((variation) => {
-            /*  console.log(variation) */
+
             return (
               <ProductAttributes
                 key={variation}
@@ -436,7 +433,7 @@ const ProductSingleDetails: React.FC = () => {
           <h3 className="text-base md:text-lg text-heading font-semibold capitalize pb-3">Tillbehör</h3>
 
           {Object.keys(productOptions).map((option) => {
-            /* console.log("tillbehör attribut", productOptions) */
+
             return (
               <ProductOptionAttributes
                 key={option}

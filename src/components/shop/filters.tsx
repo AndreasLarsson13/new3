@@ -17,7 +17,7 @@ export const ShopFilters: React.FC = () => {
 		Object.entries(query).filter(([key]) => key !== "slug")
 	);
 
-	console.log(filteredQuery)
+
 	return (
 		<div className="pt-1">
 			<div className="block border-b border-gray-300 pb-7 mb-7">

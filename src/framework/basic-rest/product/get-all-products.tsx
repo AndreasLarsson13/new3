@@ -26,8 +26,6 @@ const fetchProducts = async (updateCurrency: any) => {
 	const activeRoute = updateCurrency.queryKey[1]?.route;
 	const categoryPage = activeRoute?.split('/')[1];
 
-	console.log(categoryPage)
-	console.log(updateCurrency.queryKey[1].slug)
 	// Construct URL based on query parameters
 	let url = `${API_ENDPOINTS.PRODUCTS}?currency=${encodeURIComponent(currency)}&limit=${encodeURIComponent(limit)}`;
 	if (categoryPage === "category") {

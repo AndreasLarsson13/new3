@@ -4,7 +4,6 @@ import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
 import { useQuery } from '@tanstack/react-query';
 
 export const fetchCategories = async (options: any) => {
-  console.log(options.queryKey[1].popular)
 
   const { data } = await http.get(API_ENDPOINTS.CATEGORIES, {
     params: { frontpage: options.queryKey[1].popular }

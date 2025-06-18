@@ -26,7 +26,6 @@ const CheckoutCard: React.FC = () => {
 
 
   let shippingPrice = 0
-  console.log(items)
   items.forEach(item => {
     let price = 0
     if (item.shippingSpecial) {

@@ -100,13 +100,22 @@ export const ProductAttributes: React.FC<Props> = ({
   };
 
   // Reset vid ändring
+  /*  useEffect(() => {
+     if (resetInputFields) {
+       setSelectedValue('');
+     } else {
+       setSelectedValue(initialSelectedAttribute?.value || '');
+     }
+   }, [resetInputFields, attributes]); */
+
   useEffect(() => {
     if (resetInputFields) {
       setSelectedValue('');
-    } else {
+    } else if (!selectedValue) {  // bara sätt initialt om inget är valt
       setSelectedValue(initialSelectedAttribute?.value || '');
     }
   }, [resetInputFields, attributes]);
+
 
   // Tooltip close vid klick utanför
   useEffect(() => {
@@ -197,7 +206,7 @@ export const ProductAttributes: React.FC<Props> = ({
     );
 
   const currentSelectedOption = options.find((opt) => opt.value === selectedValue) || null;
-
+  console.log(currentSelectedOption)
   const handleChange = (selected: SingleValue<typeof options[number]>) => {
     if (!selected) {
       setSelectedValue('');
@@ -275,7 +284,7 @@ export const ProductAttributes: React.FC<Props> = ({
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [resetInputFields]);
 
   return (
     <div className={className}>

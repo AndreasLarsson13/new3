@@ -17,7 +17,7 @@ const CategoryBanner: React.FC<CategoryBannerProps> = ({
   const categoryTitle = slug?.toString().split('-').join('');
 
 
-  console.log(sale)
+
   return (
     <div
       className={`bg-gray-200 rounded-md relative flex flex-row ${className}`}

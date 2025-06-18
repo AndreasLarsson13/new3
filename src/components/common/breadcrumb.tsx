@@ -28,7 +28,6 @@ const BreadcrumbSeparator: React.FC<Props> = ({ children, ...props }) => {
 
 export const BreadcrumbItems = (props: any) => {
   let children: any = React.Children.toArray(props.children);
-  console.log(props.children)
   children = children.map((child: string, index: number) => (
     <BreadcrumbItem key={`breadcrumb_item${index}`}>{child}</BreadcrumbItem>
   ));
@@ -60,9 +59,7 @@ export const BreadcrumbItems = (props: any) => {
 const Breadcrumb: React.FC<{ separator?: string; product?: any }> = ({ separator = '/', product }) => {
   const breadcrumbs = useBreadcrumb();
   const { t } = useTranslation('common');
-  console.log(product.category.forEach(item => {
-    console.log(item.slug)
-  }))
+
   // Remove unnecessary breadcrumbs if needed
 
   let currentPath = "";

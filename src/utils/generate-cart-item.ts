@@ -34,17 +34,20 @@ export function generateCartItem(item: Item, attributes: object, attributeArray:
   const attributeString = Object.values(attributes).map((attr) => String(attr)).join(".");
 
   console.log("teststat", _id)
-  console.log(attribute)
   const generatedId = `${_id}.${attributeString}`;
 
+  const mainProductName = item.name
+
+  console.log(price)
   return {
     id: id ? id : _id,
     linkId: _id,
+    mainProductName: item.name,
     name,
     variationName,
     slug,
     image: image.original ? image : item.url, // Assuming image has a thumbnail property
-    price: price ? price : parseInt(currentPrice),
+    price/* : price ? price : parseInt(currentPrice) */,
     attributes: attributeArray,
     currency,
     sale_price,
@@ -61,14 +64,14 @@ export function generateCartItemOptions(item: Item) {
   const { id, name, slug, image, price, sale_price, currency, _id, shipping, weightPack, widthPack, heightPack, lengthPack, sku, shippingSpecial } = item;
   /*   console.log(item)
     const formulaShip = 9999;
-    console.log(attributes)
+
     // Generate unique ID based on attributes and item ID
     const attributeString = Object.values(attributes).map((attr) => String(attr)).join(".");
     const generatedId = `${_id}.${attributeString}`; */
   const formulaShip = 9999;
 
-  console.log("generate", item)
-
+  /*   console.log("generate", item)
+   */
   return {
     id,
     linkId: _id,

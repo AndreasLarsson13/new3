@@ -34,7 +34,6 @@ export const Collapse: React.FC<CollapseProps> = ({
   const isOpen = i === expanded;
 
   const { t, i18n } = useTranslation(translatorNS);
-  console.log(title)
   return (
     <div
       className={cn({

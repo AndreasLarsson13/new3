@@ -50,7 +50,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
       className={`group w-full h-auto flex justify-start items-center bg-white py-4 md:py-7 border-b border-gray-100 relative last:border-b-0`}
       title={item?.name}
     >
-      <div className="relative flex flex-shrink-0 w-24 h-24 overflow-hidden rounded-md cursor-pointer md:w-28 md:h-28 ltr:mr-4 rtl:ml-4">
+      <div className="relative flex flex-shrink-0 w-24 h-24 overflow-hidden bg-gray-200 rounded-md cursor-pointer md:w-28 md:h-28 ltr:mr-4 rtl:ml-4">
         <Image
           src={
             typeof item?.image === 'string'
@@ -81,8 +81,8 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
           {generateCartItemName(item.name, item.attributes)}
         </Link>
         {/* @ts-ignore */}
-        {item.variationName ? `Variation : ${item.variationName}` : ''}
-
+        {/*         {item.variationName ? `Variation : ${item.variationName}` : ''}
+ */}
         {item.attributes.lenght > 0 ?? item.attributes.map((extraAdded, index) => (
           extraAdded.id === "color" ?
             <span className="text-sm rtl:pr-3 text-gray-400" key={index}>

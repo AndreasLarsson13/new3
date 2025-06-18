@@ -26,7 +26,7 @@ export default function SearchTopBar() {
   })
   const router = useRouter();
   const { query } = router;
-  console.log(query)
+
 
   return (
     <div className="flex justify-between items-center mb-7">

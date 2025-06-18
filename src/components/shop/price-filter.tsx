@@ -49,11 +49,11 @@ export const PriceFilter = () => {
 		);
 	};
 	;
-	console.log(filtersData.priceRanges)
+
 	const togglePriceFilter = () => {
 		setIsOpen(prevState => !prevState);
 	};
-	console.log(filtersData.priceRanges)
+
 
 	return (
 		<div className="block border-b border-gray-300 pb-5 mb-7">

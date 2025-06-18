@@ -52,7 +52,8 @@ const serializeState = (state: State) => ({
     location: "item.location",
     attributes: "item.attributes ? serializeAttributes(item.attributes) : []",
     sku: item.sku,
-    shippingSpecial: item.shippingSpecial
+    shippingSpecial: item.shippingSpecial,
+    sale_price: item.sale_price
 
   })),
   isEmpty: state.isEmpty,
