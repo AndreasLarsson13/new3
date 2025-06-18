@@ -73,21 +73,25 @@ const ProductSingleDetails: React.FC = () => {
   const [resetInputFields, setresetInputFields] = useState(false);
   const [variationImage, setVariationImage] = useState<string | null>(null);
   const [skuNumber, setSkuNumber] = useState("")
-
+  const [currentPrice, setCurrentPrice] = useState(0);
+  const [currentSalePrice, setCurrentSalePrice] = useState(0);
   const { price, basePrice, discount } = usePrice(
     data && {
-      amount: data.sale_price ? data.sale_price : data.price,
-      baseAmount: data.price,
+      amount: parseInt(currentSalePrice) > 0 ? currentSalePrice : currentPrice,
+      baseAmount: parseInt(currentPrice),
       currencyCode: 'EUR',
     }
   );
   const { t, i18n } = useTranslation('common');
 
 
+  console.log(currentPrice, currentSalePrice)
+
 
   useEffect(() => {
     setSkuNumber(data.sku)
-
+    setCurrentSalePrice(data.sale_price)
+    setCurrentPrice(data.price)
     if (data?.gallery?.length > 0) {
       setVariationImage(data.gallery[activeIndex].original);
     }
@@ -108,7 +112,7 @@ const ProductSingleDetails: React.FC = () => {
 
 
 
-  const [currentPrice, setCurrentPrice] = useState(0);
+
   const [optionPrice, setOptionPrice] = useState(0);
   const [originalPriceExeptSale, setOriginalPriceExeptSale] = useState(0);
 
@@ -233,7 +237,7 @@ const ProductSingleDetails: React.FC = () => {
       setAddToCartLoader(false);
       setresetInputFields(false); // Reset back to false after clearing
       if (data.sale_price > 0) {
-        setCurrentPrice(data.sale_price); // Use sale price plus attribute prices if no variation
+        setCurrentSalePrice(data.sale_price); // Use sale price plus attribute prices if no variation
         setOptionPrice(0)
         setOriginalPriceExeptSale(data.price)
       } else {
@@ -247,11 +251,21 @@ const ProductSingleDetails: React.FC = () => {
 
   function handleAttribute(attribute: any, variation: any, attribut: any) {
 
+
+    console.log(attribute.id)
+
     const index = AttributeArray.findIndex((attr) => attr.group === attribute.group);
+
+
+
 
 
     // Update or remove the attribute in AttributeArray
     const shouldRemove = attribute.value === false || attribute.id === undefined;
+
+    console.log(attribute)
+
+
 
     if (index !== -1) {
       if (!shouldRemove) {
@@ -271,13 +285,36 @@ const ProductSingleDetails: React.FC = () => {
 
     // Check if any `produktvariation` is selected
     const hasProduktvariation = AttributeArray.some((attr) => attr.itsaVariation === true);
-
+    console.log(hasProduktvariation)
     // Calculate the total price based on selected attributes
 
     let totalProduct = 0;
+    let totalSaleProduct = 0;
+    let totalOptionProduct = data.price;
+    let totalOptionSaleProduct = data.price;
     let totalPriceExeptSalePrice = 0;
+
+    console.log(AttributeArray)
     AttributeArray.forEach((attr) => {
-      /* totalProduct += attr.price || 0; */ totalProduct += (attr.sale_price > 0 ? attr.sale_price : attr.price) || 0;
+
+      console.log(AttributeArray)
+
+      if (hasProduktvariation) {
+
+        totalSaleProduct += (attr.sale_price > 0 && attr.sale_price) || 0;
+        totalProduct += attr.price || 0;
+      }
+      /* totalProduct += attr.price || 0; */
+      if (!hasProduktvariation) {
+
+        totalOptionSaleProduct += attr.sale_price > 0 ? attr.sale_price : attr.price || 0;
+        console.log(attr)
+
+        console.log(totalOptionSaleProduct)
+
+        totalOptionProduct += attr.price || 0;
+      }
+      console.log(totalProduct)
       totalPriceExeptSalePrice += attr.price || 0
     });
 
@@ -285,7 +322,11 @@ const ProductSingleDetails: React.FC = () => {
 
     // Update currentPrice based on the selection
     if (hasProduktvariation) {
+
       setCurrentPrice(totalProduct)
+      setCurrentSalePrice(totalSaleProduct)
+      console.log(totalSaleProduct, totalProduct)
+
       setSkuNumber(attribute.sku)
       setOriginalPriceExeptSale(totalPriceExeptSalePrice);
       // Use total product price if a product variation is selected
@@ -293,12 +334,16 @@ const ProductSingleDetails: React.FC = () => {
 
 
     if (!hasProduktvariation) {
+      setCurrentPrice(totalOptionProduct)
+      setCurrentSalePrice(totalOptionSaleProduct)
+      console.log(totalProduct)
       setOptionPrice(totalProduct)
       setOriginalPriceExeptSale(totalPriceExeptSalePrice)
     }
 
     // Update the gallery image based on the selected attribute
     if (attribute.itsaVariation) {
+
       // Set the gallery's active image to the variation's image
       data.gallery[activeIndex].original = attribute.url;
       setVariationImage(attribute.url)
@@ -453,21 +498,20 @@ const ProductSingleDetails: React.FC = () => {
         <div className="flex items-center mt-5">
           <div className="text-heading font-bold text-base md:text-xl lg:text-2xl 2xl:text-4xl ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
 
-            {(currentPrice === 0 && optionPrice === 0)
+            {/* {(currentPrice === 0 && optionPrice === 0)
               ? price
               : formatWithSeparator(currentPrice === 0 ? parseInt(price) + optionPrice : currentPrice + optionPrice)
-            }
+            } */}
 
-
+            {/*  {optionPrice > 0 ? formatWithSeparator(parseInt(data.price) + optionPrice) : price} */} {/* {price} */}
+            {/* {currentPrice} */}
+            <div className={`font-bold ${currentSalePrice > 0 ? 'text-red-600 text-xl md:text-2xl lg:text-3xl 2xl:text-5xl' : 'text-heading text-base md:text-xl lg:text-2xl 2xl:text-4xl'}`}>
+              {price}
+            </div>
           </div>
 
           <span className="line-through font-segoe text-gray-400 text-sm md:text-base lg:text-lg xl:text-xl ltr:pl-2 rtl:pr-2">
-            {/*  {originalPriceExeptSale === 0 ? basePrice : originalPriceExeptSale}
- */}
 
-
-            {originalPriceExeptSale !== 0 && originalPriceExeptSale !== currentPrice && parseInt(originalPriceExeptSale)
-            }
             {basePrice}
 
           </span>

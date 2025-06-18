@@ -237,7 +237,7 @@ export const ProductAttributes: React.FC<Props> = ({
       id: selected._id,
       group: title,
       productName: selected.value,
-      price: selected.sale_price > 0 ? selected.sale_price : selected.price,
+      price: /* selected.sale_price > 0 ? selected.sale_price :  */selected.price,
       sale_price: selected.sale_price,
       customOrder: false,
       value: selected.value,
@@ -291,9 +291,7 @@ export const ProductAttributes: React.FC<Props> = ({
       <h3 className="text-base md:text-lg text-heading font-semibold mb-2.5 capitalize flex items-center">
         {t(title) !== title ? t(title) : titleNew}
 
-        {attributes.some((attr) => attr.variation) && (
-          <span className="text-red-500 ml-1">*</span>
-        )}
+
 
         {productAttribute && (
           <div
@@ -306,7 +304,7 @@ export const ProductAttributes: React.FC<Props> = ({
             }}
             ref={tooltipRef}
           >
-            <FaInfoCircle className="text-gray-400 cursor-pointer" />
+            {/* <FaInfoCircle className="text-gray-400 cursor-pointer" />
 
             {isTooltipOpen && (
               <div className="absolute bottom-full left-0 mb-2 w-64 bg-white text-gray-700 text-sm border border-gray-200 rounded shadow-md p-4 z-10">
@@ -326,7 +324,7 @@ export const ProductAttributes: React.FC<Props> = ({
                     : ''}
                 </p>
               </div>
-            )}
+            )} */}
           </div>
         )}
       </h3>
@@ -336,7 +334,7 @@ export const ProductAttributes: React.FC<Props> = ({
         options={options}
         onChange={handleChange}
         value={currentSelectedOption}
-        isClearable={true}
+        /* isClearable={true} */
         styles={customStyles}
         placeholder={t('chooseOption')}
         getOptionLabel={(e) => e.label}

@@ -93,12 +93,13 @@ export default function ProductPopup() {
     console.log(updatedArray)
     setArrayData(updatedArray);
 
-    let totalProduct = 0;
-    updatedArray.forEach(obj => {
-      totalProduct += obj.price ? parseInt(obj.price) : 0;
-    });
+    /*  let totalProduct = 0;
+     updatedArray.forEach(obj => {
+       totalProduct += obj.price ? parseInt(obj.price) : 0;
+     }); */
 
-    setCurrentPrice(data.sale_price > 0 ? data.sale_price + totalProduct : data.price + totalProduct);
+    /*     setCurrentPrice(data.sale_price > 0 ? data.sale_price + totalProduct : data.price + totalProduct); //kolla
+     */
 
     /* data?.gallery.forEach(item => {
       if (item.extraColor) {
