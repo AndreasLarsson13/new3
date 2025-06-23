@@ -23,7 +23,7 @@ const menuData = [
                         slug: "skorsten", // No subChildItems here
                     },
                     {
-                        slug: "tillbehor-kamin", // No subChildItems here
+                        slug: "tillbehor-kaminer", // No subChildItems here
                     },
                 ],
             },
@@ -222,7 +222,7 @@ const menuData = [
                     }
                     ,
                     {
-                        slug: "dushar",
+                        slug: "duschar",
                     }
                 ],
 
@@ -241,7 +241,7 @@ const menuData = [
                     }
                     ,
                     {
-                        slug: "dushar",
+                        slug: "duschar",
                     }
                 ],
 
