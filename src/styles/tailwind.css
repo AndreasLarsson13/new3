@@ -177,13 +177,22 @@
     @apply w-full ltr:right-auto rtl:left-auto ltr:left-0 rtl:right-0;
   }
 
+
   .headerMenu .menuItem>.megaMenu {
     @apply invisible;
   }
 
-  .headerMenu .menuItem:hover>.megaMenu,
-  .headerMenu .menuItem:hover>.subMenu {
-    @apply visible opacity-100 top-full;
+  .headerMenu .menuItem:hover>.megaMenu:not(.manual-hidden),
+  .headerMenu .menuItem:hover>.subMenu:not(.manual-hidden) {
+    visibility: visible;
+    opacity: 1;
+    top: 100%;
+    transition: opacity 0.3s ease;
+  }
+
+  .manual-hidden {
+    visibility: hidden !important;
+    opacity: 0 !important;
   }
 
   /* Category Menu & Header Three */

@@ -26,6 +26,16 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ columns }) => {
     setActiveSubMenu(activeSubMenu === id ? null : id); // Toggle submenu
   };
 
+
+  const handleMenuClick = () => {
+    const megaMenu = document.querySelectorAll('.megaMenu');
+    megaMenu.forEach(iten => {
+      iten.classList.add('manual-hidden');
+    })
+  };
+
+
+
   return (
     <div className="absolute bg-gray-200 megaMenu shadow-header ltr:-left-28 rtl:-right-28 ltr:xl:left-0 rtl:xl:right-0">
       <div className="grid grid-cols-5">
@@ -37,6 +47,8 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ columns }) => {
                   <Link
                     href={columnItem.path}
                     className="block text-sm py-1.5 text-heading font-semibold px-5 xl:px-8 2xl:px-10 hover:text-heading hover:bg-gray-300"
+                    onClick={handleMenuClick}
+
                   >
                     {t(columnItem.label)}
                   </Link>
@@ -55,6 +67,7 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ columns }) => {
                       <Link
                         href={item.path}
                         className="text-body text-sm block py-1.5 px-5 xl:px-8 2xl:px-10 hover:text-heading hover:bg-gray-300"
+                        onClick={handleMenuClick}
                       >
                         {t(item.label)}
                       </Link>
@@ -81,8 +94,10 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ columns }) => {
                             <Link
                               href={subItem.path}
                               className="text-body text-sm block py-1.5 px-5 xl:px-8 2xl:px-10 hover:text-heading hover:bg-gray-300"
+                              onClick={handleMenuClick}
                             >
                               {t(subItem.label)}
+
                             </Link>
                           </li>
                         ))}

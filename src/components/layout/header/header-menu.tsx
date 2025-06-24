@@ -12,6 +12,14 @@ interface MenuProps {
 
 const HeaderMenu: React.FC<MenuProps> = ({ data, className }) => {
   console.log(data)
+
+  // Optional: reset it on hover again
+  const handleMouseEnter = () => {
+    const megaMenu = document.querySelectorAll('.megaMenu');
+    megaMenu.forEach(item => {
+      item.classList.remove('manual-hidden');
+    })
+  };
   const { t } = useTranslation('menu');
   return (
     <nav className={classNames(`headerMenu flex w-full relative`, className)}>
@@ -24,6 +32,7 @@ const HeaderMenu: React.FC<MenuProps> = ({ data, className }) => {
           <Link
             href={item.path}
             className="relative inline-flex items-center px-3 py-2 text-sm font-normal xl:text-base text-heading xl:px-4 group-hover:text-black"
+            onMouseEnter={handleMouseEnter}
           >
             {t(item.label)}
             {(item?.columns || item.subMenu) && (
