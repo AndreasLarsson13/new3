@@ -32,7 +32,7 @@ const ProductsFeatured: React.FC<ProductsProps> = ({
 }) => {
   const { data, error } = useFeaturedProductsQuery({
     limit: limit,
-    demoVariant,
+    /*  demoVariant, */
   });
 
   const { i18n } = useTranslation();

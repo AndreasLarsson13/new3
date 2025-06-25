@@ -51,7 +51,7 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
 
   const { openModal, setModalView, setModalData } = useUI();
   const { price, basePrice, discount } = usePrice({
-    amount: product.sale_price ? product.sale_price : product.price,
+    amount: /* product.sale_price ? product.sale_price :  */product.lowestPrice,
     baseAmount: product.price,
     currencyCode: "EUR",
   });

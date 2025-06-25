@@ -31,7 +31,8 @@ export const Collapse: React.FC<CollapseProps> = ({
   variant = 'gray',
   tecnical
 }) => {
-  const isOpen = i === expanded;
+  const isOpen = i === expanded; // dynamic based on state
+  console.log(`Collapse ${i} isOpen:`, i === expanded);
 
   const { t, i18n } = useTranslation(translatorNS);
   return (
@@ -141,24 +142,29 @@ const Accordion: React.FC<AccordionProps> = ({
   translatorNS,
   variant = 'gray',
 }) => {
-  const [expanded, setExpanded] = useState<number>(0);
+  const [expanded, setExpanded] = useState<number | false>(false); // Start closed
 
   return (
     <>
       {items?.map((item, index) => (
         <Collapse
           i={index}
-          key={item.titleKey}
+          key={item.titleKey || index}
           titleKey={item.titleKey}
           contentKey={item.contentKey}
           expanded={expanded}
           setExpanded={setExpanded}
           variant={variant}
           translatorNS={translatorNS}
+          pdf={item.pdf}
+          tecnical={item.tecnical}
+          content={item.content}
+          title={item.title}
         />
       ))}
     </>
   );
 };
+
 
 export default Accordion;

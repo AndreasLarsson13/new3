@@ -8,7 +8,7 @@ interface Props {
 
 const ProductMetaReview: React.FC<Props> = ({ data }) => {
 
-	const [expanded, setExpanded] = useState<number>(0);
+	const [expanded, setExpanded] = useState<number | false>(false); // Start closed
 	return (
 		<>
 			{data && data?.map((item: any, index: any) => (

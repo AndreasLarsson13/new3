@@ -23,9 +23,11 @@ export const ProductGrid: FC<ProductGridProps> = ({ className = "" }) => {
 		isFetchingNextPage: loadingMore,
 		fetchNextPage,
 		hasNextPage,
+		paginatorInfo,
 		data,
 		error,
 	} = useCategoryProductsQuery({ limit: 12, ...query, route });
+
 
 	if (error) return <p>{error.message}</p>;
 
@@ -67,6 +69,7 @@ export const ProductGrid: FC<ProductGridProps> = ({ className = "" }) => {
 						{t("button-load-more")}
 					</Button>
 				)}
+
 			</div>
 		</>
 	);
