@@ -21,10 +21,20 @@ const RelatedProducts: React.FC<ProductsProps> = ({
 	const { slug } = router.query;
 	/* 	console.log(productRelated)
 	 */
-	const { data, isLoading, error } = useRelatedProductsQuery({
-		limit: 10,
-		productBrand: productRelated,
-		category: productRelated.categoryPath
+	/* 	const { data, isLoading, error } = useRelatedProductsQuery({
+			limit: 10,
+			productBrand: productRelated,
+			category: productRelated.categoryPath
+		});
+	 */
+
+	const {
+		isFetching: isLoading,
+		data,
+		error,
+	} = useRelatedProductsQuery({
+		limit: 20,
+		product: productRelated
 	});
 
 	return (

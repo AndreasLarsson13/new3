@@ -4,26 +4,28 @@ import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
 import { useQuery } from "@tanstack/react-query";
 
 export const fetchRelatedProducts = async (options) => {
-/* 	const item = options.queryKey.find(item => item.productBrand.categoryPaths || item.productBrand.related) ?? {};
- */	console.log(item)
+	/* 	const item = options.queryKey.find(item => item.productBrand.categoryPaths || item.productBrand.related) ?? {};
+	 */
 	/* const lastCategory = category?.[category.length - 1];
 
 	const parts = category.categoryPaths.split("/");
 	console.log(category)
 	const last = parts.length ? parts[parts.length - 1] : ""; */
 
+	const productCategory = options.queryKey[1].item.product.categoryPath
 
+	console.log(productCategory)
 
 	const location = JSON.parse(localStorage.getItem('clickedLocation'));
 
-	console.log(options)
+
 
 	const { data } = await http.get(API_ENDPOINTS.RELATED_PRODUCTS, {
 		params: {
-			product: options,
-			location: location.value,
-			category: lastCategory,
-			related: related ? related : 'false'
+			/* 	product: options,
+				location: location.value,
+				category: lastCategory,
+				related: related ? related : 'false' */
 		},
 	});
 
