@@ -23,7 +23,7 @@ const RelatedProducts: React.FC<ProductsProps> = ({
 	 */
 	const { data, isLoading, error } = useRelatedProductsQuery({
 		limit: 10,
-		related: productRelated.relatedProducts,
+		productBrand: productRelated,
 		category: productRelated.categoryPath
 	});
 

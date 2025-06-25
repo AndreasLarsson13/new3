@@ -91,7 +91,7 @@ const BrandBlock: React.FC<BrandProps> = ({
                   size="medium"
                   href={{
                     pathname: /* `/${locale === 'se' ? 'butik' : 'store'}/${brand.slug}`, */ "/store",
-                    query: { brand: 'contura' }
+                    query: { brand: brand.slug }
                   }}
 
                   imgSize="large"
