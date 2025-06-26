@@ -1,6 +1,9 @@
 import React, { useState, useCallback } from "react";
 import { useRouter } from "next/router";
 import menuData from "../../settings/menu";
+import { useTranslation } from 'next-i18next';
+
+
 
 interface MenuItemProps {
 	item: any;
@@ -21,7 +24,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
 }) => {
 	const [open, setOpen] = useState(currentPath.includes(item.slug));
 	const indent = `pl-${level * 2}`;
-
+	const { t } = useTranslation('common');
 	const toggleOpen = () => setOpen((prev) => !prev);
 	const isActive = currentPath.includes(item.slug);
 
@@ -34,7 +37,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
 			>
 				<span onClick={() => handleNavigate(item.path)} className={`${open ? "font-semibold text-heading" : "font-medium"
 					}`}>
-					{item.label}
+					{t(`menu:${item.label}`)}
 				</span>
 				{(item.columnItemItems || item.subMenu) && (
 					<span className="ml-1 text-lg">{open ? "−" : "+"}</span>

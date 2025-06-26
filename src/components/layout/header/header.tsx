@@ -115,7 +115,9 @@ const Header: React.FC = () => {
 
   console.log(clickedLocation)
 
-
+  const handleMouseEnter = () => {
+    setIsLocationDropdownOpen(!isLocationDropdownOpen);
+  };
 
 
 
@@ -155,14 +157,15 @@ const Header: React.FC = () => {
           </div>
           {/* Location Dropdown */}
 
-          <div className='flex items-center gap-1'>
+          <div className='flex items-center gap-1' >
             <h5 className="text-sm font-semibold">{t('location')}:</h5>
 
             <div className="relative">
-              {/*               <h5 className="text-sm font-semibold mr-1">{t('location')}: </h5>
- */}              <button
+              <button
                 className="border border-gray-300 text-heading text-sm font-semibold w-full py-1 px-2 bg-white rounded-lg shadow-md flex justify-between items-center "
                 onClick={() => setIsLocationDropdownOpen(!isLocationDropdownOpen)}
+                onMouseEnter={handleMouseEnter}
+
               >
                 <span className="flex items-center">
 
@@ -175,7 +178,7 @@ const Header: React.FC = () => {
 
 
               {isLocationDropdownOpen && (
-                <div className="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-10 sm:w-[180px] lg:w-[180px] z-50">
+                <div onMouseLeave={handleMouseEnter} className="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-10 sm:w-[180px] lg:w-[180px] z-50">
                   {optionsLocation.map((option) => (
                     <div
                       key={option.id}

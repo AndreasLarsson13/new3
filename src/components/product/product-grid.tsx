@@ -28,7 +28,7 @@ error,
 } = useProductsQuery({ limit: 10, ...query, route });
 if (error) return <p>{error.message}</p>; */
 
-	const { filteredData, isLoading, loadingMore, hasNextPage, fetchNextPage, error } = useFilteredData();
+	const { filteredData, isLoading, loadingMore, hasNextPage, fetchNextPage, error, data } = useFilteredData();
 
 	console.log(filteredData)
 	/* useEffect(() => {
@@ -107,8 +107,11 @@ if (error) return <p>{error.message}</p>; */
 		}
 	}, [isLoading, data]);
 */
+	if (error) return <p>{error.message}</p>;
 
-
+	console.log(data)
+	const allProducts = data?.pages.flatMap((page) => page.data) || [];
+	const totalProducts = data?.pages?.[0]?.paginatorInfo?.total || 0;
 	return (
 		<>
 			<div
@@ -126,6 +129,11 @@ if (error) return <p>{error.message}</p>; */
 					))
 				)}
 			</div>
+			{!isLoading && (
+				<p className="text-sm text-center mb-4">
+					{t("showing")} {allProducts.length} {t("of")} {totalProducts} {t("products")}
+				</p>
+			)}
 			<div className="text-center pt-8 xl:pt-14">
 				{hasNextPage && (
 					<Button
@@ -138,6 +146,7 @@ if (error) return <p>{error.message}</p>; */
 					</Button>
 				)}
 			</div>
+
 		</>
 	);
 

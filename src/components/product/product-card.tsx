@@ -70,13 +70,11 @@ const ProductCard: FC<ProductProps> = ({
      currencyCode: "EUR",
    }); */
 
-  console.log(product)
 
 
   let amounts = product.lowestPrice;
   let basePrices = product.price
 
-  console.log(basePrices)
   /* 
     if (product.variationPrices && product.variationPrices.length > 0) {
        amounts = product.lowestPrice
@@ -89,7 +87,7 @@ const ProductCard: FC<ProductProps> = ({
 }
 
  */
-  console.log(product)
+
 
 
 

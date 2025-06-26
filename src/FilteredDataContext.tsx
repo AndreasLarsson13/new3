@@ -13,16 +13,29 @@ interface PaginatedProductResponse {
     totalPages: number;
     hasMorePages: boolean;
     nextPage: number | null;
+    paginatorInfo: object;
   };
 }
 
-interface FilteredDataContextType {
+/* interface FilteredDataContextType {
   filteredData: Product[];
   filtersData: FilterType[]; // Filters data
   setFilteredData: React.Dispatch<React.SetStateAction<Product[]>>;
   isLoading: boolean;
   isError: boolean;
+} */
+
+interface FilteredDataContextType {
+  filteredData: Product[];
+  filtersData: FilterType[];
+  setFilteredData: React.Dispatch<React.SetStateAction<Product[]>>;
+  isLoading: boolean;
+  isError: boolean;
+  hasNextPage: boolean;
+  fetchNextPage: () => void;
+  loadingMore: boolean;
 }
+
 
 const FilteredDataContext = createContext<FilteredDataContextType | undefined>(undefined);
 
@@ -44,8 +57,21 @@ export const FilteredDataProvider: React.FC<ProviderProps> = ({ children }) => {
   const [isError, setIsError] = useState(false);
   const { query } = useRouter();
 
+  /*   const {
+      isFetching: isLoading,
+      data,
+      error,
+    } = useProductsQuery({
+      limit: 20,
+      ...query
+    });
+   */
+
   const {
     isFetching: isLoading,
+    isFetchingNextPage: loadingMore,
+    fetchNextPage,
+    hasNextPage,
     data,
     error,
   } = useProductsQuery({
@@ -53,6 +79,7 @@ export const FilteredDataProvider: React.FC<ProviderProps> = ({ children }) => {
     ...query
   });
 
+  console.log(data)
   useEffect(() => {
     if (error) {
       setIsError(true);
@@ -68,9 +95,23 @@ export const FilteredDataProvider: React.FC<ProviderProps> = ({ children }) => {
     }
   }, [query, data]); // `data` already includes query updates
 
+
   return (
-    <FilteredDataContext.Provider value={{ filteredData, filtersData, setFilteredData, isLoading, isError }}>
+    <FilteredDataContext.Provider
+      value={{
+        filteredData,
+        filtersData,
+        setFilteredData,
+        isLoading,
+        isError,
+        hasNextPage,
+        fetchNextPage,
+        loadingMore,
+        data
+      }}
+    >
       {children}
     </FilteredDataContext.Provider>
+
   );
 };
