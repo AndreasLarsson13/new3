@@ -18,7 +18,6 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
   const { t, i18n } = useTranslation('common');
   const { addItemToCart, removeItemFromCart, clearItemFromCart } = useCart();
 
-  console.log(item)
 
 
   const { price, discount, basePrice } = usePrice({
@@ -38,7 +37,6 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
     currencyCode: "EUR",
   });
 
-  console.log(basePrice, price)
 
   return (
     <motion.div

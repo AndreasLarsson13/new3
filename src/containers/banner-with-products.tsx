@@ -59,7 +59,7 @@ const BannerWithProducts: React.FC<ProductsProps> = ({
 							))
 							: data?.map((product: Product) => (
 								<ProductCard
-									key={`product--key${product.id}`}
+									key={`product--key${product._id}`}
 									product={product}
 									imgWidth={176}
 									imgHeight={176}

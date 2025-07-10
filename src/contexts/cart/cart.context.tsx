@@ -80,7 +80,6 @@ export const CartProvider: React.FC = ({ children }) => {
       const serializedState = JSON.stringify(serializeState(state));
 
       saveCart(serializedState);
-      console.log("Updated saved cart:", serializedState);
     } catch (error) {
       console.error("Error saving cart to localStorage:", error);
     }

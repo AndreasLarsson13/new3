@@ -43,28 +43,27 @@ const SaleBannerWithProducts: React.FC<ProductsProps> = ({
 					/>
 					{isLoading
 						? Array.from({ length: 4 }).map((_, idx) => (
-								<ProductCardListSmallLoader
-									key={idx}
-									uniqueKey={`on-selling-${idx}`}
-								/>
-						  ))
+							<ProductCardListSmallLoader
+								key={idx}
+								uniqueKey={`on-selling-${idx}`}
+							/>
+						))
 						: data?.slice(0, 4)?.map((product: Product, index: number) => (
-								<div
-									key={`product--key${product.id}`}
-									className={`${
-										variant === "center" && index === 0
-											? "2xl:order-0"
-											: "2xl:order-2"
+							<div
+								key={`product--key${product._id}`}
+								className={`${variant === "center" && index === 0
+										? "2xl:order-0"
+										: "2xl:order-2"
 									}`}
-								>
-									<ProductCard
-										product={product}
-										imgWidth={176}
-										imgHeight={176}
-										variant="listSmall"
-									/>
-								</div>
-						  ))}
+							>
+								<ProductCard
+									product={product}
+									imgWidth={176}
+									imgHeight={176}
+									variant="listSmall"
+								/>
+							</div>
+						))}
 				</div>
 			)}
 		</div>

@@ -4,6 +4,7 @@ import { IoIosArrowForward } from 'react-icons/io';
 import Link from './link';
 import MegaMenu from './mega-menu';
 import cn from 'classnames';
+import { forEach } from 'lodash';
 
 const ListMenu = ({
   dept,
@@ -71,6 +72,9 @@ const ListMenu = ({
 };
 
 const SubMenu: React.FC<any> = ({ dept, data, menuIndex }) => {
+  data.forEach(item => {
+    console.log(item.subMenu)
+  })
   dept = dept + 1;
   return (
     <ul className="absolute z-0 invisible w-56 py-3 bg-gray-200 opacity-0 subMenuChild shadow-subMenu ltr:right-full rtl:left-full ltr:2xl:right-auto rtl:2xl:left-auto ltr:2xl:left-full rtl:2xl:right-full top-4">

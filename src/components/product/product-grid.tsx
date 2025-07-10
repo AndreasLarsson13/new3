@@ -122,7 +122,7 @@ if (error) return <p>{error.message}</p>; */
 				) : (
 					filteredData && filteredData?.map((product: Product) => (
 						<ProductCard
-							key={`product--key${product.id}`}
+							key={`product--key${product._id}`}
 							product={product}
 							variant="grid"
 						/>

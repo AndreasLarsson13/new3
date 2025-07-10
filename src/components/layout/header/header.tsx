@@ -113,7 +113,6 @@ const Header: React.FC = () => {
     setIsModalOpen(!isModalOpen);
   }
 
-  console.log(clickedLocation)
 
   const handleMouseEnter = () => {
     setIsLocationDropdownOpen(!isLocationDropdownOpen);

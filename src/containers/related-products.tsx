@@ -50,7 +50,7 @@ const RelatedProducts: React.FC<ProductsProps> = ({
 				) : (
 					data?.map((product: any) => (
 						<ProductCard
-							key={`product--key${product.id}`}
+							key={`product--key${product._id}`}
 							product={product}
 							imgWidth={340}
 							imgHeight={440}

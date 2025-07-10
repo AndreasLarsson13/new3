@@ -83,7 +83,7 @@ const BrandBlock: React.FC<BrandProps> = ({
               </SwiperSlide>
             ))
             : brands?.map((brand: Brand) => (
-              <SwiperSlide key={`brand--key${brand.id}`}>
+              <SwiperSlide key={`brand--key${brand._id}`}>
                 <Card
                   showName={showName}
                   item={brand}

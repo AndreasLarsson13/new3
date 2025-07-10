@@ -51,7 +51,7 @@ const BuyDesignerAncient: React.FC<Props> = ({ imgWidth, imgHeight }) => {
                         showCategory={true}
                         showRating={true}
                         hideProductDescription={true}
-                        key={`product--key${product.id}`}
+                        key={`product--key${product._id}`}
                         product={product}
                         imgWidth={imgWidth}
                         imgHeight={imgHeight}

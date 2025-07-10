@@ -14,17 +14,17 @@ const menuData = [
 
                     },
                     {
-                        slug: "eldstader/murspis", // No subChildItems here
+                        slug: "eldstader-murspisar", // No subChildItems here
                     },
                     {
                         slug: "gjutjarnskaminer", // No subChildItems here
                     },
                     {
-                        slug: "skorsten", // No subChildItems here
+                        slug: "skorstenar", // No subChildItems here
                     },
                     {
-                        slug: "tillbehor-kaminer", // No subChildItems here
-                    },
+                        slug: "tillbehor",
+                    }
                 ],
             },
 
@@ -32,20 +32,26 @@ const menuData = [
                 slug: "varmepumpar",
                 child: [
                     {
-                        slug: "luftvarmepumpar",
+                        slug: "luft-luft",
                     },
                     {
-                        slug: "franluftvarmepump",
+                        slug: "luft-vatten",
                     },
                     {
-                        slug: "bergvarmepumpar",
+                        slug: "franluft",
                     },
                     {
-                        slug: "jordvarmepump",
+                        slug: "bergvarme",
                     },
                     {
-                        slug: "AC",
+                        slug: "jordvarme",
                     },
+                    {
+                        slug: "ac-kyla",
+                    },
+                    {
+                        slug: "tillbehor",
+                    }
                 ],
             },
 
@@ -60,11 +66,25 @@ const menuData = [
                     },
                     {
                         slug: "friflode-sjalvdrag",
+                    },
+                    {
+                        slug: "tillbehor",
                     }
                 ],
             },
             {
-                slug: "golvvärme",
+                slug: "golvvarme",
+                child: [
+                    {
+                        slug: "el-golvvarme",
+                    },
+                    {
+                        slug: "vattenburen-golvvarme",
+                    },
+                    {
+                        slug: "tillbehor",
+                    }
+                ],
             },
             {
                 slug: "vvs",
@@ -84,12 +104,13 @@ const menuData = [
                     {
                         slug: "badkar",
                     },
-                    {
-                        slug: "spabad/badtunnor", // No subChildItems here
-                    },
+
                     {
                         slug: "toastolar", // No subChildItems here
                     },
+                    {
+                        slug: "tillbehor",
+                    }
                 ],
             },
             {
@@ -104,6 +125,9 @@ const menuData = [
                     ,
                     {
                         slug: "elbilsladdning",
+                    },
+                    {
+                        slug: "tillbehor",
                     }
                 ],
             },
@@ -115,6 +139,9 @@ const menuData = [
                     },
                     {
                         slug: "takstegar",
+                    },
+                    {
+                        slug: "tillbehor",
                     }
                 ],
             },
@@ -137,6 +164,9 @@ const menuData = [
                     ,
                     {
                         slug: "vardagsrumsinrening",
+                    },
+                    {
+                        slug: "tillbehor",
                     }
                 ],
             },
@@ -188,6 +218,9 @@ const menuData = [
                     ,
                     {
                         slug: "ugnar",
+                    },
+                    {
+                        slug: "tillbehor",
                     }
                 ],
 
@@ -223,6 +256,9 @@ const menuData = [
                     ,
                     {
                         slug: "duschar",
+                    },
+                    {
+                        slug: "tillbehor"
                     }
                 ],
 
@@ -242,6 +278,9 @@ const menuData = [
                     ,
                     {
                         slug: "duschar",
+                    },
+                    {
+                        slug: "tillbehor",
                     }
                 ],
 
@@ -250,8 +289,23 @@ const menuData = [
         ],
     },
     {
-        slug: "fritid",
+        slug: "fritid-tradgard",
         child: [
+            {
+                slug: "tradgard-utemiljo",
+                child: [
+                    {
+                        slug: "spabad",
+                    },
+                    {
+                        slug: "badtunnor",
+                    },
+                    {
+                        slug: "tillbehor",
+                    }
+                ],
+
+            },
             {
                 slug: "bastu",
                 child: [
@@ -271,6 +325,9 @@ const menuData = [
                     ,
                     {
                         slug: "bastu-stugor",
+                    },
+                    {
+                        slug: "tillbehor",
                     }
                 ],
 
@@ -302,6 +359,9 @@ const menuData = [
                     ,
                     {
                         slug: "mopedbilar",
+                    },
+                    {
+                        slug: "tillbehor",
                     }
                 ],
 
@@ -330,6 +390,9 @@ const menuData = [
                     {
                         slug: "flytvastar",
                     }
+                    , {
+                        slug: "tillbehor",
+                    }
 
                 ],
 
@@ -357,6 +420,9 @@ const menuData = [
                     ,
                     {
                         slug: "fiskeklader",
+                    },
+                    {
+                        slug: "tillbehor",
                     }
 
                 ],
@@ -382,6 +448,9 @@ const menuData = [
                     ,
                     {
                         slug: "golfklader",
+                    },
+                    {
+                        slug: "tillbehor",
                     }
                 ],
 
@@ -394,6 +463,9 @@ const menuData = [
                     },
                     {
                         slug: "golfklader",
+                    },
+                    {
+                        slug: "tillbehor",
                     }
                 ],
 
@@ -406,6 +478,9 @@ const menuData = [
                     },
                     {
                         slug: "skidor",
+                    },
+                    {
+                        slug: "tillbehor",
                     }
 
                 ],
@@ -422,6 +497,9 @@ const menuData = [
                     },
                     {
                         slug: "fotbollskor",
+                    },
+                    {
+                        slug: "tillbehor",
                     }
 
                 ],
@@ -438,6 +516,9 @@ const menuData = [
                     },
                     {
                         slug: "klubbor",
+                    },
+                    {
+                        slug: "tillbehor",
                     }
 
                 ],
@@ -446,6 +527,30 @@ const menuData = [
         ],
     },
 ];
+
+const sortedMenuData = menuData.map(category => {
+    // Om category har child
+    if (category.child) {
+        const sortedChild = category.child.map(subCategory => {
+            // Om subCategory har child, sortera dess child i bokstavsordning
+            if (subCategory.child) {
+                subCategory.child.sort((a, b) =>
+                    a.slug.localeCompare(b.slug, 'sv')
+                );
+            }
+            return subCategory;
+        });
+        return {
+            ...category,
+            child: sortedChild
+        };
+    }
+    return category;
+});
+
+console.log(sortedMenuData);
+
+
 
 const mobileData = [
     {
@@ -1155,7 +1260,7 @@ const mobileData = [
 let menu = [];
 const unfiledsMenu = menuData
 
-menuData.forEach((element, index) => {
+sortedMenuData.forEach((element, index) => {
     let columnGroups = [];
     let currentGroup = [];
     let itemCount = 0;
@@ -1187,7 +1292,7 @@ menuData.forEach((element, index) => {
         itemCount += columnItem.columnItemItems.length;
 
         // If itemCount exceeds 12, create a new column
-        if (itemCount >= 7) {
+        if (itemCount >= 10) {
             columnGroups.push({
                 id: columnGroups.length + 1,
                 columnItems: [...currentGroup],

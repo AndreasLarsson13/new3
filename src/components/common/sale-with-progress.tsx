@@ -49,9 +49,8 @@ const SellWithProgress: React.FC<Props> = ({
 }) => {
   return (
     <div
-      className={`flex flex-col border border-gray-300 rounded-lg pt-6 sm:pt-7 lg:pt-8 xl:pt-7 2xl:pt-9 px-4 md:px-5 lg:px-7 pb-6 lg:pb-7 ${
-        productVariant !== 'gridSlim' && 'xl:px-5 2xl:px-7'
-      } ${className}`}
+      className={`flex flex-col border border-gray-300 rounded-lg pt-6 sm:pt-7 lg:pt-8 xl:pt-7 2xl:pt-9 px-4 md:px-5 lg:px-7 pb-6 lg:pb-7 ${productVariant !== 'gridSlim' && 'xl:px-5 2xl:px-7'
+        } ${className}`}
     >
       <SectionHeader
         sectionHeading="text-flash-sale"
@@ -64,9 +63,8 @@ const SellWithProgress: React.FC<Props> = ({
         <>
           {loading ? (
             <div
-              className={`heightFull ${
-                productVariant === 'gridSlim' && '2xl:pt-1.5 3xl:pt-0'
-              }`}
+              className={`heightFull ${productVariant === 'gridSlim' && '2xl:pt-1.5 3xl:pt-0'
+                }`}
             >
               <Carousel
                 breakpoints={
@@ -84,25 +82,24 @@ const SellWithProgress: React.FC<Props> = ({
               >
                 {productVariant === 'gridSlim'
                   ? Array.from({ length: 3 }).map((_, idx) => (
-                      <SwiperSlide key={`product-grid-${idx}`}>
-                        <ProductFlashSaleGridLoader
-                          uniqueKey={`product-grid-${idx}`}
-                        />
-                      </SwiperSlide>
-                    ))
+                    <SwiperSlide key={`product-grid-${idx}`}>
+                      <ProductFlashSaleGridLoader
+                        uniqueKey={`product-grid-${idx}`}
+                      />
+                    </SwiperSlide>
+                  ))
                   : Array.from({ length: 10 }).map((_, idx) => (
-                      <SwiperSlide key={`product-${idx}`}>
-                        <ProductFlashSaleLoader uniqueKey={`product-${idx}`} />
-                      </SwiperSlide>
-                    ))}
+                    <SwiperSlide key={`product-${idx}`}>
+                      <ProductFlashSaleLoader uniqueKey={`product-${idx}`} />
+                    </SwiperSlide>
+                  ))}
               </Carousel>
             </div>
           ) : (
             products?.length && (
               <div
-                className={`heightFull ${
-                  productVariant === 'gridSlim' ? '2xl:pt-1.5 3xl:pt-0' : ''
-                }`}
+                className={`heightFull ${productVariant === 'gridSlim' ? '2xl:pt-1.5 3xl:pt-0' : ''
+                  }`}
               >
                 <Carousel
                   breakpoints={
@@ -121,7 +118,7 @@ const SellWithProgress: React.FC<Props> = ({
                   )}
                 >
                   {products.map((product) => (
-                    <SwiperSlide key={`product--key${product.id}`}>
+                    <SwiperSlide key={`product--key${product._id}`}>
                       <div className="h-full flex flex-col justify-between">
                         <div className="mb-5 sm:mb-7 lg:mb-8 2xl:mb-10 3xl:mb-12">
                           <ProductCard
@@ -129,14 +126,12 @@ const SellWithProgress: React.FC<Props> = ({
                             imgWidth={imgWidth}
                             imgHeight={imgHeight}
                             variant={productVariant}
-                            contactClassName={`${
-                              productVariant === 'list' &&
+                            contactClassName={`${productVariant === 'list' &&
                               'ltr:pl-4 rtl:pr-4 ltr:lg:pl-6 rtl:lg:pr-6 ltr:3xl:pl-7 rtl:3xl:pr-7 '
-                            }`}
-                            imageContentClassName={`${
-                              productVariant === 'list' &&
+                              }`}
+                            imageContentClassName={`${productVariant === 'list' &&
                               'flex-shrink-0 w-32 sm:w-44 md:w-36 lg:w-48 xl:w-40 2xl:w-44 3xl:w-52'
-                            }`}
+                              }`}
                           />
                         </div>
                         <ProgressCard

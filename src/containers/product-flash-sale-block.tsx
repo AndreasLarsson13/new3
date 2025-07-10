@@ -188,7 +188,7 @@ const ProductsFlashSaleBlock: React.FC<ProductsProps> = ({
             {data.slice(0, limit)
               ?.map((product: any) => (
                 <ProductCard
-                  key={`product--key${product.id}`}
+                  key={`product--key${product._id}`}
                   product={product}
                   imgWidth={itemVariant === 'list' ? 180 : 324}
                   imgHeight={itemVariant === 'list' ? 180 : 324}
@@ -203,7 +203,7 @@ const ProductsFlashSaleBlock: React.FC<ProductsProps> = ({
           <>
             {data.map((product: any) => (
               <ProductCard
-                key={`product--key${product.id}`}
+                key={`product--key${product._id}`}
                 product={product}
                 imgWidth={itemVariant === 'list' ? 180 : 324}
                 imgHeight={itemVariant === 'list' ? 180 : 324}

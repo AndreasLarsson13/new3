@@ -85,7 +85,6 @@ const ProductSingleDetails: React.FC = () => {
   const { t, i18n } = useTranslation('common');
 
 
-  console.log(currentPrice, currentSalePrice)
 
 
   useEffect(() => {

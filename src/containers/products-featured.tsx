@@ -60,7 +60,7 @@ const ProductsFeatured: React.FC<ProductsProps> = ({
           {data && data.slice(0, limit).map((product: Product, idx: number) => (
             <ProductOverlayCard
               disableBorderRadius={disableBorderRadius}
-              key={`product--key${product.id}`}
+              key={`product--key${product._id}`}
               product={product}
               variant={variant}
               index={idx}
