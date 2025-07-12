@@ -49,7 +49,7 @@ export default function LanguageSwitcher() {
   return (
     <div className="relative z-10 w-[140px] sm:w-[150px] lg:w-[130px] xl:w-[150px]">
       {/* Language Dropdown */}
-      <Listbox value={selectedItem} onChange={handleItemClick}>
+      {/*  <Listbox value={selectedItem} onChange={handleItemClick}>
         {({ open }) => (
           <>
             <Listbox.Button className="border border-gray-300 text-heading text-[13px] xl:text-sm font-semibold relative w-full py-2 ltr:pl-3 rtl:pr-3 ltr:pr-7 rtl:pl-7 ltr:text-left rtl:text-right bg-white rounded-lg shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 cursor-pointer">
@@ -104,7 +104,7 @@ export default function LanguageSwitcher() {
           </>
         )}
       </Listbox>
-
+ */}
       {/* Location Dropdown */}
       {/*   <Listbox value={clickedLocation} onChange={setClickedLocation} className="mt-4">
         {({ open }) => (

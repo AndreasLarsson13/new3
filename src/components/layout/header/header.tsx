@@ -130,14 +130,15 @@ const Header: React.FC = () => {
         <div className={`flex gap-5 p-1 bg-gray-200 transition-all duration-300 ${isScrolled ? 'opacity-0 -translate-y-full' : 'opacity-100'
           }`}>
           <div className='flex items-center gap-1 pl-3'>
-            <h5 className="text-sm font-semibold">{/* {t('language')} */} Language:</h5>
+            <h5 className="text-sm font-semibold">{t('language')}</h5>
             <div className="relative z-999">
               {/* <h5 className="text-sm font-semibold mr-1">{/* {t('language')}  */}
               <button
                 className="border border-gray-300 text-heading text-sm font-semibold w-full py-1 px-2 bg-white rounded-lg shadow-md flex justify-between items-center"
                 onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
               >
-                <span>{selectedItem?.icon}</span>
+                {/* <span>{selectedItem?.icon}</span> */}
+                <span>{selectedItem?.name}</span>
                 <HiOutlineSelector className="w-5 h-5 text-gray-400" />
               </button>
               {isLanguageDropdownOpen && (
@@ -147,7 +148,7 @@ const Header: React.FC = () => {
                       key={option.id}
                       className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
                       onClick={() => handleLanguageChange(option)}
-                    > <span className="flex items-center gap-2 text-sm flex-nowrap">{option.icon}{t(option.name)}</span>
+                    > <span className="flex items-center gap-2 text-sm flex-nowrap">{t(option.name)}</span>
                     </div>
                   ))}
                 </div>

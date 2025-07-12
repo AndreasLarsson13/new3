@@ -109,7 +109,7 @@ return (
 
 
           {/* Language Dropdown */}
-          <div className="mb-4 relative">
+          {/*  <div className="mb-4 relative">
             <h2 className="text-lg font-semibold mb-4">{t('language')}</h2>
             <button
               className="border border-gray-300 text-heading text-sm font-semibold w-full py-2 px-3 bg-white rounded-lg shadow-md flex justify-between items-center"
@@ -130,7 +130,7 @@ return (
                 ))}
               </div>
             )}
-          </div>
+          </div> */}
 
           {/* Location Dropdown */}
           <div className="relative">

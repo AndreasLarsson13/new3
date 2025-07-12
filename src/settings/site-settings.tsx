@@ -81,20 +81,20 @@ export const siteSettings = {
 
       {
         id: 'en',
-        name: 'ENGLISH',
+        name: 'English',
         value: 'en',
         icon: <GBFlag width="20px" height="15px" />,
       },
 
       {
         id: 'se',
-        name: 'SVENSKA',
+        name: 'Svenska',
         value: 'se',
         icon: <SEFlag width="20px" height="15px" />,
       },
       {
         id: 'fi',
-        name: 'SUOMI',
+        name: 'Suomeski',
         value: 'fi',
         icon: <FIFlag width="20px" height="15px" />,
       }       /* ,
