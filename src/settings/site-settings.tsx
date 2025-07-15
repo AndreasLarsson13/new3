@@ -54,7 +54,7 @@ export const siteSettings = {
         value: 'AX',
         currency: '€',
         icon: <AXFlag width="20px" height="15px" />,
-      },
+      }/* ,
       {
         id: 'fi',
         name: 'FINLAND',
@@ -75,7 +75,7 @@ export const siteSettings = {
         value: 'WORLD',
         currency: '€',
         icon: <WorldFlag width="20px" height="15px" />,
-      }
+      } */
     ],
     languageMenu: [
 

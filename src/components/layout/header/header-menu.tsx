@@ -11,7 +11,7 @@ interface MenuProps {
 }
 
 const HeaderMenu: React.FC<MenuProps> = ({ data, className }) => {
-  console.log(data)
+
 
   // Optional: reset it on hover again
   const handleMouseEnter = () => {

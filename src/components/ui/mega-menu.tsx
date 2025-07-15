@@ -37,7 +37,7 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ columns }) => {
 
 
   return (
-    <div className="absolute bg-gray-200 megaMenu shadow-header ltr:-left-28 rtl:-right-28 ltr:xl:left-0 rtl:xl:right-0">
+    <div className="absolute bg-gray-200 megaMenu shadow-header ltr:-left-28 rtl:-right-28 ltr:xl:left-0 rtl:xl:right-0 hidden group-hover:block">
       <div className="grid grid-cols-6">
         {columns?.map((column) => (
           <ul className="pt-6 even:bg-gray-150 pb-7 2xl:pb-8 2xl:pt-7" key={column.id}>
