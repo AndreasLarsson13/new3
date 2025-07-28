@@ -692,12 +692,6 @@ const mobileData = [
 
                     },
                     {
-                        id: 4,
-                        path: "/search?q=spabad/badtunnor",
-                        label: "spabad/badtunnor",
-
-                    },
-                    {
                         id: 5,
                         path: "/search?q=toastolar",
                         label: "toastolar",
