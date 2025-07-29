@@ -27,6 +27,7 @@ interface CheckoutInputType {
 }
 
 
+
 const defaultCheckoutValues: CheckoutInputType = {
   firstName: 'Andreas',
   lastName: '',
@@ -78,6 +79,7 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
     input.country = location.name
 
     const text = {
+      "orderLocation": location,
       "firstName": "Test",
       "lastName": "Person-fi",
       "address": "Mannerheimintie 34",
@@ -90,6 +92,7 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
       "orderData": JSON.parse(productsCart)
     }
 
+
     const config = {
       headers: {
         'Authorization': 'Bearer your-token-here',  // Add your authorization token if necessary
@@ -97,12 +100,13 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
       }
     };
 
+
     /*     https://service-dot-natbutiken.lm.r.appspot.com/open-payment-session,
     http://localhost:8088
-        
+      
      */
     try {
-      const response = await http.post('http://localhost:8080/open-payment-session', text, config);
+      const response = await http.post('http://localhost:8087/open-payment-session', text, config);
       console.log(response.data);
 
       if (response && response.data) {
