@@ -28,7 +28,7 @@ export function generateCartItem(item: Item, attributes: object, attributeArray:
   const { id, name, slug, image, price, sale_price, currency, _id, shippingCosts, weightPack, widthPack, heightPack, lengthPack, sku, variationName, shippingSpecial } = item;
 
 
-  const formulaShip = 9999;
+  const formulaShip = 9999; //jej
   const { attribute } = attributes
   // Generate unique ID based on attributes and item ID
   const attributeString = Object.values(attributes).map((attr) => String(attr)).join(".");

@@ -171,10 +171,9 @@ const ProductSingleDetails: React.FC = () => {
 
     // Generate the cart item
 
-
     console.log(data)
     const item = generateCartItem(data, attributes, AttributeArray, currentPrice, storedLocation);
-    console.log(item)
+
 
     // Debugging: Check the item before adding
     // Add to cart
@@ -218,8 +217,8 @@ const ProductSingleDetails: React.FC = () => {
     }
 
 
-    console.log(item)
-
+    /*     console.log(item)
+     */
 
     AttributeArray = [];
 
@@ -251,8 +250,8 @@ const ProductSingleDetails: React.FC = () => {
   function handleAttribute(attribute: any, variation: any, attribut: any) {
 
 
-    console.log(attribute.id)
-
+    /*     console.log(attribute.id)
+     */
     const index = AttributeArray.findIndex((attr) => attr.group === attribute.group);
 
 
@@ -262,8 +261,8 @@ const ProductSingleDetails: React.FC = () => {
     // Update or remove the attribute in AttributeArray
     const shouldRemove = attribute.value === false || attribute.id === undefined;
 
-    console.log(attribute)
-
+    /*     console.log(attribute)
+     */
 
 
     if (index !== -1) {
@@ -284,8 +283,8 @@ const ProductSingleDetails: React.FC = () => {
 
     // Check if any `produktvariation` is selected
     const hasProduktvariation = AttributeArray.some((attr) => attr.itsaVariation === true);
-    console.log(hasProduktvariation)
-    // Calculate the total price based on selected attributes
+    /*     console.log(hasProduktvariation)
+     */    // Calculate the total price based on selected attributes
 
     let totalProduct = 0;
     let totalSaleProduct = 0;
@@ -293,10 +292,8 @@ const ProductSingleDetails: React.FC = () => {
     let totalOptionSaleProduct = data.price;
     let totalPriceExeptSalePrice = 0;
 
-    console.log(AttributeArray)
     AttributeArray.forEach((attr) => {
 
-      console.log(AttributeArray)
 
       if (hasProduktvariation) {
 
@@ -307,13 +304,10 @@ const ProductSingleDetails: React.FC = () => {
       if (!hasProduktvariation) {
 
         totalOptionSaleProduct += attr.sale_price > 0 ? attr.sale_price : attr.price || 0;
-        console.log(attr)
 
-        console.log(totalOptionSaleProduct)
 
         totalOptionProduct += attr.price || 0;
       }
-      console.log(totalProduct)
       totalPriceExeptSalePrice += attr.price || 0
     });
 
@@ -324,7 +318,6 @@ const ProductSingleDetails: React.FC = () => {
 
       setCurrentPrice(totalProduct)
       setCurrentSalePrice(totalSaleProduct)
-      console.log(totalSaleProduct, totalProduct)
 
       setSkuNumber(attribute.sku)
       setOriginalPriceExeptSale(totalPriceExeptSalePrice);
@@ -335,7 +328,6 @@ const ProductSingleDetails: React.FC = () => {
     if (!hasProduktvariation) {
       setCurrentPrice(totalOptionProduct)
       setCurrentSalePrice(totalOptionSaleProduct)
-      console.log(totalProduct)
       setOptionPrice(totalProduct)
       setOriginalPriceExeptSale(totalPriceExeptSalePrice)
     }
