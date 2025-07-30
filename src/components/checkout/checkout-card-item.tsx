@@ -25,8 +25,7 @@ export const CheckoutItem: React.FC<{ item: Item }> = ({ item }) => {
     amount: item.itemTotalSale && item.itemTotalSale > 0 ? item.itemTotalSale : item.itemTotal,
 
     baseAmount: item.itemTotal,
-    /*    currencyCode: item.currency, */  // Byt framöver
-    currencyCode: "EUR",
+    currencyCode: location?.value,
   });
 
   return (

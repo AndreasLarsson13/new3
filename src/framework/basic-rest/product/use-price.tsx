@@ -3,10 +3,11 @@ import { useMemo } from "react";
 // Mapping currency codes to symbols
 const currencySymbols: { [key: string]: string } = {
   USD: "$",
-  EUR: "€",
+  AX: "€",
+  FI: "€",
   GBP: "£",
   JPY: "¥",
-  SEK: "kr",
+  SV: "kr",
   // Add more currency codes and symbols as needed
 };
 

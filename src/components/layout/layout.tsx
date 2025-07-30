@@ -14,8 +14,8 @@ export default function Layout({ children }: React.PropsWithChildren<{}>) {
 	useEffect(() => {
 		/* 		const checkLocation = localStorage.getItem('clickedLocation')
 		 */		/* if (!checkLocation) {
-				  document.getElementById("locationContainerStart")?.classList.remove("hidden");
-			  } */
+				 document.getElementById("locationContainerStart")?.classList.remove("hidden");
+			 } */
 		/* 		document.getElementById("locationContainerStart")?.classList.remove("hidden");
 		 */
 	}, [])
@@ -57,6 +57,7 @@ export default function Layout({ children }: React.PropsWithChildren<{}>) {
 					],
 				}}
 			/>
+
 			<Header />
 			<LocationOption
 				title={t('text-cookies-title')}

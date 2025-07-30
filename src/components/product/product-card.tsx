@@ -2,7 +2,7 @@ import cn from 'classnames';
 import _ from 'lodash';
 import Image from 'next/image';
 import type { FC } from 'react';
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router';
 import { ROUTES } from '@utils/routes';
 
@@ -45,6 +45,8 @@ interface ProductProps {
   disableBorderRadius?: boolean;
 }
 
+
+
 const ProductCard: FC<ProductProps> = ({
   product,
   className = '',
@@ -69,8 +71,14 @@ const ProductCard: FC<ProductProps> = ({
      baseAmount: product.salePrice > 0 ? product.price : null,
      currencyCode: "EUR",
    }); */
+  const [location, setLocation] = useState<{ currency: string } | null>(null);
 
-
+  useEffect(() => {
+    const storedLocation = localStorage.getItem('clickedLocation');
+    if (storedLocation) {
+      setLocation(JSON.parse(storedLocation));
+    }
+  }, []);
 
   let amounts = product.lowestPrice;
   let basePrices = product.price
@@ -90,13 +98,13 @@ const ProductCard: FC<ProductProps> = ({
 
 
 
-
+  console.log(location)
 
 
   const { price, basePrice, discount } = usePrice({
     amount: amounts,
     baseAmount: /* product.price */basePrices,
-    currencyCode: "EUR",
+    currencyCode: location?.value,
   });
 
   const { i18n } = useTranslation();

@@ -26,7 +26,7 @@ const Card: React.FC<Props> = ({
   imgSize,
   disableBorderRadius = false,
 }) => {
-  const { name, image } = item ?? {};
+  const { name, image, slug } = item ?? {};
   const imageSize: any = (imgSize === 'large' && 375) || (size === 'small' && 180) || (size === 'medium' && 198);
 
   const placeholderImage = `/assets/placeholder/card-${size}.svg`;
@@ -63,7 +63,7 @@ const Card: React.FC<Props> = ({
       </div>
       {!!showName !== false && (
         <Text variant="heading" className="capitalize">
-          {name}
+          {t(`menu:${slug}`)}
         </Text>
       )}
     </Link>

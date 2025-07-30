@@ -9,6 +9,7 @@ interface CartProviderState extends State {
   clearItemFromCart: (id: Item["id"]) => void;
   getItemFromCart: (id: Item["id"]) => any | undefined;
   isInCart: (id: Item["id"]) => boolean;
+  clearCart: () => void;  // Lägg till denna rad
 }
 
 export const cartContext = React.createContext<CartProviderState | undefined>(
@@ -65,7 +66,7 @@ const serializeState = (state: State) => ({
 
 export const CartProvider: React.FC = ({ children }) => {
   const [savedCart, saveCart] = useLocalStorage(
-    "chawkbazar-cart",
+    "natbutiken", //testasnu
     JSON.stringify(initialState)
   );
 
@@ -98,6 +99,10 @@ export const CartProvider: React.FC = ({ children }) => {
     dispatch({ type: "REMOVE_ITEM", id });
   };
 
+  const clearCart = () => {
+    dispatch({ type: "RESET_CART" });
+  };
+
   const isInCart = (id: Item["id"]) => !!getItem(state.items, id);
 
   const getItemFromCart = (id: Item["id"]) => getItem(state.items, id);
@@ -109,6 +114,7 @@ export const CartProvider: React.FC = ({ children }) => {
     clearItemFromCart,
     getItemFromCart,
     isInCart,
+    clearCart
   };
 
   return <cartContext.Provider value={value}>{children}</cartContext.Provider>;

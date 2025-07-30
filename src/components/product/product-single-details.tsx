@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { ImageGalleryModal } from './image-gallery-modal'; // <--- NYTT: Importera modalkomponenten
+
 import Button from '@components/ui/button';
 import Counter from '@components/common/counter';
 import { useRouter } from 'next/router';
@@ -11,6 +13,7 @@ import { ProductAttributes } from './product-attributes';
 import { ProductOptionAttributes } from './product-option-attributes';
 import isEmpty from 'lodash/isEmpty';
 import Link from '@components/ui/link';
+
 import { toast } from 'react-toastify';
 import { useWindowSize } from '@utils/use-window-size';
 import Carousel from '@components/ui/carousel/carousel';
@@ -72,28 +75,42 @@ const ProductSingleDetails: React.FC = () => {
   const [customOrder, setcustomOrder] = useState(false);
   const [resetInputFields, setresetInputFields] = useState(false);
   const [variationImage, setVariationImage] = useState<string | null>(null);
+  const [visualImage, setVisualImage] = useState<string | null>(null);
   const [skuNumber, setSkuNumber] = useState("")
   const [currentPrice, setCurrentPrice] = useState(0);
   const [currentSalePrice, setCurrentSalePrice] = useState(0);
+  const [location, setLocation] = useState<{ currency: string } | null>(null);
+
+
+  const [manualGalleryIndex, setManualGalleryIndex] = useState<number | null>(null); // Befintlig, men viktig för logiken
+  // NYA TILLSTÅND: För modalen
+  const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false); // Kontrollerar om modalen är öppen
+  const [modalInitialSlide, setModalInitialSlide] = useState(0); // Bestämmer vilken bild modalen ska starta på
+
   const { price, basePrice, discount } = usePrice(
     data && {
       amount: parseInt(currentSalePrice) > 0 ? currentSalePrice : currentPrice,
       baseAmount: parseInt(currentPrice),
-      currencyCode: 'EUR',
+      currencyCode: location?.value
     }
   );
   const { t, i18n } = useTranslation('common');
 
-
+  useEffect(() => {
+    const storedLocation = localStorage.getItem('clickedLocation');
+    if (storedLocation) {
+      setLocation(JSON.parse(storedLocation));
+    }
+  }, []);
 
 
   useEffect(() => {
     setSkuNumber(data.sku)
     setCurrentSalePrice(data.sale_price)
     setCurrentPrice(data.price)
-    if (data?.gallery?.length > 0) {
+    /* if (data?.gallery?.length > 0) {
       setVariationImage(data.gallery[activeIndex].original);
-    }
+    } */
   }, [data, activeIndex]);
 
 
@@ -109,7 +126,14 @@ const ProductSingleDetails: React.FC = () => {
     return formatted;
   }
 
-
+  // Funktion för att öppna modalen när huvudbilden klickas
+  const handleMainImageClick = () => {
+    setIsGalleryModalOpen(true);
+    // Sätt initial slide till den bild som för närvarande visas
+    // Hittar indexet för den aktuella variationImage i galleriet
+    const currentImageIndex = data?.gallery?.findIndex(img => img.original === variationImage);
+    setModalInitialSlide(currentImageIndex !== -1 ? currentImageIndex : 0);
+  };
 
 
   const [optionPrice, setOptionPrice] = useState(0);
@@ -247,6 +271,9 @@ const ProductSingleDetails: React.FC = () => {
   }
 
 
+
+
+
   function handleAttribute(attribute: any, variation: any, attribut: any) {
 
 
@@ -336,8 +363,9 @@ const ProductSingleDetails: React.FC = () => {
     if (attribute.itsaVariation) {
 
       // Set the gallery's active image to the variation's image
-      data.gallery[activeIndex].original = attribute.url;
+      /* data.gallery[0].original = attribute.url; */
       setVariationImage(attribute.url)
+      setVisualImage(attribute.url)
     }
 
     // Update the attributes state
@@ -349,7 +377,8 @@ const ProductSingleDetails: React.FC = () => {
 
   const handleClick = (index: number) => {
     if (data?.gallery?.[index]) {
-      setVariationImage(data.gallery[index].original); // Uppdatera huvudbilden
+/*       setVariationImage(data.gallery[index].original); // Uppdatera huvudbilden
+ */      setVisualImage(data.gallery[index].original)
       setActiveIndex(index); // Uppdatera aktivt index (om du använder det någon annanstans)
     }
   };
@@ -411,7 +440,7 @@ const ProductSingleDetails: React.FC = () => {
           <div className="col-span-4 grid grid-cols-1 gap-2.5">
             <div className="col-span-1 overflow-hidden flex justify-center">
               <img
-                src={variationImage ?? '/assets/placeholder/products/product-gallery.svg'}
+                src={visualImage ?? '/assets/placeholder/products/product-gallery.svg'}
                 alt={`${data?.name}--${activeIndex}`}
                 className="w-auto h-full max-h-[402px] min-h-[402px] transition duration-150 ease-in hover:opacity-90 "
               />
@@ -445,102 +474,108 @@ const ProductSingleDetails: React.FC = () => {
           }
 
         </div>
+        {data.restrictedCountry !== true && <>
+          {variations && Object.keys(variations).length > 0 && <div className={`${productOptions ? 'pb-5 border-b border-gray-300' : ''}`}>
+            {/* <h3 className="text-base md:text-lg text-heading font-semibold capitalize pb-3">Variationer</h3> */}
+            {Object.keys(variations).map((variation) => {
 
-        {variations && Object.keys(variations).length > 0 && <div className={`${productOptions ? 'pb-5 border-b border-gray-300' : ''}`}>
-          {/* <h3 className="text-base md:text-lg text-heading font-semibold capitalize pb-3">Variationer</h3> */}
-          {Object.keys(variations).map((variation) => {
+              return (
+                <ProductAttributes
+                  key={variation}
+                  title={variation}
+                  attributes={variations[variation]}
+                  active={attributes[variation]}
+                  clicked={attributes}
+                  fieldErrors={fieldErrors}
+                  onClick={(attribute: any) => handleAttribute(attribute, variation, attributes[variation])}
+                  resetInputFields={resetInputFields}
+                />
+              );
+            })}
+          </div>}
 
-            return (
-              <ProductAttributes
-                key={variation}
-                title={variation}
-                attributes={variations[variation]}
-                active={attributes[variation]}
-                clicked={attributes}
-                fieldErrors={fieldErrors}
-                onClick={(attribute: any) => handleAttribute(attribute, variation, attributes[variation])}
-                resetInputFields={resetInputFields}
-              />
-            );
-          })}
-        </div>}
+          {productOptions && Object.keys(productOptions).length > 0 && <div className="pb-3 border-b border-gray-300 pt-5">
+            <h3 className="text-base md:text-lg text-heading font-semibold capitalize pb-3">{t('optionsProduct')}</h3>
 
-        {productOptions && Object.keys(productOptions).length > 0 && <div className="pb-3 border-b border-gray-300 pt-5">
-          <h3 className="text-base md:text-lg text-heading font-semibold capitalize pb-3">Tillbehör</h3>
+            {Object.keys(productOptions).map((option) => {
 
-          {Object.keys(productOptions).map((option) => {
-
-            return (
-              <ProductOptionAttributes
-                key={option}
-                title={option}
-                attributes={productOptions[option]}
-                active={attributes[option]}
-                clicked={attributes}
-                fieldErrors={fieldErrors}
-                onClick={(attribute: any) => handleAttribute(attribute, option, attributes[option])}
-                resetInputFields={resetInputFields}
-              />
-            );
-          })}
-        </div>}
+              return (
+                <ProductOptionAttributes
+                  key={option}
+                  title={option}
+                  attributes={productOptions[option]}
+                  active={attributes[option]}
+                  clicked={attributes}
+                  fieldErrors={fieldErrors}
+                  onClick={(attribute: any) => handleAttribute(attribute, option, attributes[option])}
+                  resetInputFields={resetInputFields}
+                />
+              );
+            })}
+          </div>}
 
 
-        <div className="flex items-center mt-5">
-          <div className="text-heading font-bold text-base md:text-xl lg:text-2xl 2xl:text-4xl ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
+          <div className="flex items-center mt-5">
+            <div className="text-heading font-bold text-base md:text-xl lg:text-2xl 2xl:text-4xl ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
 
-            {/* {(currentPrice === 0 && optionPrice === 0)
+              {/* {(currentPrice === 0 && optionPrice === 0)
               ? price
               : formatWithSeparator(currentPrice === 0 ? parseInt(price) + optionPrice : currentPrice + optionPrice)
             } */}
 
-            {/*  {optionPrice > 0 ? formatWithSeparator(parseInt(data.price) + optionPrice) : price} */} {/* {price} */}
-            {/* {currentPrice} */}
-            <div className={`font-bold ${currentSalePrice > 0 ? 'text-red-600 text-xl md:text-2xl lg:text-3xl 2xl:text-5xl' : 'text-heading text-base md:text-xl lg:text-2xl 2xl:text-4xl'}`}>
-              {price}
+              {/*  {optionPrice > 0 ? formatWithSeparator(parseInt(data.price) + optionPrice) : price} */} {/* {price} */}
+              {/* {currentPrice} */}
+              <div className={`font-bold ${currentSalePrice > 0 ? 'text-red-600 text-xl md:text-2xl lg:text-3xl 2xl:text-5xl' : 'text-heading text-base md:text-xl lg:text-2xl 2xl:text-4xl'}`}>
+                {price}
+              </div>
             </div>
+
+            <span className="line-through font-segoe text-gray-400 text-sm md:text-base lg:text-lg xl:text-xl ltr:pl-2 rtl:pr-2">
+
+              {basePrice}
+
+            </span>
+          </div>
+          <div className="flex items-center gap-x-4 ltr:md:pr-32 rtl:md:pl-32 ltr:lg:pr-12 rtl:lg:pl-12 ltr:2xl:pr-32 rtl:2xl:pl-32 ltr:3xl:pr-48 rtl:3xl:pl-48  py-8">
+            <Counter
+              quantity={quantity}
+              onIncrement={() => setQuantity((prev) => prev + 1)}
+              onDecrement={() =>
+                setQuantity((prev) => (prev !== 1 ? prev - 1 : 1))
+              }
+              disableDecrement={quantity === 1}
+            />
+
+            <Button
+              onClick={addToCart}
+              variant="slim"
+              className={`w-full md:w-6/12 xl:w-full ${!isSelected && 'bg-gray-400 hover:bg-gray-400'
+                } ${customOrder && 'bg-green-400'} `}
+              disabled={!isSelected}
+              loading={addToCartLoader}
+            >
+              <span className="py-2 3xl:px-8">{customOrder ? t("text-add-to-cart-special") : t("text-add-to-cart")}</span>
+            </Button>
           </div>
 
-          <span className="line-through font-segoe text-gray-400 text-sm md:text-base lg:text-lg xl:text-xl ltr:pl-2 rtl:pr-2">
-
-            {basePrice}
-
+          <div className="flex items-center pb-7 space-x-2 border-b border-gray-300">
+            <h3 className="text-base md:text-lg text-heading font-semibold capitalize">
+              {t('expectedDelivery')}
+            </h3>
+            <p className="text-gray-400">{data?.deliveryTime}</p>
+            <div className="relative group">
+              <FaInfoCircle className="text-gray-400 cursor-pointer" />
+              <div className="absolute bottom-full left-0 mb-2 hidden group-hover:block w-64 bg-white text-gray-700 text-sm border border-gray-200 rounded shadow-md p-2">
+                Vi strävar efter att leverera din produkt inom den angivna tidsramen, men leveranstider kan variera beroende på produktens tillgänglighet och ditt val av leveransmetod.
+              </div>
+            </div>
+          </div> </>}
+        {data?.restrictedCountry &&
+          <span className="font-semibold text-heading inline-block ltr:pr-2 rtl:pl-2">
+            {t('text-countryRestriction')}
           </span>
-        </div>
-        <div className="flex items-center gap-x-4 ltr:md:pr-32 rtl:md:pl-32 ltr:lg:pr-12 rtl:lg:pl-12 ltr:2xl:pr-32 rtl:2xl:pl-32 ltr:3xl:pr-48 rtl:3xl:pl-48  py-8">
-          <Counter
-            quantity={quantity}
-            onIncrement={() => setQuantity((prev) => prev + 1)}
-            onDecrement={() =>
-              setQuantity((prev) => (prev !== 1 ? prev - 1 : 1))
-            }
-            disableDecrement={quantity === 1}
-          />
+        }
 
-          <Button
-            onClick={addToCart}
-            variant="slim"
-            className={`w-full md:w-6/12 xl:w-full ${!isSelected && 'bg-gray-400 hover:bg-gray-400'
-              } ${customOrder && 'bg-green-400'} `}
-            disabled={!isSelected}
-            loading={addToCartLoader}
-          >
-            <span className="py-2 3xl:px-8">{customOrder ? t("text-add-to-cart-special") : t("text-add-to-cart")}</span>
-          </Button>
-        </div>
-
-        <div className="flex items-center pb-7 space-x-2 border-b border-gray-300">
-          <h3 className="text-base md:text-lg text-heading font-semibold capitalize">
-            Förväntad leveranstid:
-          </h3>
-          <p className="text-gray-400">{data?.deliveryTime}</p>
-          <div className="relative group">
-            <FaInfoCircle className="text-gray-400 cursor-pointer" />
-            <div className="absolute bottom-full left-0 mb-2 hidden group-hover:block w-64 bg-white text-gray-700 text-sm border border-gray-200 rounded shadow-md p-2">
-              Vi strävar efter att leverera din produkt inom den angivna tidsramen, men leveranstider kan variera beroende på produktens tillgänglighet och ditt val av leveransmetod.
-            </div>
-          </div>
-        </div>
         <div className="py-6">
           <ul className="text-sm space-y-5 pb-1">
             <li>

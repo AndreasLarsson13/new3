@@ -7,6 +7,8 @@ import { useCategoriesQuery } from '@framework/category/get-all-categories';
 import { ROUTES } from '@utils/routes';
 import Alert from '@components/ui/alert';
 import { SwiperSlide } from 'swiper/react';
+import { useTranslation } from 'next-i18next';
+
 
 interface CategoriesProps {
   sectionHeading: string;
@@ -83,11 +85,14 @@ const CategoryBlock: React.FC<CategoriesProps> = ({
     },
   };
 
+  const { i18n } = useTranslation('common');
+
   const { data, isLoading, error } = useCategoriesQuery({
     limit: 10,
     popular: true,
-    demoVariant: demoVariant || undefined,
-  });
+    language: i18n.language
+/*     demoVariant: demoVariant || undefined,
+ */  });
 
   return (
     <div className={className}>

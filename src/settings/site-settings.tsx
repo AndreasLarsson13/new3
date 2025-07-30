@@ -44,7 +44,7 @@ export const siteSettings = {
       {
         id: 'se',
         name: 'SVERIGE',
-        value: 'SE',
+        value: 'SV',
         currency: 'SEK',
         icon: <SEFlag width="20px" height="15px" />,
       },

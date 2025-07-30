@@ -43,7 +43,7 @@ const defaultCheckoutValues: CheckoutInputType = {
 };
 
 const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbillingInfo }) => {
-  const [cosyNew, setCozyNew] = useLocalStorage('chawkbazar-cart', [])
+  const [cosyNew, setCozyNew] = useLocalStorage('natbutiken', [])
 
   const { t } = useTranslation();
   const { mutate: updateUser, isPending } = useCheckoutMutation();
@@ -67,7 +67,7 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
   }, []);
 
   const fetchSnippet = async (input: CheckoutInputType) => {
-    const rawCart = localStorage.getItem('chawkbazar-cart');
+    const rawCart = localStorage.getItem('natbutiken');
     const productsCart = rawCart ? JSON.parse(rawCart) : [];
 
 

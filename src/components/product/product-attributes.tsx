@@ -69,6 +69,7 @@ export const ProductAttributes: React.FC<Props> = ({
   const { t, i18n } = useTranslation('common');
   const [isTooltipOpen, setTooltipOpen] = useState(false);
   const tooltipRef = useRef<HTMLDivElement>(null);
+  const [location, setLocation] = useState<{ currency: string } | null>(null);
 
   // Hitta attributet med lägst pris (sale_price om > 0, annars price)
   const findLowestPriceAttribute = () => {
@@ -79,6 +80,15 @@ export const ProductAttributes: React.FC<Props> = ({
       return currentPrice < lowestPrice ? current : lowest;
     });
   };
+
+
+  useEffect(() => {
+    const storedLocation = localStorage.getItem('clickedLocation');
+    if (storedLocation) {
+      setLocation(JSON.parse(storedLocation));
+    }
+  }, []);
+
 
   const initialSelectedAttribute = findLowestPriceAttribute();
 
@@ -183,12 +193,12 @@ export const ProductAttributes: React.FC<Props> = ({
               {sale_price > 0 ? (
                 <>
                   <span style={{ color: '#ff6666' }}>
-                    {formatWithSeparator(sale_price)} €
+                    {formatWithSeparator(sale_price)}  {location?.currency && location?.currency === "SEK" ? "kr" : location?.currency}
                   </span>{' '}
-                  <s>{formatWithSeparator(price)} €</s>
+                  <s>{formatWithSeparator(price)}  {location?.currency && location?.currency === "SEK" ? "kr" : location?.currency}</s>
                 </>
               ) : (
-                `${formatWithSeparator(price)} €`
+                `${formatWithSeparator(price)} ${location?.currency && location?.currency === "SEK" ? "kr" : location?.currency}`
               )}
             </span>
           </div>
@@ -336,7 +346,7 @@ export const ProductAttributes: React.FC<Props> = ({
         value={currentSelectedOption}
         /* isClearable={true} */
         styles={customStyles}
-        placeholder={t('chooseOption')}
+        placeholder={t('select_placeholder')}
         getOptionLabel={(e) => e.label}
         getOptionValue={(e) => e.value}
         aria-label={title}

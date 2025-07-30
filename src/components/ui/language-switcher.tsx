@@ -44,34 +44,34 @@ export default function LanguageSwitcher() {
   }, []);
 
   // Handle language selection and redirect
-  function handleLanguageChange(option: Option) {
-    setSelectedItem(option);
-    router.push(asPath, undefined, { locale: option.value });
-    setIsLanguageDropdownOpen(false);
-  }
+  /*  function handleLanguageChange(option: Option) {
+     setSelectedItem(option);
+     router.push(asPath, undefined, { locale: option.value });
+     setIsLanguageDropdownOpen(false);
+   } */
 
   // Handle location selection change
-  function handleLocationChange(option: Option) {
-    if (option.value === "se") {
-      setClickedLocation(option);
-      localStorage.setItem('clickedLocation', JSON.stringify(option));
-      setIsLocationDropdownOpen(false);
-    }
-    else if (option.value === "fi") {
-      alert("Vi säljer inte till Finland än tyvärr");
-    }
-
-    else {
-      setClickedLocation(option);
-      localStorage.setItem('clickedLocation', JSON.stringify(option));
-      setIsLocationDropdownOpen(false);
-    }
-  }
+  /*  function handleLocationChange(option: Option) {
+     if (option.value === "se") {
+       setClickedLocation(option);
+       localStorage.setItem('clickedLocation', JSON.stringify(option));
+       setIsLocationDropdownOpen(false);
+     }
+     else if (option.value === "fi") {
+       alert("Vi säljer inte till Finland än tyvärr");
+     }
+ 
+     else {
+       setClickedLocation(option);
+       localStorage.setItem('clickedLocation', JSON.stringify(option));
+       setIsLocationDropdownOpen(false);
+     }
+   } */
 
   // Toggle modal visibility
-  function toggleModal() {
-    setIsModalOpen(!isModalOpen);
-  }
+  /*  function toggleModal() {
+     setIsModalOpen(!isModalOpen);
+   } */
 
   /* console.log(clickedLocation) */
   const handleMouseEnter = () => {
@@ -135,7 +135,7 @@ return (
           </div> */}
 
           {/* Location Dropdown */}
-          <div className="relative">
+          {/*  <div className="relative">
             <h2 className="text-lg font-semibold mb-4">{t('location')}</h2>
             <button
               className="border border-gray-300 text-heading text-sm font-semibold w-full py-2 px-3 bg-white rounded-lg shadow-md flex justify-between items-center"
@@ -165,7 +165,7 @@ return (
                 ))}
               </div>
             )}
-          </div>
+          </div> */}
 
           {/* Close button */}
           <button

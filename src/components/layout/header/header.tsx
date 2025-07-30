@@ -1,4 +1,6 @@
 import React, { useRef } from 'react';
+import { useCart } from '@contexts/cart/cart.context';
+
 import { useState, useEffect } from 'react';
 import SearchIcon from '@components/icons/search-icon';
 import { siteSettings } from '@settings/site-settings';
@@ -21,12 +23,13 @@ const CartButton = dynamic(() => import('@components/cart/cart-button'), {
 
 type DivElementRef = React.MutableRefObject<HTMLDivElement>;
 const { site_header } = siteSettings;
+
 const Header: React.FC = () => {
+  const { clearCart } = useCart()
   const { openSearch, openModal, setModalView, isAuthorized } = useUI();
   const { t } = useTranslation('common');
   const siteHeaderRef = useRef() as DivElementRef;
   addActiveScroll(siteHeaderRef);
-
   function handleLogin() {
     setModalView('LOGIN_VIEW');
     return openModal();
@@ -90,10 +93,16 @@ const Header: React.FC = () => {
 
   // Handle location selection change
   function handleLocationChange(option: Option) {
-    if (option.value === "SE") {
+
+
+
+    if (option.value === "SV") {
       setClickedLocation(option);
       localStorage.setItem('clickedLocation', JSON.stringify(option));
       setIsLocationDropdownOpen(false);
+      /*       clearCart();
+       */
+
     } else if (option.value === "FI") {
       alert("Vi säljer inte till Finland än tyvärr");
     }
@@ -108,19 +117,26 @@ const Header: React.FC = () => {
       localStorage.setItem('clickedLocation', JSON.stringify(option));
       setIsLocationDropdownOpen(false);
     }
+    window.location.reload();
+    clearCart()
   }
 
   // Toggle modal visibility
-  function toggleModal() {
-    setIsModalOpen(!isModalOpen);
-  }
+  /*  function toggleModal() {
+     setIsModalOpen(!isModalOpen);
+   } */
 
 
   const handleMouseEnter = () => {
     setIsLocationDropdownOpen(!isLocationDropdownOpen);
   };
 
-
+  try {
+    const cart = useCart();
+    console.log("Cart context in Header:", cart);
+  } catch (e) {
+    console.error(e);
+  }
 
   return (
     <header

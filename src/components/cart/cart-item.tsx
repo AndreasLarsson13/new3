@@ -1,5 +1,7 @@
 import Link from '@components/ui/link';
 import Image from 'next/image';
+import { useEffect, useState } from 'react'
+
 import { motion } from 'framer-motion';
 import { fadeInOut } from '@utils/motion/fade-in-out';
 import { IoIosCloseCircle } from 'react-icons/io';
@@ -16,6 +18,15 @@ type CartItemProps = {
 
 const CartItem: React.FC<CartItemProps> = ({ item }) => {
   const { t, i18n } = useTranslation('common');
+  const [location, setLocation] = useState<{ currency: string } | null>(null);
+
+  useEffect(() => {
+    const storedLocation = localStorage.getItem('clickedLocation');
+    if (storedLocation) {
+      setLocation(JSON.parse(storedLocation));
+    }
+  }, []);
+
   const { addItemToCart, removeItemFromCart, clearItemFromCart } = useCart();
 
 
@@ -24,8 +35,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
 
     amount: item.sale_price ? item.sale_price : item.price,
     baseAmount: item.price,
-    /*  currencyCode: item.currency,  */ // Byt framöver
-    currencyCode: "EUR",
+    currencyCode: location?.value,
   });
 
 
@@ -33,8 +43,8 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
     amount: item.itemTotalSale && item.itemTotalSale > 0 ? item.itemTotalSale : item.itemTotal,
 
     baseAmount: item.itemTotal,
-    /*    currencyCode: item.currency, */  // Byt framöver
-    currencyCode: "EUR",
+
+    currencyCode: location?.value
   });
 
 

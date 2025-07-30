@@ -18,7 +18,7 @@ const CheckoutCard: React.FC = () => {
   const { items, total, isEmpty } = useCart();
   const { price: subtotal } = usePrice({
     amount: total,
-    currencyCode: location?.currency,
+    currencyCode: location?.value,
   });
 
   // Beräkna frakt
@@ -45,12 +45,12 @@ const CheckoutCard: React.FC = () => {
 
   const { price: formattedShippingPrice } = usePrice({
     amount: shippingPrice,
-    currencyCode: location?.currency,
+    currencyCode: location?.value,
   });
 
   const { price: totalWithShipping } = usePrice({
     amount: total + shippingPrice,
-    currencyCode: location?.currency,
+    currencyCode: location?.value,
   });
 
   const { t } = useTranslation('common');

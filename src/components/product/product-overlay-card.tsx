@@ -1,5 +1,7 @@
 import Image from 'next/image';
 import { useUI } from '@contexts/ui.context';
+import { useEffect, useState } from 'react'
+
 import usePrice from '@framework/product/use-price';
 import { Product } from '@framework/types';
 import Text from '@components/ui/text';
@@ -48,12 +50,21 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
   } else {
     classes = 'col-span-2 lg:col-span-1';
   }
+  const [location, setLocation] = useState<{ currency: string } | null>(null);
+
+  useEffect(() => {
+    const storedLocation = localStorage.getItem('clickedLocation');
+    if (storedLocation) {
+      setLocation(JSON.parse(storedLocation));
+    }
+  }, []);
+
 
   const { openModal, setModalView, setModalData } = useUI();
   const { price, basePrice, discount } = usePrice({
     amount: /* product.sale_price ? product.sale_price :  */product.lowestPrice,
     baseAmount: product.price,
-    currencyCode: "EUR",
+    currencyCode: location?.value,
   });
   const { i18n } = useTranslation();
 
@@ -168,7 +179,7 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
               </del>
             )}
             <div className="text-heading font-segoe font-semibold text-base md:text-xl lg:text-base xl:text-xl 3xl:text-2xl 3xl:mt-0.5 ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
-              {price}
+              {product.hasVariations ? "Från" : ""} {price}
             </div>
           </div>
 

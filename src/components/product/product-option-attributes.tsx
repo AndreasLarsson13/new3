@@ -1,6 +1,7 @@
 import { useTranslation } from 'next-i18next';
 import { FaLink } from 'react-icons/fa';
 import { useState, useRef, useEffect } from 'react';
+import usePrice from '@framework/product/use-price';
 
 interface Attribute {
   id: number;
@@ -39,6 +40,63 @@ interface Props {
   fieldErrors: string[];
 }
 
+const formatWithSeparator = (price: number) =>
+  price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' ').replace('.', ',');
+
+const AttributeOption: React.FC<{
+  attr: Attribute;
+  title: string;
+  isChecked: boolean;
+  onClick: () => void;
+  i18n: any;
+  location: any;
+  productAttribute?: Attribute;
+}> = ({ attr, title, isChecked, onClick, i18n, location, productAttribute }) => {
+  const { price } = usePrice({
+    amount: attr.price,
+    baseAmount: attr.sale_price > 0 ? attr.price : undefined,
+    currencyCode: location?.value // <-- This was probably "value" before
+  });
+
+  return (
+    <label
+      key={attr._id}
+      className={`flex items-center cursor-pointer space-x-2 p-2 rounded hover:bg-gray-100 ${isChecked ? 'bg-blue-100' : ''}`}
+    >
+      <input type="checkbox" checked={isChecked} onChange={onClick} />
+
+      {title === 'color' ? (
+        <span className="inline-block w-5 h-5 rounded-full border" style={{ backgroundColor: attr.meta }} />
+      ) : typeof attr.img === 'object' && attr.img?.url ? (
+        <img src={attr.img.url} alt={attr.img.name || 'Image'} className="w-6 h-6 rounded-full" />
+      ) : null}
+
+      <span>
+        {attr.namn || attr.translation?.[i18n.language]} <span className="px-2">-</span>{' '}
+        {attr.sale_price > 0 ? (
+          <>
+            <span className="text-red-500">{formatWithSeparator(attr.sale_price)} €</span>
+            <s className="ml-1">{formatWithSeparator(attr.price)} €</s>
+          </>
+        ) : (
+          price
+        )}
+      </span>
+
+      {productAttribute && (
+        <a
+          href={`/products/${productAttribute._id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-500 flex items-center ml-2"
+        >
+          <FaLink className="mr-1" /> Gå till produktsidan
+        </a>
+      )}
+    </label>
+  );
+};
+
 export const ProductOptionAttributes: React.FC<Props> = ({
   className = 'mb-2',
   title,
@@ -51,8 +109,16 @@ export const ProductOptionAttributes: React.FC<Props> = ({
 }) => {
   const { t, i18n } = useTranslation('common');
   const [selectedValue, setSelectedValue] = useState<string>(active);
+  const [location, setLocation] = useState<{ currency: string } | null>(null);
   const hasError = fieldErrors.includes(title);
   const tooltipRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const storedLocation = localStorage.getItem('clickedLocation');
+    if (storedLocation) {
+      setLocation(JSON.parse(storedLocation));
+    }
+  }, []);
 
   useEffect(() => {
     if (resetInputFields) {
@@ -63,15 +129,12 @@ export const ProductOptionAttributes: React.FC<Props> = ({
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (tooltipRef.current && !tooltipRef.current.contains(event.target as Node)) {
-        // Additional tooltip logic can go here if needed
+        // Tooltip logic if needed
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-
-  const formatWithSeparator = (price: number) =>
-    price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' ').replace('.', ',');
 
   const productAttribute = attributes.find((attr) => attr.product);
 
@@ -112,43 +175,16 @@ export const ProductOptionAttributes: React.FC<Props> = ({
             };
 
             return (
-              <label
+              <AttributeOption
                 key={attr._id}
-                className={`flex items-center cursor-pointer space-x-2 p-2 rounded hover:bg-gray-100 ${isChecked ? 'bg-blue-100' : ''
-                  }`}
-              >
-                <input type="checkbox" checked={isChecked} onChange={handleChange} />
-
-                {title === 'color' ? (
-                  <span className="inline-block w-5 h-5 rounded-full border" style={{ backgroundColor: attr.meta }} />
-                ) : typeof attr.img === 'object' && attr.img?.url ? (
-                  <img src={attr.img.url} alt={attr.img.name || 'Image'} className="w-6 h-6 rounded-full" />
-                ) : null}
-
-                <span>
-                  {attr.namn || t(attr.value)}{' '}
-                  <span className="px-2">-</span>{' '}
-                  {attr.sale_price > 0 ? (
-                    <>
-                      <span className="text-red-500">{formatWithSeparator(attr.sale_price)} €</span>
-                      <s className="ml-1">{formatWithSeparator(attr.price)} €</s>
-                    </>
-                  ) : (
-                    `${formatWithSeparator(attr.price)} €`
-                  )}
-                </span>
-
-                {productAttribute && (
-                  <a
-                    href={`/products/${productAttribute._id}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 flex items-center ml-2"
-                  >
-                    <FaLink className="mr-1" /> Gå till produktsidan
-                  </a>
-                )}
-              </label>
+                attr={attr}
+                title={title}
+                isChecked={isChecked}
+                onClick={handleChange}
+                i18n={i18n}
+                location={location}
+                productAttribute={productAttribute}
+              />
             );
           })}
       </div>

@@ -130,6 +130,7 @@
   "text-view-cart": "Till kundvagn",
   "text-added-to-bag": "Tillagd i kundvagnen",
   "text-view-details": "Visa detaljer",
+  "text-countryRestriction": "Denna produkt sälja inte i ditt land än",
   "text-shipping": "Frakt",
   "text-free-shipping": "Gratis frakt",
   "text-shipping-address": "Leveransadress",
@@ -335,5 +336,8 @@
   "quantity": "Antal",
   "select_placeholder": "Välj...",
   "showing": "Visar",
-  "of": "av"
+  "of": "av",
+  "chooseOption": "Välj ett alternativ",
+  "expectedDelivery": "Förväntad leveranstid",
+  "optionsProduct": "Tillbehör"
 }
