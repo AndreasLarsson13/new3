@@ -108,9 +108,9 @@ const ProductSingleDetails: React.FC = () => {
     setSkuNumber(data.sku)
     setCurrentSalePrice(data.sale_price)
     setCurrentPrice(data.price)
-    /* if (data?.gallery?.length > 0) {
-      setVariationImage(data.gallery[activeIndex].original);
-    } */
+    if (!data.variations.length > 0) {
+      setVisualImage(data.gallery[activeIndex].original);
+    }
   }, [data, activeIndex]);
 
 
