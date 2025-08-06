@@ -1,7 +1,6 @@
 import BannerCard from '@components/common/banner-card';
 import Container from '@components/ui/container';
 import BrandBlock from '@containers/brand-block';
-
 import CategoryBlock from '@containers/category-block';
 import Layout from '@components/layout/layout';
 import BannerWithProducts from '@containers/banner-with-products';
@@ -61,6 +60,7 @@ export default function Home() {
           banner={banner[1]}
           href="https://www.hfc.ax"
           className="mb-12 lg:mb-14 xl:mb-16 pb-0.5 lg:pb-1 xl:pb-0"
+          location='addSpace'
         />
         <NewArrivalsProductFeed />
         <DownloadApps />

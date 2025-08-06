@@ -9,7 +9,6 @@ import Alert from '@components/ui/alert';
 import { Brand } from '@framework/types';
 import { useRouter } from 'next/router';
 
-
 interface BrandProps {
   sectionHeading: string;
   className?: string;

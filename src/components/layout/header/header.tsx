@@ -5,6 +5,9 @@ import { useState, useEffect } from 'react';
 import SearchIcon from '@components/icons/search-icon';
 import { siteSettings } from '@settings/site-settings';
 import HeaderMenu from '@components/layout/header/header-menu';
+import axios from "axios";
+import http from '@framework/utils/http';
+
 import Logo from '@components/ui/logo';
 import { useUI } from '@contexts/ui.context';
 import { ROUTES } from '@utils/routes';
@@ -14,6 +17,8 @@ import { useTranslation } from 'next-i18next';
 import LanguageSwitcher from '@components/ui/language-switcher';
 import { HiOutlineSelector } from 'react-icons/hi';
 import { useRouter } from 'next/router';
+import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
+
 
 
 const AuthMenu = dynamic(() => import('./auth-menu'), { ssr: false });
@@ -23,7 +28,7 @@ const CartButton = dynamic(() => import('@components/cart/cart-button'), {
 
 type DivElementRef = React.MutableRefObject<HTMLDivElement>;
 const { site_header } = siteSettings;
-
+console.log(site_header.menu)
 const Header: React.FC = () => {
   const { clearCart } = useCart()
   const { openSearch, openModal, setModalView, isAuthorized } = useUI();
@@ -53,6 +58,30 @@ const Header: React.FC = () => {
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
   const [isLocationDropdownOpen, setIsLocationDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const [menu, setMenu] = useState([]);
+
+
+  //menu data
+  useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        const res = await http.get(API_ENDPOINTS.MENU);
+        console.log(res.data)
+
+
+
+
+
+
+        setMenu(res.data);
+      } catch (err) {
+        console.error('Failed to fetch menu:', err);
+      }
+    };
+
+    fetchMenu();
+  }, []);
 
 
   // Load the clicked location from local storage when component mounts
@@ -145,7 +174,7 @@ const Header: React.FC = () => {
       className="relative z-20 w-full h-16 sm:h-20 lg:h-24"
     >
       <div className='fixed w-full'>
-        <div className={`flex gap-5 p-1 bg-gray-200 transition-all duration-300 ${isScrolled ? 'opacity-0 -translate-y-full' : 'opacity-100'
+        <div className={`hidden sm:flex  gap-5 p-1 bg-gray-200 transition-all duration-300 ${isScrolled ? 'opacity-0 -translate-y-full' : 'opacity-100'
           }`}>
           <div className='flex items-center gap-1 pl-3'>
             <h5 className="text-sm font-semibold">{t('language')}</h5>
@@ -221,7 +250,7 @@ const Header: React.FC = () => {
             <Logo />
 
             <HeaderMenu
-              data={site_header.menu}
+              data={menu}  /* site_header.menu */
               className="hidden lg:flex ltr:md:ml-6 rtl:md:mr-6 ltr:xl:ml-10 rtl:xl:mr-10"
             />
 

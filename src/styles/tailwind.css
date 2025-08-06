@@ -254,17 +254,25 @@
     @apply absolute top-0 bottom-0 flex h-full bg-heading ltr:left-0 rtl:right-0;
   }
 
+  .mobileMenu ul {
+    list-style: none;
+  }
+
   .mobileMenu li li {
-    @apply text-sm text-body;
+
+    @apply text-sm text-black;
   }
 
   .mobileMenu li li div>a {
+
     @apply relative py-2.5 text-body;
+    color: inherit;
   }
 
   .mobileMenu li>ul>li>div>a:before {
+
     content: '';
-    height: 1px;
+
     @apply flex absolute bg-body top-1/2 ltr:left-1.5 rtl:right-1.5 ltr:md:left-3 rtl:md:right-3 w-1.5 md:w-2;
   }
 
@@ -272,6 +280,15 @@
     animation: shake 0.3s ease-in-out;
   }
 
+  ul.mobileMenu {
+    list-style: none !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
+
+  ul.mobileMenu li {
+    list-style: none !important;
+  }
 
   @keyframes shake {
 

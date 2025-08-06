@@ -41,21 +41,23 @@ export const homeThreeBanner = [
 export const homeThreeMasonryBanner = [
   {
     id: 1,
-    title: "Men's Collection",
+    title: "Kök",
     slug: 'kok',
     image: {
       mobile: {
-        url: '/assets/images/banner/masonry/banner-mobile-1.jpg',
+        url: 'https://firebasestorage.googleapis.com/v0/b/natbutiken.appspot.com/o/website%2FheroPhotos%2Fbanner-1.webp?alt=media&token=c7ab49ce-5384-4e6d-9e34-67cf685f6b93',
         width: 470,
         height: 232,
       },
       desktop: {
-        url: '/assets/images/banner/masonry/noblessa-kok-natbutiken.jpg',
+        url: 'https://firebasestorage.googleapis.com/v0/b/natbutiken.appspot.com/o/website%2FheroPhotos%2Fbanner-1.webp?alt=media&token=c7ab49ce-5384-4e6d-9e34-67cf685f6b93',
         width: 1078,
         height: 425,
       },
     },
     type: 'medium',
+    location: 'header',
+    hrf: "/husochhem/kok"
   },
   {
     id: 2,
@@ -63,35 +65,39 @@ export const homeThreeMasonryBanner = [
     slug: 'sport',
     image: {
       mobile: {
-        url: '/assets/images/banner/masonry/sport-mobile-top.jpg',
+        url: 'https://firebasestorage.googleapis.com/v0/b/natbutiken.appspot.com/o/website%2FheroPhotos%2Fbanner-2.webp?alt=media&token=6540834b-b70b-4603-adcb-ef2bf943a566',
         width: 232,
         height: 232,
       },
       desktop: {
-        url: '/assets/images/banner/masonry/sport-banner-top.jpg',
+        url: 'https://firebasestorage.googleapis.com/v0/b/natbutiken.appspot.com/o/website%2FheroPhotos%2Fbanner-2.webp?alt=media&token=6540834b-b70b-4603-adcb-ef2bf943a566',
         width: 425,
         height: 425,
       },
     },
     type: 'small',
+    location: 'header',
+    hrf: "/sport"
   },
   {
     id: 3,
-    title: 'Dress Women',
-    slug: 'fritid-main',
+    title: 'Fritid & trädgård',
+    slug: 'menu-fritid-main',
     image: {
       mobile: {
-        url: '/assets/images/banner/masonry/fritid-mobile-banner.jpg',
+        url: 'https://firebasestorage.googleapis.com/v0/b/natbutiken.appspot.com/o/website%2FheroPhotos%2Fbanner-3.webp?alt=media&token=e29bfdc4-6954-49f4-bf3c-a93c505d59f4',
         width: 232,
         height: 232,
       },
       desktop: {
-        url: '/assets/images/banner/masonry/fritid-banner-top.jpg',
+        url: 'https://firebasestorage.googleapis.com/v0/b/natbutiken.appspot.com/o/website%2FheroPhotos%2Fbanner-3.webp?alt=media&token=e29bfdc4-6954-49f4-bf3c-a93c505d59f4',
         width: 425,
         height: 425,
       },
     },
     type: 'small',
+    location: 'header',
+    hrf: "/fritid-tradgard"
   },
   {
     id: 4,
@@ -99,22 +105,25 @@ export const homeThreeMasonryBanner = [
     slug: 'badrum',
     image: {
       mobile: {
-        url: '/assets/images/banner/masonry/badrum-mobile-top.jpg',
+        url: 'https://firebasestorage.googleapis.com/v0/b/natbutiken.appspot.com/o/website%2FheroPhotos%2Fbanner-4.webp?alt=media&token=3be770ca-4dbb-492f-a193-0b5c0b6ec3cb',
         width: 232,
         height: 232,
       },
       desktop: {
-        url: '/assets/images/banner/masonry/banner-4.jpg',
+        url: 'https://firebasestorage.googleapis.com/v0/b/natbutiken.appspot.com/o/website%2FheroPhotos%2Fbanner-4.webp?alt=media&token=3be770ca-4dbb-492f-a193-0b5c0b6ec3cb',
         width: 425,
         height: 425,
       },
     },
     type: 'small',
+    location: 'header',
+    hrf: "/husochhem/badrum/"
   },
   {
     id: 5,
     title: 'Höst rea',
     slug: 'host-rea',
+    type: 'rea',
     image: {
       mobile: {
         url: '/assets/images/banner/masonry/banner-mobile-5.jpg',
@@ -126,8 +135,8 @@ export const homeThreeMasonryBanner = [
         width: 425,
         height: 425,
       },
-    },
-    type: 'small',
+    }, location: 'header',
+    hrf: ""
   },
   {
     id: 6,
@@ -135,17 +144,19 @@ export const homeThreeMasonryBanner = [
     slug: 'braskaminer',
     image: {
       mobile: {
-        url: '/assets/images/banner/masonry/banner-mobile-6.jpg',
+        url: 'https://firebasestorage.googleapis.com/v0/b/natbutiken.appspot.com/o/website%2FheroPhotos%2Fbanner-6.webp?alt=media&token=939be112-c112-473c-b815-2c0b407ea037',
         width: 470,
         height: 232,
       },
       desktop: {
-        url: '/assets/images/banner/masonry/contura-banner.jpg',
+        url: 'https://firebasestorage.googleapis.com/v0/b/natbutiken.appspot.com/o/website%2FheroPhotos%2Fbanner-6.webp?alt=media&token=939be112-c112-473c-b815-2c0b407ea037',
         width: 1078,
         height: 425,
       },
     },
     type: 'medium',
+    location: 'header',
+    hrf: "/husochhem/kaminer/"
   },
 ];
 
@@ -167,6 +178,7 @@ export const promotionBanner = [
       },
     },
     type: 'small',
+    location: 'slider'
   },
   {
     id: 2,
@@ -185,6 +197,7 @@ export const promotionBanner = [
       },
     },
     type: 'small',
+    location: 'slider'
   },
   {
     id: 3,
@@ -203,6 +216,7 @@ export const promotionBanner = [
       },
     },
     type: 'small',
+    location: 'slider'
   },
 ];
 

@@ -229,7 +229,7 @@ const ProductSingleDetails: React.FC = () => {
           item.id = itemAttributes.id
           /*  */
           item.sale_price = itemAttributes.sale_price
-
+          item.price = itemAttributes.price
           combinedIds += `${itemAttributes.id}_`
           item.image = variationImage
           item.sku = itemAttributes.sku

@@ -36,14 +36,6 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
   ) {
     classes = 'row-span-full lg:row-span-2 col-span-full lg:col-span-2';
     size = 620;
-  } else if (variant === 'combined') {
-    if (index === 2) {
-      classes = 'col-span-2 lg:col-span-1 lg:row-span-2';
-      size = 620;
-    } else {
-      classes = 'col-span-2 lg:col-span-1';
-      size = 620;
-    }
   } else if (variant === 'modern') {
     classes = 'col-span-2 md:row-span-2';
     size = 620;
@@ -106,7 +98,7 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
 
       <div
         /*  onClick={navigateToProductPage} */
-        className={`${classes} cursor-pointer group flex flex-col  ${!disableBorderRadius && 'rounded-md'
+        className={`${classes} w-full cursor-pointer group flex flex-col  ${!disableBorderRadius && 'rounded-md'
           } relative items-center justify-between overflow-hidden`}
       >
         <div

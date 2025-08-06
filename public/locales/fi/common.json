@@ -339,5 +339,9 @@
   "of": "/",
   "chooseOption": "Valitse vaihtoehto",
   "expectedDelivery": "Odotettu toimitusaika",
-  "optionsProduct": "Lisävarusteet"
+  "optionsProduct": "Lisävarusteet",
+  "discover": "Tutustu",
+  "summerSale": "Kesäale",
+  "winterSale": "Talviale",
+  "autumnSale": "Syysale"
 }

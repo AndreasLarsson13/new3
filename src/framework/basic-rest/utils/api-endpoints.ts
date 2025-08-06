@@ -10,6 +10,8 @@ export const API_ENDPOINTS = {
   FEATURED_CATEGORIES: '/featured_categories.json',
   COLLECTIONS: '/collections.json',
   BRANDS: '/brands',
+  MENU: '/menu',
+  MENUMOBILE: '/menumobile',
   PRODUCTS: '/products',
   FILTERPAGE: '/filterFetch',
   CATEGORIESPRODUCTS: '/categoryProducts',

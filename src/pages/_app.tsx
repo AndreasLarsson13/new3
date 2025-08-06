@@ -28,6 +28,7 @@ import "@styles/rc-drawer.css";
 import { getDirection } from "@utils/get-direction";
 import UnderConstruction from "../pages/underConstruction";
 
+import '../styles/fonts.css';
 
 
 

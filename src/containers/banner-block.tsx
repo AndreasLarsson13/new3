@@ -16,14 +16,14 @@ const BannerBlock: React.FC<BannerProps> = ({
 
 }) => {
   const { t } = useTranslation('common'); // Place it inside the functional component
-  const test = t('bannersTop', { returnObjects: true });
+  /*   const test = t('bannersTop', { returnObjects: true });
+   */
 
-
-  data.forEach((item, index) => {
-
-    item.image.desktop.url = test[index].desktop
-    item.image.mobile.url = test[index].mobile
-  });
+  /*   data.forEach((item, index) => {
+  
+      item.image.desktop.url = test[index].desktop
+      item.image.mobile.url = test[index].mobile
+    }); */
 
   return (
     <div
@@ -33,7 +33,7 @@ const BannerBlock: React.FC<BannerProps> = ({
         <BannerCard
           key={`banner--key${banner.id}`}
           banner={banner}
-          href={banner.slug === "host-rea" ? `search?campaign=${banner.slug}` : `search?q=${banner.slug}`}
+          href={banner.slug === "host-rea" ? `search?campaign=${banner.slug}` : `/store${banner.hrf}`}
           effectActive={true}
           variant='default'
           className={

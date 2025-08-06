@@ -38,7 +38,7 @@ export const siteSettings = {
   defaultLanguage: 'se',
   currencyCode: 'EUR',
   site_header: {
-
+    mobileMenu: mobileData,
     menu: menu,
     currencyMenu: [
       {

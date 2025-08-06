@@ -44,7 +44,7 @@ export const CheckoutItem: React.FC<{ item: Item }> = ({ item }) => {
       </div>
 
       {/* Product Details */}
-      <div className="flex-1 ltr:pl-3 rtl:pr-3">
+      <div className="flex-1 ltr:pl-3 rtl:pr-3 overflow-hidden">
         {/* Product Name */}
         <h6 className="text-sm font-medium text-heading truncate">
           {generateCartItemName(item.name, item.attributes)}

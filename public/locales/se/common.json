@@ -1,28 +1,28 @@
 {
   "bannersTop": [
     {
-      "mobile": "/assets/images/banner/masonry/kok-mobile-banner.jpg",
-      "desktop": "/assets/images/banner/masonry/noblessa-kok-natbutiken.jpg"
+      "mobile": "https://firebasestorage.googleapis.com/v0/b/natbutiken.appspot.com/o/website%2FheroPhotos%2Fbanner-1.webp?alt=media&token=c7ab49ce-5384-4e6d-9e34-67cf685f6b93",
+      "desktop": "https://firebasestorage.googleapis.com/v0/b/natbutiken.appspot.com/o/website%2FheroPhotos%2Fbanner-1.webp?alt=media&token=c7ab49ce-5384-4e6d-9e34-67cf685f6b93"
     },
     {
-      "mobile": "/assets/images/banner/masonry/sport-mobile-top.jpg",
-      "desktop": "/assets/images/banner/masonry/sport-banner-top.jpg"
+      "mobile": "https://firebasestorage.googleapis.com/v0/b/natbutiken.appspot.com/o/website%2FheroPhotos%2Fbanner-2.webp?alt=media&token=6540834b-b70b-4603-adcb-ef2bf943a566",
+      "desktop": "https://firebasestorage.googleapis.com/v0/b/natbutiken.appspot.com/o/website%2FheroPhotos%2Fbanner-2.webp?alt=media&token=6540834b-b70b-4603-adcb-ef2bf943a566"
     },
     {
-      "mobile": "/assets/images/banner/masonry/fritid-mobile-banner.jpg",
-      "desktop": "/assets/images/banner/masonry/fritid-banner-top.jpg"
+      "mobile": "https://firebasestorage.googleapis.com/v0/b/natbutiken.appspot.com/o/website%2FheroPhotos%2Fbanner-3.webp?alt=media&token=e29bfdc4-6954-49f4-bf3c-a93c505d59f4",
+      "desktop": "https://firebasestorage.googleapis.com/v0/b/natbutiken.appspot.com/o/website%2FheroPhotos%2Fbanner-3.webp?alt=media&token=e29bfdc4-6954-49f4-bf3c-a93c505d59f4"
     },
     {
-      "mobile": "/assets/images/banner/masonry/badrum-mobile-top.jpg",
-      "desktop": "/assets/images/banner/masonry/banner-4.jpg"
+      "mobile": "https://firebasestorage.googleapis.com/v0/b/natbutiken.appspot.com/o/website%2FheroPhotos%2Fbanner-4.webp?alt=media&token=3be770ca-4dbb-492f-a193-0b5c0b6ec3cb",
+      "desktop": "https://firebasestorage.googleapis.com/v0/b/natbutiken.appspot.com/o/website%2FheroPhotos%2Fbanner-4.webp?alt=media&token=3be770ca-4dbb-492f-a193-0b5c0b6ec3cb"
     },
     {
-      "mobile": "/assets/images/banner/masonry/banner-mobile-5.jpg",
+      "mobile": "https://firebasestorage.googleapis.com/v0/b/natbutiken.appspot.com/o/website%2FheroPhotos%2Fbanner-6.webp?alt=media&token=939be112-c112-473c-b815-2c0b407ea037",
       "desktop": "/assets/images/banner/masonry/banner-5.jpg"
     },
     {
-      "mobile": "/assets/images/banner/masonry/kaminer-mobile-banner.jpg",
-      "desktop": "/assets/images/banner/masonry/contura-banner.jpg"
+      "mobile": "https://firebasestorage.googleapis.com/v0/b/natbutiken.appspot.com/o/website%2FheroPhotos%2Fbanner-6.webp?alt=media&token=939be112-c112-473c-b815-2c0b407ea037",
+      "desktop": "https://firebasestorage.googleapis.com/v0/b/natbutiken.appspot.com/o/website%2FheroPhotos%2Fbanner-6.webp?alt=media&token=939be112-c112-473c-b815-2c0b407ea037"
     }
   ],
   "sliderPhotos": [
@@ -339,5 +339,9 @@
   "of": "av",
   "chooseOption": "Välj ett alternativ",
   "expectedDelivery": "Förväntad leveranstid",
-  "optionsProduct": "Tillbehör"
+  "optionsProduct": "Tillbehör",
+  "discover": "Upptäck",
+  "summerSale": "Sommarrea",
+  "winterSale": "Vinterrea",
+  "autumnSale": "Höstrea"
 }

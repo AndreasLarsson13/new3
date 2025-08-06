@@ -285,6 +285,32 @@ const menuData = [
                 ],
 
             },
+            {
+                slug: "bastu",
+                child: [
+                    {
+                        slug: "elektiskt/bastupriser",
+                    },
+                    {
+                        slug: "vedeldade/bastuspisar",
+                    },
+                    {
+                        slug: "tillbehor",
+                    }
+                    ,
+                    {
+                        slug: "bastu-inredning",
+                    }
+                    ,
+                    {
+                        slug: "bastu-stugor",
+                    },
+                    {
+                        slug: "tillbehor",
+                    }
+                ],
+
+            },
 
         ],
     },
@@ -550,6 +576,76 @@ const sortedMenuData = menuData.map(category => {
 
 console.log(sortedMenuData);
 
+
+
+
+
+
+
+
+let menu = [];
+const unfiledsMenu = menuData
+
+sortedMenuData.forEach((element, index) => {
+    let columnGroups = [];
+    let currentGroup = [];
+    let itemCount = 0;
+
+    element.child.forEach((child, childIndex) => {
+        const columnItem = {
+            id: childIndex + 1,
+            path: `/store/${element.slug}/${child.slug}`,
+            label: child.slug,
+            columnItemItems: child.child
+                ? child.child.map((subChild, subChildIndex) => ({
+                    id: subChildIndex + 1,
+                    path: `/store/${element.slug}/${child.slug}/${subChild.slug}`,
+                    label: subChild.slug,
+                    subMenu: subChild.subChildItems
+                        ? subChild.subChildItems.map((subSubChild, subSubChildIndex) => ({
+                            id: subSubChildIndex + 1,
+                            path: `/store/${element.slug}/${child.slug}/${subChild.slug}/${subSubChild}`,
+                            label: subSubChild,
+                        }))
+                        : [],
+                }))
+                : [],
+        };
+
+        currentGroup.push(columnItem);
+
+        // Count the total number of columnItemItems
+        itemCount += columnItem.columnItemItems.length;
+
+        // If itemCount exceeds 12, create a new column
+        if (itemCount >= 10) {
+            columnGroups.push({
+                id: columnGroups.length + 1,
+                columnItems: [...currentGroup],
+            });
+            currentGroup = [];
+            itemCount = 0; // Reset item count for the next group
+        }
+    });
+
+    // Add the remaining items if they are less than 12
+    if (currentGroup.length > 2) {
+        columnGroups.push({
+            id: columnGroups.length + 1,
+            columnItems: [...currentGroup],
+        });
+    }
+
+    // Create the final menu structure
+    const menuItem = {
+        id: index + 1, // Unique ID for each menu item
+        path: `/store/${element.slug}`, // Generate path from slug
+        label: element.slug, // Use slug as label
+        columns: columnGroups, // Push the groups into columns
+    };
+
+    menu.push(menuItem);
+});
 
 
 const mobileData = [
@@ -1247,76 +1343,6 @@ const mobileData = [
         ]
     }
 ];
-
-
-
-
-let menu = [];
-const unfiledsMenu = menuData
-
-sortedMenuData.forEach((element, index) => {
-    let columnGroups = [];
-    let currentGroup = [];
-    let itemCount = 0;
-
-    element.child.forEach((child, childIndex) => {
-        const columnItem = {
-            id: childIndex + 1,
-            path: `/store/${element.slug}/${child.slug}`,
-            label: child.slug,
-            columnItemItems: child.child
-                ? child.child.map((subChild, subChildIndex) => ({
-                    id: subChildIndex + 1,
-                    path: `/store/${element.slug}/${child.slug}/${subChild.slug}`,
-                    label: subChild.slug,
-                    subMenu: subChild.subChildItems
-                        ? subChild.subChildItems.map((subSubChild, subSubChildIndex) => ({
-                            id: subSubChildIndex + 1,
-                            path: `/store/${element.slug}/${child.slug}/${subChild.slug}/${subSubChild}`,
-                            label: subSubChild,
-                        }))
-                        : [],
-                }))
-                : [],
-        };
-
-        currentGroup.push(columnItem);
-
-        // Count the total number of columnItemItems
-        itemCount += columnItem.columnItemItems.length;
-
-        // If itemCount exceeds 12, create a new column
-        if (itemCount >= 10) {
-            columnGroups.push({
-                id: columnGroups.length + 1,
-                columnItems: [...currentGroup],
-            });
-            currentGroup = [];
-            itemCount = 0; // Reset item count for the next group
-        }
-    });
-
-    // Add the remaining items if they are less than 12
-    if (currentGroup.length > 2) {
-        columnGroups.push({
-            id: columnGroups.length + 1,
-            columnItems: [...currentGroup],
-        });
-    }
-
-    // Create the final menu structure
-    const menuItem = {
-        id: index + 1, // Unique ID for each menu item
-        path: `/store/${element.slug}`, // Generate path from slug
-        label: element.slug, // Use slug as label
-        columns: columnGroups, // Push the groups into columns
-    };
-
-    menu.push(menuItem);
-});
-
-
-
 
 
 // Export the menu data

@@ -339,5 +339,9 @@
   "of": "of",
   "chooseOption": "Choose an option",
   "expectedDelivery": "Expected Delivery Time",
-  "optionsProduct": "Accessories"
+  "optionsProduct": "Accessories",
+  "discover": "Discover",
+  "summerSale": "Summer Sale",
+  "winterSale": "Winter Sale",
+  "autumnSale": "Autumn Sale"
 }
