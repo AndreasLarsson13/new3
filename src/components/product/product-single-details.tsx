@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ImageGalleryModal } from './image-gallery-modal'; // <--- NYTT: Importera modalkomponenten
+import { Collapse } from "@components/common/accordion";
 
 import Button from '@components/ui/button';
 import Counter from '@components/common/counter';
@@ -105,10 +106,11 @@ const ProductSingleDetails: React.FC = () => {
 
 
   useEffect(() => {
-    setSkuNumber(data.sku)
+
     setCurrentSalePrice(data.sale_price)
     setCurrentPrice(data.price)
     if (!data.variations.length > 0) {
+      setSkuNumber(data.sku)
       setVisualImage(data.gallery[activeIndex].original);
     }
   }, [data, activeIndex]);
@@ -156,6 +158,7 @@ const ProductSingleDetails: React.FC = () => {
 
   const productOptions = getVariations(data.options)
 
+  const [expanded, setExpanded] = useState<number | false>(false); // Start closed
 
   const isSelected = !isEmpty(variations)
     ? Object.keys(variations).every((variation) => {
@@ -345,7 +348,6 @@ const ProductSingleDetails: React.FC = () => {
 
       setCurrentPrice(totalProduct)
       setCurrentSalePrice(totalSaleProduct)
-
       setSkuNumber(attribute.sku)
       setOriginalPriceExeptSale(totalPriceExeptSalePrice);
       // Use total product price if a product variation is selected
@@ -366,6 +368,8 @@ const ProductSingleDetails: React.FC = () => {
       /* data.gallery[0].original = attribute.url; */
       setVariationImage(attribute.url)
       setVisualImage(attribute.url)
+      setSkuNumber(attribute.sku)
+
     }
 
     // Update the attributes state
@@ -494,7 +498,7 @@ const ProductSingleDetails: React.FC = () => {
             })}
           </div>}
 
-          {productOptions && Object.keys(productOptions).length > 0 && <div className="pb-3 border-b border-gray-300 pt-5">
+          {/*    {productOptions && Object.keys(productOptions).length > 0 && <div className="pb-3 border-b border-gray-300 pt-5">
             <h3 className="text-base md:text-lg text-heading font-semibold capitalize pb-3">{t('optionsProduct')}</h3>
 
             {Object.keys(productOptions).map((option) => {
@@ -512,8 +516,40 @@ const ProductSingleDetails: React.FC = () => {
                 />
               );
             })}
-          </div>}
+          </div>} */}
 
+          {productOptions && Object.keys(productOptions).length > 0 &&
+            <div>
+
+              <Collapse
+                i={t('optionsProduct')}
+                key={t('optionsProduct')}
+                title={t('optionsProduct')}
+                /*   pdf={"item.PDF"} */
+                translatorNS="review"
+                /*   tecnical={"item.tecnical"} */
+                content={
+                  Object.keys(productOptions).map((option) => {
+
+                    return (
+                      <ProductOptionAttributes
+                        key={option}
+                        title={option}
+                        attributes={productOptions[option]}
+                        active={attributes[option]}
+                        clicked={attributes}
+                        fieldErrors={fieldErrors}
+                        onClick={(attribute: any) => handleAttribute(attribute, option, attributes[option])}
+                        resetInputFields={resetInputFields}
+                      />
+                    );
+                  })
+                }
+                expanded={expanded}
+                setExpanded={setExpanded}
+                variant="transparent"
+              />
+            </div>}
 
           <div className="flex items-center mt-5">
             <div className="text-heading font-bold text-base md:text-xl lg:text-2xl 2xl:text-4xl ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">

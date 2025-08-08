@@ -361,6 +361,7 @@ export const ProductAttributes: React.FC<Props> = ({
         getOptionLabel={(e) => e.label}
         getOptionValue={(e) => e.value}
         aria-label={title}
+        isSearchable={false}
       />
     </div>
   );
