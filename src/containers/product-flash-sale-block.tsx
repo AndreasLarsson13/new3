@@ -201,7 +201,7 @@ const ProductsFlashSaleBlock: React.FC<ProductsProps> = ({
           </>
         ) : (
           <>
-            {data.map((product: any) => (
+            {data && data.map((product: any) => (
               <ProductCard
                 key={`product--key${product._id}`}
                 product={product}

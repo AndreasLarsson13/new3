@@ -156,6 +156,11 @@ export const ProductAttributes: React.FC<Props> = ({
 
   const options = attributes
     .filter(({ mainObject }) => !mainObject)
+    .sort((a, b) => {
+      const priceA = a.sale_price > 0 ? a.sale_price : a.price;
+      const priceB = b.sale_price > 0 ? b.sale_price : b.price;
+      return priceA - priceB; // Descending order
+    })
     .map(
       ({
         value,
@@ -193,12 +198,17 @@ export const ProductAttributes: React.FC<Props> = ({
               {sale_price > 0 ? (
                 <>
                   <span style={{ color: '#ff6666' }}>
-                    {formatWithSeparator(sale_price)}  {location?.currency && location?.currency === "SEK" ? "kr" : location?.currency}
+                    {formatWithSeparator(sale_price)}{' '}
+                    {location?.currency === 'SEK' ? 'kr' : location?.currency}
                   </span>{' '}
-                  <s>{formatWithSeparator(price)}  {location?.currency && location?.currency === "SEK" ? "kr" : location?.currency}</s>
+                  <s>
+                    {formatWithSeparator(price)}{' '}
+                    {location?.currency === 'SEK' ? 'kr' : location?.currency}
+                  </s>
                 </>
               ) : (
-                `${formatWithSeparator(price)} ${location?.currency && location?.currency === "SEK" ? "kr" : location?.currency}`
+                `${formatWithSeparator(price)} ${location?.currency === 'SEK' ? 'kr' : location?.currency
+                }`
               )}
             </span>
           </div>
@@ -214,6 +224,7 @@ export const ProductAttributes: React.FC<Props> = ({
         shipping,
       })
     );
+
 
   const currentSelectedOption = options.find((opt) => opt.value === selectedValue) || null;
   console.log(currentSelectedOption)
