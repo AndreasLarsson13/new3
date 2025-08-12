@@ -38,7 +38,7 @@ export default function Home() {
     <>
       <BannerBlock data={masonryBanner} />
       <Container>
-        <ProductsFlashSaleBlock date={'2025-08-13T13:29:59'} />
+        <ProductsFlashSaleBlock date={'2025-08-13T13:29:59'} /> {/* area to change time */}
       </Container>
       <BannerSliderBlock />
       <Container>
