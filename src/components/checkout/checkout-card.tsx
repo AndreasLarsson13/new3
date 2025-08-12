@@ -22,27 +22,39 @@ const CheckoutCard: React.FC = () => {
   });
 
   // Beräkna frakt
+  console.log(items)
+
   let shippingPrice = 0;
   items.forEach(item => {
     let price = 0;
+    console.log(item)
+    /*  item.shippingSpecial.units = parseInt(item.shippingSpecial.units)
+     item.shippingCosts = parseInt(item.shippingCosts)
+     item.quantity = parseInt(item.quantity) */
 
+    console.log(item.shippingSpecial.units)
+    console.log(item.shippingCosts)
+    console.log(item.quantity)
     if (item.shippingSpecial?.enabled) {
       if (item.quantity >= item.shippingSpecial.units) {
-        price = item.shippingSpecial.units * item.shipping;
+        price = item.shippingSpecial.units * item.shippingCosts;
       } else {
-        price = item.quantity * item.shipping;
+        price = item.quantity * item.shippingCosts;
       }
     } else {
-      price = item.quantity * item.shipping;
+      price = item.quantity * item.shippingCosts;
     }
 
+    console.log(price)
     shippingPrice += price;
+
   });
+  console.log(shippingPrice)
 
   if (Number.isNaN(shippingPrice)) {
     shippingPrice = 0;
   }
-
+  console.log(shippingPrice)
   const { price: formattedShippingPrice } = usePrice({
     amount: shippingPrice,
     currencyCode: location?.value,
@@ -64,7 +76,7 @@ const CheckoutCard: React.FC = () => {
     {
       id: 2,
       name: t('text-shipping'),
-      price: shippingPrice === 0 ? t('text-free-shipping') : formattedShippingPrice,
+      price: shippingPrice == 0 ? t('text-free-shipping') : formattedShippingPrice,
     },
     {
       id: 3,

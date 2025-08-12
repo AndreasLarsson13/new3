@@ -43,6 +43,7 @@ const serializeAttributes = (attributes: any[]) => {
 };
 
 // Main function to serialize state for localStorage
+
 const serializeState = (state: State) => ({
   items: state.items.map((item) => ({
     id: item.id ? item.id : item._id,
@@ -54,15 +55,15 @@ const serializeState = (state: State) => ({
     attributes: "item.attributes ? serializeAttributes(item.attributes) : []",
     sku: item.sku,
     shippingSpecial: item.shippingSpecial,
-    sale_price: item.sale_price
-
+    sale_price: item.sale_price,
+    shippingCosts: item.shippingCosts
   })),
   isEmpty: state.isEmpty,
   totalItems: state.totalItems,
   totalUniqueItems: state.totalUniqueItems,
   total: state.total,
 });
-
+console.log(serializeState)
 
 export const CartProvider: React.FC = ({ children }) => {
   const [savedCart, saveCart] = useLocalStorage(

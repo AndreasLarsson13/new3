@@ -128,16 +128,26 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
             variant="dark"
           />
           <span className="text-sm font-semibold leading-5 md:text-base text-heading">
-            {/* {totalPrice} */}
-            {totalPrice !== basePricetotalPrice && discounttotalPrice ? (
-              <>
-                <span className="text-red-500">{totalPrice}</span>&nbsp;
-                <del>{basePricetotalPrice}</del>
-              </>
-            ) : (
-              <>{totalPrice}</>
-            )}
+            {totalPrice
+              ? totalPrice !== basePricetotalPrice && discounttotalPrice
+                ? (
+                  <>
+                    <span className="text-red-500">{totalPrice}</span>&nbsp;
+                    <del>{basePricetotalPrice}</del>
+                  </>
+                )
+                : <>{totalPrice}</>
+              : price !== basePrice && discount
+                ? (
+                  <>
+                    <span className="text-red-500">{price}</span>&nbsp;
+                    <del>{basePrice}</del>
+                  </>
+                )
+                : <>{price}</>
+            }
           </span>
+
         </div>
       </div>
     </motion.div>

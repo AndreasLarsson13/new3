@@ -21,6 +21,8 @@ const HeaderMenu: React.FC<MenuProps> = ({ data, className }) => {
     })
   };
   const { t } = useTranslation('menu');
+
+  console.log(data)
   return (
     <nav className={classNames(`headerMenu flex w-full relative`, className)}>
       {data?.map((item: any) => (
@@ -34,7 +36,7 @@ const HeaderMenu: React.FC<MenuProps> = ({ data, className }) => {
             className="relative inline-flex items-center px-3 py-2 text-sm font-normal xl:text-base text-heading xl:px-4 group-hover:text-black"
             onMouseEnter={handleMouseEnter}
           >
-            {t(item.label)}
+            {t(item.value)}
             {(item?.columns || item.subMenu) && (
               <span className="opacity-30 text-xs mt-1 xl:mt-0.5 w-4 flex justify-end">
                 <FaChevronDown className="transition duration-300 ease-in-out transform group-hover:-rotate-180" />

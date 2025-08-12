@@ -33,12 +33,11 @@ export function generateCartItem(item: Item, attributes: object, attributeArray:
   // Generate unique ID based on attributes and item ID
   const attributeString = Object.values(attributes).map((attr) => String(attr)).join(".");
 
-  console.log("teststat", _id)
+  console.log("generate", shippingCosts, item)
   const generatedId = `${_id}.${attributeString}`;
 
   const mainProductName = item.name
 
-  console.log(price)
   return {
     id: id ? id : _id,
     linkId: _id,
@@ -53,7 +52,7 @@ export function generateCartItem(item: Item, attributes: object, attributeArray:
     sale_price,
     location: locationS,
     sku: sku ? sku : attribute?.sku,
-    shipping: shippingCosts ? shippingCosts : formulaShip,
+    shippingCosts: shippingCosts ? shippingCosts : formulaShip,
     shippingSpecial
   };
 }
@@ -61,7 +60,7 @@ export function generateCartItem(item: Item, attributes: object, attributeArray:
 export function generateCartItemOptions(item: Item) {
   /* onst { id, name, slug, image, price, sale_price, currency, _id, shipping, weightPack, widthPack, heightPack, lengthPack, sku } = item;
  */
-  const { id, name, slug, image, price, sale_price, currency, _id, shipping, weightPack, widthPack, heightPack, lengthPack, sku, shippingSpecial } = item;
+  const { id, name, slug, image, price, sale_price, currency, _id, shipping, weightPack, widthPack, heightPack, lengthPack, sku, shippingSpecial, shippingCosts } = item;
   /*   console.log(item)
     const formulaShip = 9999;
 
@@ -69,9 +68,10 @@ export function generateCartItemOptions(item: Item) {
     const attributeString = Object.values(attributes).map((attr) => String(attr)).join(".");
     const generatedId = `${_id}.${attributeString}`; */
   const formulaShip = 9999;
-
+  console.log(item)
   /*   console.log("generate", item)
    */
+  console.log(shippingCosts)
   return {
     id,
     linkId: _id,
@@ -84,7 +84,7 @@ export function generateCartItemOptions(item: Item) {
     currency: "foji",
     location: "locationS",
     sku,
-    shipping: shipping ? shipping : formulaShip,
+    shippingCosts: shippingCosts ? shippingCosts : formulaShip,
     shippingSpecial
   };
 }

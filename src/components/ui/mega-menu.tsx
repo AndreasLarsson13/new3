@@ -54,7 +54,7 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ columns }) => {
                     onClick={handleMenuClick}
 
                   >
-                    {t(columnItem.label)}
+                    {t(columnItem.value)}
                   </Link>
                 </li>
 
@@ -73,7 +73,7 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ columns }) => {
                         className="text-body text-sm block py-1.5 px-5 xl:px-8 2xl:px-10 hover:text-heading hover:bg-gray-300"
                         onClick={handleMenuClick}
                       >
-                        {t(item.label)}
+                        {t(item.value)}
                       </Link>
 
                       {/* Render dropdown arrow only for subMenu */}
