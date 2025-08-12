@@ -32,11 +32,13 @@ export default function Home() {
     item.image.desktop.url = test[index].desktop
     item.image.mobile.url = test[index].mobile
   });
+
+  const datum = new Date(Date.now() + 1000 * 60 * 60 * 24);
   return (
     <>
       <BannerBlock data={masonryBanner} />
       <Container>
-        <ProductsFlashSaleBlock date={'2024-05-30T01:02:03'} />
+        <ProductsFlashSaleBlock date={'2025-08-13T13:29:59'} />
       </Container>
       <BannerSliderBlock />
       <Container>

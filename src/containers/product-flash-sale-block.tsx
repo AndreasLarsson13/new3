@@ -72,45 +72,45 @@ function ProductFlashSaleWrapper({
 // Renderer callback with condition
 const renderer = ({ days, hours, minutes, seconds, completed, t }: any) => {
   if (completed) {
-    // Render a completed state
     return <span>{t('text-time-over')}</span>;
-  } else {
-    // Render a countdown
-    return (
-      <div className="flex items-center gap-x-1.5 md:gap-x-2.5">
-        <div className="text-heading text-10px md:text-xs text-center uppercase">
-          <span className="bg-heading rounded-md text-white text-xs md:text-sm w-8 h-8 md:w-10 md:h-10 flex items-center justify-center mb-1">
-            {days}
-          </span>
-          {t("text-days")} 1000
-        </div>
-        <div className="text-heading text-10px md:text-xs text-center uppercase">
-          <span className="bg-heading rounded-md text-white text-xs md:text-sm w-8 h-8 md:w-10 md:h-10 flex items-center justify-center mb-1">
-            {hours}
-          </span>
-          {t("text-hours")}
-        </div>
-        <div className="text-heading text-10px md:text-xs text-center uppercase">
-          <span className="bg-heading rounded-md text-white text-xs md:text-sm w-8 h-8 md:w-10 md:h-10 flex items-center justify-center mb-1">
-            {minutes}
-          </span>
-          {t("text-mins")}
-        </div>
-        <div className="text-heading text-10px md:text-xs text-center uppercase">
-          <span className="bg-heading rounded-md text-white text-xs md:text-sm w-8 h-8 md:w-10 md:h-10 flex items-center justify-center mb-1">
-            {seconds}
-          </span>
-          {t("text-secs")}
-        </div>
-      </div>
-    );
   }
+  return (
+    <div className="flex items-center gap-x-1.5 md:gap-x-3">
+      <div className="text-heading text-10px md:text-xxs text-center uppercase">
+        <span className="bg-heading rounded-md text-white text-xs md:text-sm w-8 h-8 md:w-10 md:h-10 flex items-center justify-center mb-1">
+          {days}
+        </span>
+        {t("text-days")}
+      </div>
+      <div className="text-heading text-10px md:text-xxs text-center uppercase">
+        <span className="bg-heading rounded-md text-white text-xs md:text-sm w-8 h-8 md:w-10 md:h-10 flex items-center justify-center mb-1">
+          {hours}
+        </span>
+        {t("text-hours")}
+      </div>
+      <div className="text-heading text-10px md:text-xxs text-center uppercase">
+        <span className="bg-heading rounded-md text-white text-xs md:text-sm w-8 h-8 md:w-10 md:h-10 flex items-center justify-center mb-1">
+          {minutes}
+        </span>
+        {t("text-mins")}
+      </div>
+      <div className="text-heading text-10px md:text-xxs text-center uppercase">
+        <span className="bg-heading rounded-md text-white text-xs md:text-sm w-8 h-8 md:w-10 md:h-10 flex items-center justify-center mb-1">
+          {seconds}
+        </span>
+        {t("text-secs")}
+      </div>
+    </div>
+  );
 };
+
 
 const ProductsFlashSaleBlock: React.FC<ProductsProps> = ({
   sectionHeading = 'text-flash-sale',
   className = 'mb-12 md:mb-14 xl:mb-16',
-  date = '2025-05-10T01:02:03', // Datum när sales slutar
+  // Uppdaterad rad för att ställa in datumet till en vecka framåt.
+  // Ändra detta datum till ett framtida datum för att timern ska räkna ner.
+  date = new Date('2025-12-31T23:59:59'),
   disableSectionPadding = false,
   disableSectionBorder = false,
   hideCountdown = false,
@@ -121,6 +121,8 @@ const ProductsFlashSaleBlock: React.FC<ProductsProps> = ({
   disableBorderRadius = false,
   bgGray,
 }) => {
+  console.log("Flash sale datezzz:", date);
+
   const { t } = useTranslation('common');
   const { data, isLoading, error } = useFlashSaleProductsQuery({
     limit: limit || 10,
@@ -129,6 +131,7 @@ const ProductsFlashSaleBlock: React.FC<ProductsProps> = ({
 
   if (isLoading) {
     return (
+
       <ProductFlashSaleWrapper
         sectionHeading={sectionHeading}
         className={className}
