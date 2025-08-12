@@ -16,9 +16,27 @@ export default function ListBox({ options }: { options: Option[] }) {
     ? options.find((o) => o.value === query.sort_by)!
     : options[0];
   const [selectedItem, setSelectedItem] = useState<Option>(currentSelectedItem);
+
+
   useEffect(() => {
     setSelectedItem(currentSelectedItem);
-  }, [query?.sort_by]);
+
+    // Om ingen sort_by parameter finns, pusha standardvärdet till URL:en
+    if (!query?.sort_by) {
+      router.replace(
+        {
+          pathname,
+          query: {
+            ...query,
+            sort_by: selectedItem.value,
+          },
+        },
+        undefined,
+        { scroll: false, shallow: true }
+      );
+    }
+  }, [query?.sort_by]); // Körs när sort_by parametern ändras
+
   function handleItemClick(values: Option) {
     setSelectedItem(values);
     const { sort_by, ...restQuery } = query;
@@ -73,9 +91,8 @@ export default function ListBox({ options }: { options: Option[] }) {
                   {({ selected, active }) => (
                     <>
                       <span
-                        className={`${
-                          selected ? 'font-medium' : 'font-normal'
-                        } block truncate`}
+                        className={`${selected ? 'font-medium' : 'font-normal'
+                          } block truncate`}
                       >
                         {t(option.name)}
                       </span>

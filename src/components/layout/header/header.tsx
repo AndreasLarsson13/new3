@@ -1,90 +1,69 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect, useCallback, useMemo } from 'react';
 import { useCart } from '@contexts/cart/cart.context';
-
-import { useState, useEffect } from 'react';
 import SearchIcon from '@components/icons/search-icon';
 import { siteSettings } from '@settings/site-settings';
 import HeaderMenu from '@components/layout/header/header-menu';
-import axios from "axios";
 import http from '@framework/utils/http';
-
 import Logo from '@components/ui/logo';
 import { useUI } from '@contexts/ui.context';
 import { ROUTES } from '@utils/routes';
 import { addActiveScroll } from '@utils/add-active-scroll';
 import dynamic from 'next/dynamic';
 import { useTranslation } from 'next-i18next';
-import LanguageSwitcher from '@components/ui/language-switcher';
 import { HiOutlineSelector } from 'react-icons/hi';
 import { useRouter } from 'next/router';
 import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
 
-
+// Importera den nya Dropdown-komponenten
+import Dropdown from '@components/ui/dropdown';
 
 const AuthMenu = dynamic(() => import('./auth-menu'), { ssr: false });
 const CartButton = dynamic(() => import('@components/cart/cart-button'), {
   ssr: false,
 });
 
+type Option = {
+  id: string;
+  name: string;
+  value: string;
+  icon?: JSX.Element;
+};
+
 type DivElementRef = React.MutableRefObject<HTMLDivElement>;
 const { site_header } = siteSettings;
-console.log(site_header.menu)
+
 const Header: React.FC = () => {
-  const { clearCart } = useCart()
+  const { clearCart } = useCart();
   const { openSearch, openModal, setModalView, isAuthorized } = useUI();
   const { t } = useTranslation('common');
   const siteHeaderRef = useRef() as DivElementRef;
-  addActiveScroll(siteHeaderRef);
-  function handleLogin() {
-    setModalView('LOGIN_VIEW');
-    return openModal();
-  }
-
-
-  const { site_header } = siteSettings;
-
-  const options: Option[] = site_header.languageMenu;
-  const optionsLocation: Option[] = site_header.currencyMenu;
   const router = useRouter();
   const { asPath, locale } = router;
 
-  // Initial state for language and location
-  const currentSelectedItem = locale
-    ? options.find((o) => o.value === locale)
-    : options[2];
-  const [selectedItem, setSelectedItem] = useState<Option | undefined>(currentSelectedItem);
-  const [clickedLocation, setClickedLocation] = useState<Option | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
-  const [isLocationDropdownOpen, setIsLocationDropdownOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  addActiveScroll(siteHeaderRef);
 
   const [menu, setMenu] = useState([]);
+  const [isScrolled, setIsScrolled] = useState(false);
 
+  const options: Option[] = site_header.languageMenu;
+  const optionsLocation: Option[] = site_header.currencyMenu;
 
-  //menu data
+  const currentSelectedItem = useMemo(() => options.find((o) => o.value === locale) || options[2], [locale, options]);
+  const [selectedItem, setSelectedItem] = useState<Option | undefined>(currentSelectedItem);
+  const [clickedLocation, setClickedLocation] = useState<Option | null>(null);
+
   useEffect(() => {
     const fetchMenu = async () => {
       try {
         const res = await http.get(API_ENDPOINTS.MENU);
-        console.log(res.data)
-
-
-
-
-
-
         setMenu(res.data);
       } catch (err) {
         console.error('Failed to fetch menu:', err);
       }
     };
-
     fetchMenu();
   }, []);
 
-
-  // Load the clicked location from local storage when component mounts
   useEffect(() => {
     const storedLocation = localStorage.getItem('clickedLocation');
     if (storedLocation) {
@@ -94,191 +73,86 @@ const Header: React.FC = () => {
         setClickedLocation(matchedOption);
       }
     }
-
-  }, []);
-
-
+  }, [optionsLocation]);
 
   useEffect(() => {
     const handleScroll = () => {
-      // Change threshold as needed
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 50);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Handle language selection and redirect
-  function handleLanguageChange(option: Option) {
+  const handleLanguageChange = useCallback((option: Option) => {
     setSelectedItem(option);
     router.push(asPath, undefined, { locale: option.value });
-    setIsLanguageDropdownOpen(false);
-  }
+  }, [asPath, router]);
 
-  // Handle location selection change
-  function handleLocationChange(option: Option) {
-
-
-
-    if (option.value === "SV") {
+  const handleLocationChange = useCallback((option: Option) => {
+    if (option.value === "SV" || option.value === "AX") {
       setClickedLocation(option);
       localStorage.setItem('clickedLocation', JSON.stringify(option));
-      setIsLocationDropdownOpen(false);
-      /*       clearCart();
-       */
-
-    } else if (option.value === "FI") {
-      alert("Vi säljer inte till Finland än tyvärr");
+      clearCart();
+      window.location.reload();
+    } else {
+      alert(`Vi säljer inte till ${option.name} än tyvärr`);
     }
-    else if (option.value === "EU") {
-      alert("Vi säljer inte till EU än tyvärr");
-    }
-    else if (option.value === "WORLD") {
-      alert("Vi säljer inte till resten av världen än tyvärr");
-    }
-    else {
-      setClickedLocation(option);
-      localStorage.setItem('clickedLocation', JSON.stringify(option));
-      setIsLocationDropdownOpen(false);
-    }
-    window.location.reload();
-    clearCart()
-  }
+  }, [clearCart]);
 
-  // Toggle modal visibility
-  /*  function toggleModal() {
-     setIsModalOpen(!isModalOpen);
-   } */
-
-
-  const handleMouseEnter = () => {
-    setIsLocationDropdownOpen(!isLocationDropdownOpen);
-  };
-
-  try {
-    const cart = useCart();
-    console.log("Cart context in Header:", cart);
-  } catch (e) {
-    console.error(e);
+  function handleLogin() {
+    setModalView('LOGIN_VIEW');
+    return openModal();
   }
 
   return (
-    <header
-      id="siteHeader"
-      ref={siteHeaderRef}
-      className="relative z-20 w-full h-16 sm:h-20 lg:h-24"
-    >
+    <header id='siteHeader' ref={siteHeaderRef} className='relative z-20 w-full h-16 sm:h-20 lg:h-24'>
       <div className='fixed w-full'>
-        <div className={`hidden sm:flex  gap-5 p-1 bg-gray-200 transition-all duration-300 ${isScrolled ? 'opacity-0 -translate-y-full' : 'opacity-100'
-          }`}>
+        <div className={`hidden sm:flex gap-5 p-1 bg-gray-200 transition-all duration-300 ${isScrolled ? 'opacity-0 -translate-y-full' : 'opacity-100'}`}>
           <div className='flex items-center gap-1 pl-3'>
             <h5 className="text-sm font-semibold">{t('language')}</h5>
-            <div className="relative z-999">
-              {/* <h5 className="text-sm font-semibold mr-1">{/* {t('language')}  */}
-              <button
-                className="border border-gray-300 text-heading text-sm font-semibold w-full py-1 px-2 bg-white rounded-lg shadow-md flex justify-between items-center"
-                onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
-              >
-                {/* <span>{selectedItem?.icon}</span> */}
-                <span>{selectedItem?.name}</span>
-                <HiOutlineSelector className="w-5 h-5 text-gray-400" />
-              </button>
-              {isLanguageDropdownOpen && (
-                <div className="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-50 sm:w-[120px] lg:w-[120px]">
-                  {options.map((option) => (
-                    <div
-                      key={option.id}
-                      className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => handleLanguageChange(option)}
-                    > <span className="flex items-center gap-2 text-sm flex-nowrap">{t(option.name)}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+            <Dropdown
+              options={options}
+              selectedItem={selectedItem}
+              onSelect={handleLanguageChange}
+              translationKey='language'
+            />
           </div>
-          {/* Location Dropdown */}
-
-          <div className='flex items-center gap-1' >
-            <h5 className="text-sm font-semibold">{t('location')}:</h5>
-
-            <div className="relative">
-              <button
-                className="border border-gray-300 text-heading text-sm font-semibold w-full py-1 px-2 bg-white rounded-lg shadow-md flex justify-between items-center "
-                onClick={() => setIsLocationDropdownOpen(!isLocationDropdownOpen)}
-                onMouseEnter={handleMouseEnter}
-
-              >
-                <span className="flex items-center">
-
-                  <span className="mr-2" key={clickedLocation?.name}>{clickedLocation?.icon}</span>
-
-                  {/*  {clickedLocation?.name || t('Select Location')} */}
-                </span>
-                <HiOutlineSelector className="w-5 h-5 text-gray-400" />
-              </button>
-
-
-              {isLocationDropdownOpen && (
-                <div onMouseLeave={handleMouseEnter} className="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-10 sm:w-[180px] lg:w-[180px] z-50">
-                  {optionsLocation.map((option) => (
-                    <div
-                      key={option.id}
-                      className="px-3 py-2 hover:bg-gray-100 cursor-pointer "
-                      onClick={() => handleLocationChange(option)}
-                    >
-
-                      <span className="flex items-center gap-2 text-sm flex-nowrap">{option.icon} {t(option.name)}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+          <div className='flex items-center gap-1'>
+            <h5 className="text-sm font-semibold">{t('location')}</h5>
+            <Dropdown
+              options={optionsLocation}
+              selectedItem={clickedLocation}
+              onSelect={handleLocationChange}
+              translationKey='location'
+              icon={clickedLocation?.icon}
+            />
           </div>
         </div>
-        <div className={`z-50 w-full h-16 px-4 text-gray-700 transition duration-200 ease-in-out bg-white innerSticky body-font sm:h-20 lg:h-24 md:px-8 lg:px-6 
-        ${isScrolled ? 'fixed' : ''}`}
-          style={{ top: 0 }}>
 
-          <div className="flex items-center justify-center mx-auto max-w-[1920px] h-full w-full">
-
+        <div className={`z-50 w-full h-16 px-4 text-gray-700 transition duration-200 ease-in-out bg-white innerSticky body-font sm:h-20 lg:h-24 md:px-8 lg:px-6 ${isScrolled ? 'fixed' : ''}`} style={{ top: isScrolled ? 0 : 'auto' }}>
+          <div className='flex items-center justify-center mx-auto max-w-[1920px] h-full w-full'>
             <Logo />
-
-            <HeaderMenu
-              data={menu}  /* site_header.menu */
-              className="hidden lg:flex ltr:md:ml-6 rtl:md:mr-6 ltr:xl:ml-10 rtl:xl:mr-10"
-            />
-
-
-            <div className="items-center justify-end flex-shrink-0 hidden lg:flex gap-x-6 lg:gap-x-5 xl:gap-x-8 2xl:gap-x-10 ltr:ml-auto rtl:mr-auto">
+            <HeaderMenu data={menu} className='hidden lg:flex ltr:md:ml-6 rtl:md:mr-6 ltr:xl:ml-10 rtl:xl:mr-10' />
+            <div className='items-center justify-end flex-shrink-0 hidden lg:flex gap-x-6 lg:gap-x-5 xl:gap-x-8 2xl:gap-x-10 ltr:ml-auto rtl:mr-auto'>
               <button
-                className="relative flex items-center justify-center flex-shrink-0 h-auto transform focus:outline-none"
+                className='relative flex items-center justify-center flex-shrink-0 h-auto transform focus:outline-none'
                 onClick={openSearch}
-                aria-label="search-button"
+                aria-label='search-button'
               >
                 <SearchIcon />
               </button>
-              {/* Login knapp <div className="-mt-0.5 flex-shrink-0">
               <AuthMenu
                 isAuthorized={isAuthorized}
                 href={ROUTES.ACCOUNT}
-                className="text-sm font-semibold xl:text-base text-heading"
+                className='text-sm font-semibold xl:text-base text-heading'
                 btnProps={{
-                  className:
-                    'text-sm xl:text-base text-heading font-semibold focus:outline-none',
-                  // @ts-ignore
+                  className: 'text-sm xl:text-base text-heading font-semibold focus:outline-none',
                   children: t('text-sign-in'),
                   onClick: handleLogin,
                 }}
               >
                 {t('text-account')}
               </AuthMenu>
-            </div> */}
               <CartButton />
             </div>
           </div>

@@ -33,12 +33,16 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ columns }) => {
       iten.classList.add('manual-hidden');
     })
   };
-
-
+  // Dynamiskt bestämma bredden baserat på antalet kolumner
+  const numberOfColumns = columns.length;
+  let gridClass = 'grid-cols-1';
+  if (numberOfColumns > 1) {
+    gridClass = `grid-cols-${numberOfColumns}`;
+  }
 
   return (
     <div className="absolute bg-gray-200 megaMenu shadow-header ltr:-left-28 rtl:-right-28 ltr:xl:left-0 rtl:xl:right-0 hidden group-hover:block">
-      <div className="grid grid-cols-6">
+      <div className={`grid ${gridClass}`}>
         {columns?.map((column) => (
           <ul className="pt-6 even:bg-gray-150 pb-7 2xl:pb-8 2xl:pt-7" key={column.id}>
             {column?.columnItems?.map((columnItem) => (
