@@ -94,7 +94,7 @@ export const Collapse: React.FC<CollapseProps> = ({
                   className={`flex gap-2 justify-between px-2 ${index % 2 === 0 ? 'bg-gray-300' : ''
                     }`}
                 >
-                  <h4 className='font-semibold'>{item.title}</h4>
+                  <h4 className='font-semibold'>{item.title[i18n.language]}</h4>
 
                   {Array.isArray(item.data) ? (
                     <h4>
