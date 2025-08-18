@@ -62,8 +62,8 @@
   "hallar": "Hallar",
   "ugnar": "Ugnar",
   "bastu": "Bastu",
-  "elektiskt/bastupriser": "Elektriskt/Bastupriser",
-  "vedeldade/bastuspisar": "Vedeldade/Bastuspisar",
+  "elektriska-bastuaggregat": "Elektrisk Bastuaggregat",
+  "vedeldad-bastu": "Vedeldade Bastu",
   "tillbehor": "Tillbehör",
   "fritid-tradgard": "Fritid & Trädgård",
   "tradgard-utemiljo": "Trädgård & Utemiljö",
@@ -107,7 +107,7 @@
   "koksinredning": "Köksinredning",
   "badrumsinredning": "Badrumsinredning",
   "batterier": "Batterier",
-  "bastu-Inredning": "Bastuinredning",
-  "elektriska-bastuaggregat": "elektriska-bastuaggregat",
-  "vedeldad-bastu": "Vedeldade Bastu"
+  "ishockey": "Ishockey",
+  "skridskor": "Skridskor",
+  "klubbor": "Klubbor"
 }
