@@ -9,6 +9,7 @@ interface WidgetsProps {
     lists: any
     isCompanyIntroduction?: boolean
     logo?: any
+    target: string
   }[]
 
   variant?: 'contemporary'

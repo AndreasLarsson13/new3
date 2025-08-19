@@ -12,6 +12,7 @@ interface Props {
       path?: string;
       title: string;
       icon?: any;
+      target: string
     }[];
     logo?: any;
     description?: string;
@@ -32,7 +33,7 @@ const WidgetLink: FC<Props> = ({ className, data }) => {
       {!data?.isCompanyIntroduction ? (
         <>
           <h4 className="mb-5 text-sm font-semibold text-heading md:text-base xl:text-lg 2xl:mb-6 3xl:mb-7">
-            {t(`${widgetTitle}`)}
+            {t(`${widgetTitle}`, { defaultValue: t(`menu:${widgetTitle}`) })}
           </h4>
           <ul className="text-xs lg:text-sm text-body flex flex-col space-y-3 lg:space-y-3.5">
             {lists.map((list) => (
@@ -46,8 +47,10 @@ const WidgetLink: FC<Props> = ({ className, data }) => {
                   </span>
                 )}
                 <Link href={list.path ? list.path : '#!'} legacyBehavior>
-                  <a className="transition-colors duration-200 hover:text-black">
-                    {t(`${list.title}`)}
+                  <a
+                    target={list.target ? list.target : '_self'}
+                    className="transition-colors duration-200 hover:text-black">
+                    {t(`${list.title}`, { defaultValue: t(`menu:${list.title}`) })}
                   </a>
                 </Link>
               </li>

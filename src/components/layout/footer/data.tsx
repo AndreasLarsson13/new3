@@ -16,18 +16,21 @@ export const footer = {
           title: 'link-instagram',
           path: 'https://www.instagram.com/nätbutiken/',
           icon: <IoLogoInstagram />,
+          target: "_blank"
         },
         {
           id: 2,
           title: 'link-facebook',
           path: 'https://www.facebook.com/nätbutiken/',
           icon: <IoLogoFacebook />,
+          target: "_blank"
         },
         {
           id: 3,
           title: 'link-youtube',
-          path: 'https://www.youtube.com/channel/UCjld1tyVHRNy_pe3ROLiLhw',
+          path: 'https://www.youtube.com/nätbutiken',
           icon: <IoLogoYoutube />,
+          target: "_blank"
         },
       ],
     },
@@ -48,12 +51,12 @@ export const footer = {
         {
           id: 3,
           title: 'link-email',
-          path: '/',
+          path: 'mailto:info@nätbutiken.ax',
         },
         {
           id: 4,
           title: 'link-phone',
-          path: '/',
+          path: 'tel:+358401234567',
         },
       ],
     },
@@ -91,23 +94,23 @@ export const footer = {
       lists: [
         {
           id: 1,
-          title: 'link-kranar',
-          path: '/search?q=kranar',
+          title: 'kranar',
+          path: '/store/husochhem/vvs/kranar',
         },
         {
           id: 2,
-          title: 'link-pizza',
-          path: '/search?q=pizza-ugn',
+          title: 'pizza-oven',
+          path: '/store/husochhem/vitvaror/ugnar',
         },
         {
           id: 3,
-          title: 'link-braskamin',
-          path: '/hushall/braskaminer',
+          title: 'braskaminer',
+          path: '/store/husochhem/kaminer/braskaminer',
         },
         {
           id: 4,
-          title: 'link-sports-wear',
-          path: '/search',
+          title: 'bastu',
+          path: '/store/husochhem/bastu',
         },
       ],
     },

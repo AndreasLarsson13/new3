@@ -35,6 +35,9 @@ export const Collapse: React.FC<CollapseProps> = ({
   console.log(`Collapse ${i} isOpen:`, i === expanded);
 
   const { t, i18n } = useTranslation(translatorNS);
+
+  const transaltion = titleKey ? t(`faq:${titleKey}`) : t(`common:${title}`)
+
   return (
     <div
       className={cn({
@@ -62,7 +65,7 @@ export const Collapse: React.FC<CollapseProps> = ({
             }
           )}
         >
-          {t(`common:${title}`)}
+          {transaltion}
         </h2>
         <div className="relative flex items-center justify-center flex-shrink-0 w-4 h-4">
           <div className="w-full h-0.5 bg-heading rounded-sm" />
@@ -94,7 +97,7 @@ export const Collapse: React.FC<CollapseProps> = ({
                   className={`flex gap-2 justify-between px-2 ${index % 2 === 0 ? 'bg-gray-300' : ''
                     }`}
                 >
-                  <h4 className='font-semibold'>{item.title[i18n.language]}</h4>
+                  <h4 className='font-semibold'>{item.title}</h4>
 
                   {Array.isArray(item.data) ? (
                     <h4>

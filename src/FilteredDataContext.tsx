@@ -95,7 +95,7 @@ export const FilteredDataProvider: React.FC<ProviderProps> = ({ children }) => {
     }
   }, [query, data]); // `data` already includes query updates
 
-
+  console.log(filtersData)
   return (
     <FilteredDataContext.Provider
       value={{

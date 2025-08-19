@@ -7,7 +7,7 @@ import { useFilteredData } from './../../FilteredDataContext';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa'; // Importera pilikoner
 
 export const BrandFilter = () => {
-	const { filteredData } = useFilteredData();
+	const { filteredData, filtersData } = useFilteredData();
 	const { t } = useTranslation("common");
 	const router = useRouter();
 	const { query } = router;
@@ -48,13 +48,16 @@ export const BrandFilter = () => {
 
 	// Filtrera varumärken baserat på produkter
 
+	console.log(filtersData)
+
+	const arrayProductBrands = filtersData.brands && filtersData.brands.map((item: any) => item.brand);
 
 
-	const arrayProductBrands = filteredData.map((item: any) => item.brand);
-	const finalFilteredItems = data.filter((item) =>
-		arrayProductBrands.includes(item.slug)
-	);
 
+	/* 	const finalFilteredItems = data.filter((item) =>
+			arrayProductBrands.includes(item.brand)
+		); */
+	console.log(arrayProductBrands)
 	const toggleBrandFilter = () => {
 		setIsOpen(prevState => !prevState);
 	};
@@ -75,13 +78,13 @@ export const BrandFilter = () => {
 			</h3>
 			{isOpen && (
 				<div className="mt-2 flex flex-col space-y-4">
-					{finalFilteredItems.map((item: any) => (
+					{arrayProductBrands.map((item: any) => (
 						<CheckBox
-							key={item.id}
-							label={item.name}
-							name={item.name.toLowerCase()}
-							checked={formState.includes(item.slug)}
-							value={item.slug}
+							key={item}
+							label={item}
+							name={item}
+							checked={formState.includes(item)}
+							value={item}
 							onChange={handleItemClick}
 						/>
 					))}

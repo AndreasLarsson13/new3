@@ -35,7 +35,7 @@ export const ShopFilters: React.FC = () => {
 							}
 
 							const pathname = Array.isArray(query.slug)
-								? `/${query.slug.join("/")}`
+								? `/store/${query.slug.join("/")}`
 								: "/";
 
 							router.push({
