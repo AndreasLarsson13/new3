@@ -1,15 +1,11 @@
-import Input from '@components/ui/input';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import TextArea from '@components/ui/text-area';
-import { useCheckoutMutation } from '@framework/checkout/use-checkout';
 import { CheckBox } from '@components/ui/checkbox';
 import Button from '@components/ui/button';
-import { useEffect, useState } from 'react';
-import http from "@framework/utils/http";
-import { useLocalStorage } from "@utils/use-local-storage";
-
-import Router from 'next/router';
-import { ROUTES } from '@utils/routes';
+import Input from '@components/ui/input'; // Make sure this path is correct
+import http from '@framework/utils/http';
+import { useLocalStorage } from '@utils/use-local-storage';
 import { useTranslation } from 'next-i18next';
 
 interface CheckoutInputType {
@@ -26,8 +22,6 @@ interface CheckoutInputType {
   country: string;
 }
 
-
-
 const defaultCheckoutValues: CheckoutInputType = {
   firstName: 'Andreas',
   lastName: '',
@@ -39,19 +33,16 @@ const defaultCheckoutValues: CheckoutInputType = {
   save: false,
   note: '',
   orderData: {},
-  country: 'Åland' // Default to an empty string if location is null
+  country: 'Åland',
 };
 
 const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbillingInfo }) => {
-  const [cosyNew, setCozyNew] = useLocalStorage('natbutiken', [])
-
+  const [cosyNew] = useLocalStorage('natbutiken', []);
   const { t } = useTranslation();
-  const { mutate: updateUser, isPending } = useCheckoutMutation();
-  /* const { register, handleSubmit, formState: { errors } } = useForm<CheckoutInputType>(); */
   const { register, handleSubmit, formState: { errors } } = useForm<CheckoutInputType>({
-    defaultValues: defaultCheckoutValues
+    defaultValues: defaultCheckoutValues,
   });
-  const [location, setLocation] = useState<{ name: string } | null>(null);
+  const [location, setLocation] = useState<{ id: string, name: string } | null>(null);
 
   useEffect(() => {
     const storedLocation = localStorage.getItem('clickedLocation');
@@ -59,81 +50,88 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
       setLocation(JSON.parse(storedLocation));
     }
   }, []);
-  useEffect(() => {
-    const storedLocation = localStorage.getItem('clickedLocation');
-    if (storedLocation) {
-      setLocation(JSON.parse(storedLocation));
-    }
-  }, []);
 
-  const fetchSnippet = async (input: CheckoutInputType) => {
+  const initiateKlarnaPayments = async (input: CheckoutInputType) => {
     const rawCart = localStorage.getItem('natbutiken');
     const productsCart = rawCart ? JSON.parse(rawCart) : [];
 
-
-
-    /*     const productsCart = JSON.parse(localStorage.getItem('chawkbazar-cart') || '[]');
-     */
-
-    input.orderData = productsCart;
-    input.country = location.name
-
-    const text = {
-      "orderLocation": location,
-      "firstName": "Test",
-      "lastName": "Person-fi",
-      "address": "Mannerheimintie 34",
-      "phone": "+358401234567",
-      "email": "customer@email.fi",
-      "city": "Helsinki",
-      "zipCode": "00100",
-      "country": "FI",
-      "note": "",
-      "orderData": JSON.parse(productsCart)
+    if (!location || productsCart.length === 0) {
+      console.error('Plats eller produkter saknas.');
+      return;
     }
 
+    const orderPayload = {
+      orderLocation: { id: location.id, value: location.name },
+      firstName: input.firstName,
+      lastName: input.lastName,
+      address: input.address,
+      phone: input.phone,
+      email: input.email,
+      city: input.city,
+      zipCode: input.zipCode,
+      country: input.country,
+      note: input.note,
+      orderData: { items: productsCart },
+    };
 
     const config = {
       headers: {
-        'Authorization': 'Bearer your-token-here',  // Add your authorization token if necessary
-        'Content-Type': 'application/json'          // Set the correct content type
-      }
+        'Content-Type': 'application/json',
+      },
     };
 
-
-    /*     https://service-dot-natbutiken.lm.r.appspot.com/open-payment-session,
-    http://localhost:8088
-      
-     */
     try {
-      const response = await http.post('http://localhost:8087/open-payment-session', text, config);
-      console.log(response.data);
+      const response = await http.post('http://localhost:8087/open-payment-session', orderPayload, config);
 
-      if (response && response.data) {
-        const htmlSnippet = response.data;
-        const checkoutContainer = document.getElementById(checkoutContainerId);
-        checkoutContainer.innerHTML = htmlSnippet;
+      if (response?.data?.client_token) {
+        const { client_token } = response.data;
+        const klarnaPaymentsContainer = document.getElementById(checkoutContainerId);
 
-        const scriptTags = checkoutContainer.getElementsByTagName('script');
-        for (let i = 0; i < scriptTags.length; i++) {
-          const parentNode = scriptTags[i].parentNode;
-          const newScriptTag = document.createElement('script');
-          newScriptTag.type = 'text/javascript';
-          newScriptTag.text = scriptTags[i].text;
-          parentNode.removeChild(scriptTags[i]);
-          parentNode.appendChild(newScriptTag);
-
-          setklarnaisopen(true);
-          setbillingInfo(true);
+        if (!klarnaPaymentsContainer) {
+          console.error(`Hittade inte element med ID: ${checkoutContainerId}`);
+          return;
         }
+
+        const scriptUrl = 'https://js.klarna.com/eu/kp/1.22.0/main.js';
+        if (!document.querySelector(`script[src="${scriptUrl}"]`)) {
+          const script = document.createElement('script');
+          script.src = scriptUrl;
+          script.onload = () => {
+            initializeKlarnaWidget(client_token, klarnaPaymentsContainer);
+          };
+          document.body.appendChild(script);
+        } else {
+          initializeKlarnaWidget(client_token, klarnaPaymentsContainer);
+        }
+
       } else {
-        throw new Error('Failed to fetch HTML snippet');
+        throw new Error('Misslyckades att få client_token från backend');
       }
     } catch (error) {
-      console.error('Error fetching HTML snippet:', error);
+      console.error('Fel vid initiering av Klarna-session:', error);
     }
   };
 
+  const initializeKlarnaWidget = (token, container) => {
+    container.innerHTML = ''; // Rensa behållaren innan laddning
+
+    Klarna.Payments.init({
+      client_token: token,
+    });
+
+    Klarna.Payments.load(
+      { container: `#${container.id}` },
+      (res) => {
+        if (res.show_form) {
+          console.log('Klarna Payments form laddad utan problem.');
+          setklarnaisopen(true);
+          setbillingInfo(true);
+        } else {
+          console.error('Misslyckades att ladda Klarna Payments form:', res);
+        }
+      }
+    );
+  };
 
   return (
     <>
@@ -141,7 +139,7 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
         {t('text-shipping-address')}
       </h2>
       <form
-        onSubmit={handleSubmit(fetchSnippet)}
+        onSubmit={handleSubmit(initiateKlarnaPayments)}
         className="w-full mx-auto flex flex-col justify-center "
         noValidate
       >
@@ -236,13 +234,16 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
           />
           <div className="flex w-full">
             <Button
+              type="submit"
               className="w-full sm:w-auto"
-              loading={isPending}
-              disabled={isPending}
+            /*  loading={isPending}
+             disabled={isPending} */
             >
               {t('common:button-place-order')}
             </Button>
           </div>
+          <div id="klarna-payments-container"></div>
+
         </div>
       </form>
     </>
@@ -250,6 +251,3 @@ const CheckoutForm: React.FC = ({ checkoutContainerId, setklarnaisopen, setbilli
 };
 
 export default CheckoutForm;
-
-
-

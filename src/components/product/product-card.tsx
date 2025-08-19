@@ -115,8 +115,7 @@ const ProductCard: FC<ProductProps> = ({
 
 
   const filterProduct = {
-    ...product,
-    description: product.description[i18n.language]  // Assuming product.description is an object with i18n.language keys
+    ...product  // Assuming product.description is an object with i18n.language keys
   };
   const tempElement = document.createElement('div');
 

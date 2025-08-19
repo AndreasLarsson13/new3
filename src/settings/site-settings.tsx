@@ -94,7 +94,7 @@ export const siteSettings = {
       },
       {
         id: 'fi',
-        name: 'Suomeski',
+        name: 'Suomeksi',
         value: 'fi',
         icon: <FIFlag width="20px" height="15px" />,
       }       /* ,

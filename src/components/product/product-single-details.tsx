@@ -150,7 +150,7 @@ const ProductSingleDetails: React.FC = () => {
         }
       }
     }, [price]); */
-
+  console.log(data)
   if (isLoading) return <p>Laddar...</p>;
 
   const variations = getVariations(data.variations);

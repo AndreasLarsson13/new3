@@ -71,21 +71,17 @@ const Breadcrumb: React.FC<{ separator?: string; product?: any }> = ({ separator
       </ActiveLink>
 
 
-      {product.category.map(link => {
-        currentPath += `/${link.slug}`;
 
-        return (
-          <ActiveLink
-            href={currentPath}
-            activeClassName="font-semibold text-heading"
-            key={link.slug}
-          >
-            <a className="capitalize">
-              {/* t(`${convertBreadcrumbTitle(link)}`) */ link.slug}
-            </a>
-          </ActiveLink>
-        );
-      })}
+      <ActiveLink
+        href={`/store/${product.categoryPaths[0]}`}
+        activeClassName="font-semibold text-heading"
+        key={product.categoryPaths}
+      >
+        <a className="capitalize">
+          {/* t(`${convertBreadcrumbTitle(link)}`) */ product.categoryPaths[0]}
+        </a>
+      </ActiveLink>
+
       {/*   {breadcrumbs &&
 
 
@@ -105,11 +101,11 @@ const Breadcrumb: React.FC<{ separator?: string; product?: any }> = ({ separator
 
 
 
-      {product && (
+      {/*   {product && (
         <a className="capitalize">
           {product.name}
         </a>
-      )}
+      )} */}
 
 
 
