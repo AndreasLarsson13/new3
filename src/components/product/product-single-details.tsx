@@ -34,7 +34,11 @@ let options; // Till logikem
 let textObjekt = [];
 
 let found = false;
-
+const countryNames = {
+  AX: "Åland",
+  SV: "Sverige",
+  FI: "Finland",
+};
 let AttributeArray = []
 
 
@@ -116,7 +120,10 @@ const ProductSingleDetails: React.FC = () => {
   }, [data, activeIndex]);
 
 
-
+  const countries = Object.keys(data.sellInCountries || {})
+    .map(code => countryNames[code] || code)
+    .join(', ');
+  let AttributeArray = []
 
 
   function formatWithSeparator(price) {
@@ -478,7 +485,7 @@ const ProductSingleDetails: React.FC = () => {
           }
 
         </div>
-        {data.restrictedCountry !== true && <>
+        {data.restrictedCountry !== true || data.hideProductFromView !== true && <>
           {variations && Object.keys(variations).length > 0 && <div className={`${productOptions ? 'pb-5 border-b border-gray-300' : ''}`}>
             {/* <h3 className="text-base md:text-lg text-heading font-semibold capitalize pb-3">Variationer</h3> */}
             {Object.keys(variations).map((variation) => {
@@ -606,9 +613,17 @@ const ProductSingleDetails: React.FC = () => {
               </div>
             </div>
           </div> </>}
-        {data?.restrictedCountry &&
-          <span className="font-semibold text-heading inline-block ltr:pr-2 rtl:pl-2">
-            {t('text-countryRestriction')}
+        {data.restrictedCountry === true &&
+          < span className="font-semibold text-heading inline-block ltr:pr-2 rtl:pl-2">
+
+            {`${t('text-countryRestriction')} ${countries}`}
+
+          </span>
+        }
+        {data.hideProductFromView === true &&
+          < span className="font-semibold text-heading inline-block ltr:pr-2 rtl:pl-2">
+
+            {`${t('text-sellsWithOther')} ${data?.compadibleWithProduct.join(', ')}`}
           </span>
         }
 
