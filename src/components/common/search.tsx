@@ -108,7 +108,7 @@ export default function Search() {
 													className=" p-5 border-b border-gray-150 relative last:border-b-0"
 													onClick={closeSearch}
 												>
-													<SearchProduct item={item} key={index} />
+													<SearchProduct item={item} searchTerm={debouncedSearchText} />
 												</div>
 											))
 										)}

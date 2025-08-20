@@ -483,29 +483,45 @@ const ProductSingleDetails: React.FC = () => {
           {
             <div className="description-content" dangerouslySetInnerHTML={{ __html: data.description[i18n.language] }} />
           }
+          {data.compadibleWithProduct && data.compadibleWithProduct.length > 0 && (
+            <div className="mt-5">
+              <h3 className="text-sm font-semibold text-gray-700 mb-2">{t('compadibleWith')}</h3>
+              <div className="flex flex-wrap gap-2">
+                {data.compadibleWithProduct.map((item: string, index: number) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1 bg-gray-200 text-gray-800 text-sm rounded-full hover:bg-gray-300 transition-colors cursor-pointer"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
 
         </div>
-        {data.restrictedCountry !== true || data.hideProductFromView !== true && <>
-          {variations && Object.keys(variations).length > 0 && <div className={`${productOptions ? 'pb-5 border-b border-gray-300' : ''}`}>
-            {/* <h3 className="text-base md:text-lg text-heading font-semibold capitalize pb-3">Variationer</h3> */}
-            {Object.keys(variations).map((variation) => {
+        {!(data.restrictedCountry === true || data.hideProductFromView === true)
+          && <>
+            {variations && Object.keys(variations).length > 0 && <div className={`${productOptions ? 'pb-5 border-b border-gray-300' : ''}`}>
+              {/* <h3 className="text-base md:text-lg text-heading font-semibold capitalize pb-3">Variationer</h3> */}
+              {Object.keys(variations).map((variation) => {
 
-              return (
-                <ProductAttributes
-                  key={variation}
-                  title={variation}
-                  attributes={variations[variation]}
-                  active={attributes[variation]}
-                  clicked={attributes}
-                  fieldErrors={fieldErrors}
-                  onClick={(attribute: any) => handleAttribute(attribute, variation, attributes[variation])}
-                  resetInputFields={resetInputFields}
-                />
-              );
-            })}
-          </div>}
+                return (
+                  <ProductAttributes
+                    key={variation}
+                    title={variation}
+                    attributes={variations[variation]}
+                    active={attributes[variation]}
+                    clicked={attributes}
+                    fieldErrors={fieldErrors}
+                    onClick={(attribute: any) => handleAttribute(attribute, variation, attributes[variation])}
+                    resetInputFields={resetInputFields}
+                  />
+                );
+              })}
+            </div>}
 
-          {/*    {productOptions && Object.keys(productOptions).length > 0 && <div className="pb-3 border-b border-gray-300 pt-5">
+            {/*    {productOptions && Object.keys(productOptions).length > 0 && <div className="pb-3 border-b border-gray-300 pt-5">
             <h3 className="text-base md:text-lg text-heading font-semibold capitalize pb-3">{t('optionsProduct')}</h3>
 
             {Object.keys(productOptions).map((option) => {
@@ -525,94 +541,94 @@ const ProductSingleDetails: React.FC = () => {
             })}
           </div>} */}
 
-          {productOptions && Object.keys(productOptions).length > 0 &&
-            <div>
+            {productOptions && Object.keys(productOptions).length > 0 &&
+              <div>
 
-              <Collapse
-                i={t('optionsProduct')}
-                key={t('optionsProduct')}
-                title={t('optionsProduct')}
-                /*   pdf={"item.PDF"} */
-                translatorNS="review"
-                /*   tecnical={"item.tecnical"} */
-                content={
-                  Object.keys(productOptions).map((option) => {
+                <Collapse
+                  i={t('optionsProduct')}
+                  key={t('optionsProduct')}
+                  title={t('optionsProduct')}
+                  /*   pdf={"item.PDF"} */
+                  translatorNS="review"
+                  /*   tecnical={"item.tecnical"} */
+                  content={
+                    Object.keys(productOptions).map((option) => {
 
-                    return (
-                      <ProductOptionAttributes
-                        key={option}
-                        title={option}
-                        attributes={productOptions[option]}
-                        active={attributes[option]}
-                        clicked={attributes}
-                        fieldErrors={fieldErrors}
-                        onClick={(attribute: any) => handleAttribute(attribute, option, attributes[option])}
-                        resetInputFields={resetInputFields}
-                      />
-                    );
-                  })
-                }
-                expanded={expanded}
-                setExpanded={setExpanded}
-                variant="transparent"
-              />
-            </div>}
+                      return (
+                        <ProductOptionAttributes
+                          key={option}
+                          title={option}
+                          attributes={productOptions[option]}
+                          active={attributes[option]}
+                          clicked={attributes}
+                          fieldErrors={fieldErrors}
+                          onClick={(attribute: any) => handleAttribute(attribute, option, attributes[option])}
+                          resetInputFields={resetInputFields}
+                        />
+                      );
+                    })
+                  }
+                  expanded={expanded}
+                  setExpanded={setExpanded}
+                  variant="transparent"
+                />
+              </div>}
 
-          <div className="flex items-center mt-5">
-            <div className="text-heading font-bold text-base md:text-xl lg:text-2xl 2xl:text-4xl ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
+            <div className="flex items-center mt-5">
+              <div className="text-heading font-bold text-base md:text-xl lg:text-2xl 2xl:text-4xl ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
 
-              {/* {(currentPrice === 0 && optionPrice === 0)
+                {/* {(currentPrice === 0 && optionPrice === 0)
               ? price
               : formatWithSeparator(currentPrice === 0 ? parseInt(price) + optionPrice : currentPrice + optionPrice)
             } */}
 
-              {/*  {optionPrice > 0 ? formatWithSeparator(parseInt(data.price) + optionPrice) : price} */} {/* {price} */}
-              {/* {currentPrice} */}
-              <div className={`font-bold ${currentSalePrice > 0 ? 'text-red-600 text-xl md:text-2xl lg:text-3xl 2xl:text-5xl' : 'text-heading text-base md:text-xl lg:text-2xl 2xl:text-4xl'}`}>
-                {price}
+                {/*  {optionPrice > 0 ? formatWithSeparator(parseInt(data.price) + optionPrice) : price} */} {/* {price} */}
+                {/* {currentPrice} */}
+                <div className={`font-bold ${currentSalePrice > 0 ? 'text-red-600 text-xl md:text-2xl lg:text-3xl 2xl:text-5xl' : 'text-heading text-base md:text-xl lg:text-2xl 2xl:text-4xl'}`}>
+                  {price}
+                </div>
               </div>
+
+              <span className="line-through font-segoe text-gray-400 text-sm md:text-base lg:text-lg xl:text-xl ltr:pl-2 rtl:pr-2">
+
+                {basePrice}
+
+              </span>
+            </div>
+            <div className="flex items-center gap-x-4 ltr:md:pr-32 rtl:md:pl-32 ltr:lg:pr-12 rtl:lg:pl-12 ltr:2xl:pr-32 rtl:2xl:pl-32 ltr:3xl:pr-48 rtl:3xl:pl-48  py-8">
+              <Counter
+                quantity={quantity}
+                onIncrement={() => setQuantity((prev) => prev + 1)}
+                onDecrement={() =>
+                  setQuantity((prev) => (prev !== 1 ? prev - 1 : 1))
+                }
+                disableDecrement={quantity === 1}
+              />
+
+              <Button
+                onClick={addToCart}
+                variant="slim"
+                className={`w-full md:w-6/12 xl:w-full ${!isSelected && 'bg-gray-400 hover:bg-gray-400'
+                  } ${customOrder && 'bg-green-400'} `}
+                disabled={!isSelected}
+                loading={addToCartLoader}
+              >
+                <span className="py-2 3xl:px-8">{customOrder ? t("text-add-to-cart-special") : t("text-add-to-cart")}</span>
+              </Button>
             </div>
 
-            <span className="line-through font-segoe text-gray-400 text-sm md:text-base lg:text-lg xl:text-xl ltr:pl-2 rtl:pr-2">
-
-              {basePrice}
-
-            </span>
-          </div>
-          <div className="flex items-center gap-x-4 ltr:md:pr-32 rtl:md:pl-32 ltr:lg:pr-12 rtl:lg:pl-12 ltr:2xl:pr-32 rtl:2xl:pl-32 ltr:3xl:pr-48 rtl:3xl:pl-48  py-8">
-            <Counter
-              quantity={quantity}
-              onIncrement={() => setQuantity((prev) => prev + 1)}
-              onDecrement={() =>
-                setQuantity((prev) => (prev !== 1 ? prev - 1 : 1))
-              }
-              disableDecrement={quantity === 1}
-            />
-
-            <Button
-              onClick={addToCart}
-              variant="slim"
-              className={`w-full md:w-6/12 xl:w-full ${!isSelected && 'bg-gray-400 hover:bg-gray-400'
-                } ${customOrder && 'bg-green-400'} `}
-              disabled={!isSelected}
-              loading={addToCartLoader}
-            >
-              <span className="py-2 3xl:px-8">{customOrder ? t("text-add-to-cart-special") : t("text-add-to-cart")}</span>
-            </Button>
-          </div>
-
-          <div className="flex items-center pb-7 space-x-2 border-b border-gray-300">
-            <h3 className="text-base md:text-lg text-heading font-semibold capitalize">
-              {t('expectedDelivery')}
-            </h3>
-            <p className="text-gray-400">{data?.deliveryTime}</p>
-            <div className="relative group">
-              <FaInfoCircle className="text-gray-400 cursor-pointer" />
-              <div className="absolute bottom-full left-0 mb-2 hidden group-hover:block w-64 bg-white text-gray-700 text-sm border border-gray-200 rounded shadow-md p-2">
-                Vi strävar efter att leverera din produkt inom den angivna tidsramen, men leveranstider kan variera beroende på produktens tillgänglighet och ditt val av leveransmetod.
+            <div className="flex items-center pb-7 space-x-2 border-b border-gray-300">
+              <h3 className="text-base md:text-lg text-heading font-semibold capitalize">
+                {t('expectedDelivery')}
+              </h3>
+              <p className="text-gray-400">{data?.deliveryTime}</p>
+              <div className="relative group">
+                <FaInfoCircle className="text-gray-400 cursor-pointer" />
+                <div className="absolute bottom-full left-0 mb-2 hidden group-hover:block w-64 bg-white text-gray-700 text-sm border border-gray-200 rounded shadow-md p-2">
+                  Vi strävar efter att leverera din produkt inom den angivna tidsramen, men leveranstider kan variera beroende på produktens tillgänglighet och ditt val av leveransmetod.
+                </div>
               </div>
-            </div>
-          </div> </>}
+            </div> </>}
         {data.restrictedCountry === true &&
           < span className="font-semibold text-heading inline-block ltr:pr-2 rtl:pl-2">
 
