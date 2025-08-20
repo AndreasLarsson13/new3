@@ -3,7 +3,7 @@ import { getToken } from "./get-token";
 
 const http = axios.create({
   /*  baseURL: "https://natbutiken.lm.r.appspot.com", "http://localhost:4000" */
-  baseURL: "http://localhost:4000",
+  baseURL: "https://natbutiken.lm.r.appspot.com",
   timeout: 30000,
   headers: {
     Accept: "application/json",
