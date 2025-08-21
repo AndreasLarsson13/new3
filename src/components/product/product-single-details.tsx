@@ -123,7 +123,7 @@ const ProductSingleDetails: React.FC = () => {
   const countries = Object.keys(data.sellInCountries || {})
     .map(code => countryNames[code] || code)
     .join(', ');
-  let AttributeArray = []
+  /* let AttributeArray = [] */
 
 
   function formatWithSeparator(price) {
@@ -157,7 +157,7 @@ const ProductSingleDetails: React.FC = () => {
         }
       }
     }, [price]); */
-  console.log(data)
+
   if (isLoading) return <p>Laddar...</p>;
 
   const variations = getVariations(data.variations);
@@ -178,6 +178,7 @@ const ProductSingleDetails: React.FC = () => {
 
   function addToCart() {
     // Validate required fields
+
     const missingRequiredFields = Object.keys(variations).filter((variation) => {
       const isRequired = variations[variation][0]?.required;
       return isRequired && (!attributes[variation] || attributes[variation] === null);
@@ -203,21 +204,22 @@ const ProductSingleDetails: React.FC = () => {
     // Get stored location
     const storedLocation = JSON.parse(localStorage.getItem('clickedLocation'));
 
+
     // Generate the cart item
 
     console.log(data)
+    console.log(attributes)
     const item = generateCartItem(data, attributes, AttributeArray, currentPrice, storedLocation);
 
 
     // Debugging: Check the item before adding
     // Add to cart
 
-    if (data.variations.length === 0) {
-
-      addItemToCart(item, quantity)
-
-
+    if (!data.variations?.length) {
+      console.log("hdhdh")
+      addItemToCart(item, quantity);
     }
+
     let variationPrice = 0
     let combinedIds = ""
     if (AttributeArray.length > 0) {
@@ -227,12 +229,12 @@ const ProductSingleDetails: React.FC = () => {
         if (!itemAttributes.itsaVariation) {
 
           int++
-
+          console.log(item)
           const test = generateCartItemOptions(itemAttributes)
           addItemToCart(test, 1)
         }
         else {
-
+          console.log(item)
           /* variationPrice += itemAttributes.sale_price > 0 ? itemAttributes.sale_price : itemAttributes.price */
           item.name = `${item.name} - ${itemAttributes.value}`
           item.variationName = itemAttributes.value
@@ -251,8 +253,7 @@ const ProductSingleDetails: React.FC = () => {
     }
 
 
-    /*     console.log(item)
-     */
+
 
     AttributeArray = [];
 
