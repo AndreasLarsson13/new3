@@ -22,7 +22,6 @@ const HeaderMenu: React.FC<MenuProps> = ({ data, className }) => {
   };
   const { t } = useTranslation('menu');
 
-  console.log(data)
   return (
     <nav className={classNames(`headerMenu flex w-full relative`, className)}>
       {data?.map((item: any) => (

@@ -22,19 +22,17 @@ const CheckoutCard: React.FC = () => {
   });
 
   // Beräkna frakt
-  console.log(items)
+
 
   let shippingPrice = 0;
   items.forEach(item => {
     let price = 0;
-    console.log(item)
+
     /*  item.shippingSpecial.units = parseInt(item.shippingSpecial.units)
      item.shippingCosts = parseInt(item.shippingCosts)
      item.quantity = parseInt(item.quantity) */
 
-    console.log(item.shippingSpecial.units)
-    console.log(item.shippingCosts)
-    console.log(item.quantity)
+
     if (item.shippingSpecial?.enabled) {
       if (item.quantity >= item.shippingSpecial.units) {
         price = item.shippingSpecial.units * item.shippingCosts;
@@ -45,7 +43,7 @@ const CheckoutCard: React.FC = () => {
       price = item.quantity * item.shippingCosts;
     }
 
-    console.log(price)
+
     shippingPrice += price;
 
   });

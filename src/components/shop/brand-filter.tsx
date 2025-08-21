@@ -48,7 +48,6 @@ export const BrandFilter = () => {
 
 	// Filtrera varumärken baserat på produkter
 
-	console.log(filtersData)
 
 	const arrayProductBrands = filtersData.brands && filtersData.brands.map((item: any) => item.brand);
 
@@ -57,7 +56,6 @@ export const BrandFilter = () => {
 	/* 	const finalFilteredItems = data.filter((item) =>
 			arrayProductBrands.includes(item.brand)
 		); */
-	console.log(arrayProductBrands)
 	const toggleBrandFilter = () => {
 		setIsOpen(prevState => !prevState);
 	};

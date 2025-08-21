@@ -23,7 +23,6 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ columns }) => {
   const { t } = useTranslation('menu');
   const [activeSubMenu, setActiveSubMenu] = useState<number | string | null>(null);
   const [activeTertiaryMenu, setActiveTertiaryMenu] = useState<number | string | null>(null); // Nytt state
-  console.log(columns)
   const toggleSubMenu = (id: number | string) => {
     setActiveSubMenu(activeSubMenu === id ? null : id);
   };

@@ -16,8 +16,8 @@ export default function InitializeLocation() {
             if (alandLocation) {
                 // Store in localStorage
                 localStorage.setItem('clickedLocation', JSON.stringify(alandLocation));
-/*                 console.log('Åland location saved:', alandLocation);
- */            } else {
+
+            } else {
                 console.warn('Åland location not found in currencyMenu');
             }
         }

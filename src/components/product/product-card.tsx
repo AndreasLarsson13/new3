@@ -98,7 +98,7 @@ const ProductCard: FC<ProductProps> = ({
 
 
 
-  console.log(location)
+
 
 
   const { price, basePrice, discount } = usePrice({

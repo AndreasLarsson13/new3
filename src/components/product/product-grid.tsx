@@ -30,7 +30,7 @@ if (error) return <p>{error.message}</p>; */
 
 	const { filteredData, isLoading, loadingMore, hasNextPage, fetchNextPage, error, data } = useFilteredData();
 
-	console.log(filteredData)
+
 	/* useEffect(() => {
 		if (!isLoading && data) {
 			const filterProducts = (products, categoryQuery, priceQuery, colorQuery, brandQuery) => {
@@ -109,7 +109,7 @@ if (error) return <p>{error.message}</p>; */
 */
 	if (error) return <p>{error.message}</p>;
 
-	console.log(data)
+
 	const allProducts = data?.pages.flatMap((page) => page.data) || [];
 	const totalProducts = data?.pages?.[0]?.paginatorInfo?.total || 0;
 	return (

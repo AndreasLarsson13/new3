@@ -16,7 +16,9 @@ const colorFilterItems = [
 ];
 
 export const ColorFilter = () => {
-  const { filteredData } = useFilteredData();
+  const { filteredData, filtersData } = useFilteredData();
+  console.log(filtersData)
+  console.log(filteredData)
   const { t } = useTranslation('common');
   const router = useRouter();
   const { pathname, query } = router;
@@ -79,44 +81,25 @@ export const ColorFilter = () => {
 
   // Get unique colors
   const uniqueColors = React.useMemo(() => {
-    const colorCounts: Record<string, number> = {};
-
-    const allColors = filteredData.flatMap((product) =>
-      product.meta?.flatMap((metaItem) =>
-        metaItem.tecnical
-          ?.filter((t) => t.idforFiltering === "color")
-          .flatMap((colorEntry) => {
-            const colors = colorEntry.data || [];
-            colors.forEach((color) => {
-              const slug = typeof color === 'string' ? color.toLowerCase() : '';
-              if (slug) {
-                colorCounts[slug] = (colorCounts[slug] || 0) + 1;
-              }
-            });
-            return colors;
-          }) ?? []
-      ) ?? []
-    );
-
-    const unique = Array.from(new Set(allColors));
-
-    return unique.map((colorRaw) => {
-      const color = typeof colorRaw === 'string' ? colorRaw : '';
-      const slug = color.toLowerCase();
+    return filtersData?.colors?.map((c) => {
+      const slug = c.color.toLowerCase();
       const matched = colorFilterItems.find(
         (item) => item.slug.toLowerCase() === slug
       );
-
       return {
         id: matched?.id ?? slug,
-        name: matched?.name ?? color,
+        name: matched?.name ?? c.color,
         slug,
         hexColor: matched?.hexColor ?? '#ccc',
-        count: colorCounts[slug] || 0,
+        count: c.count,
       };
-    });
-  }, [filteredData]);
+    }) || []; // fallback to empty array if undefined
+  }, [filtersData?.colors]);
 
+
+
+
+  console.log(filteredData)
   return (
     <div className="block border-b border-gray-300 pb-5">
 
