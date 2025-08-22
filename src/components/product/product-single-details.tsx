@@ -394,6 +394,7 @@ const ProductSingleDetails: React.FC = () => {
       setActiveIndex(index); // Uppdatera aktivt index (om du använder det någon annanstans)
     }
   };
+  console.log(data)
 
 
   const categoryPath = data?.categoryPaths[0]?.split('/') || [];
@@ -421,7 +422,6 @@ const ProductSingleDetails: React.FC = () => {
     },
     { currentPath: '', breadcrumbs: [] as JSX.Element[] }
   ).breadcrumbs;
-
 
   return (
     <div className="block lg:grid grid-cols-9 gap-x-10 xl:gap-x-14 pt-7 pb-10 lg:pb-14 2xl:pb-20 items-start">
@@ -618,12 +618,20 @@ const ProductSingleDetails: React.FC = () => {
               </Button>
             </div>
 
-            <div className="flex items-center pb-7 space-x-2 border-b border-gray-300">
+            <div className="flex pb-7 space-x-2 border-b border-gray-300 flex-col ">
               <h3 className="text-base md:text-lg text-heading font-semibold capitalize">
                 {t('expectedDelivery')}
               </h3>
-              <p className="text-gray-400">{data?.deliveryTime}</p>
-              <div className="relative group">
+              <p className="flex  gap-2 text-gray-600 flex-col">
+                <span className="flex items-center gap-1">
+
+                  {`${t('Home')} ${data?.deliveryTime?.home ?? "-"}`}
+                </span>
+                <span className="flex items-center gap-1">
+
+                  {`${t('warehouse')} ${data?.deliveryTime?.warehouse ?? "-"}`}
+                </span>
+              </p>              <div className="relative group">
                 <FaInfoCircle className="text-gray-400 cursor-pointer" />
                 <div className="absolute bottom-full left-0 mb-2 hidden group-hover:block w-64 bg-white text-gray-700 text-sm border border-gray-200 rounded shadow-md p-2">
                   Vi strävar efter att leverera din produkt inom den angivna tidsramen, men leveranstider kan variera beroende på produktens tillgänglighet och ditt val av leveransmetod.
