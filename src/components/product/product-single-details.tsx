@@ -121,8 +121,10 @@ const ProductSingleDetails: React.FC = () => {
 
 
   const countries = Object.keys(data.sellInCountries || {})
-    .map(code => countryNames[code] || code)
+    .map(code => countryNames[code])
+    .filter(Boolean)
     .join(', ');
+
   /* let AttributeArray = [] */
 
 
@@ -487,11 +489,12 @@ const ProductSingleDetails: React.FC = () => {
           {data.compadibleWithProduct && data.compadibleWithProduct.length > 0 && (
             <div className="mt-5">
               <h3 className="text-sm font-semibold text-gray-700 mb-2">{t('compadibleWith')}</h3>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2" >
                 {data.compadibleWithProduct.map((item: string, index: number) => (
                   <span
                     key={index}
                     className="px-3 py-1 bg-gray-200 text-gray-800 text-sm rounded-full hover:bg-gray-300 transition-colors cursor-pointer"
+                    style={{ backgroundColor: "#3BE49D", color: "black" }}
                   >
                     {item}
                   </span>
@@ -618,20 +621,19 @@ const ProductSingleDetails: React.FC = () => {
               </Button>
             </div>
 
-            <div className="flex pb-7 space-x-2 border-b border-gray-300 flex-col ">
+            <div className="flex pb-7 space-x-2 border-b border-gray-300 ">
               <h3 className="text-base md:text-lg text-heading font-semibold capitalize">
-                {t('expectedDelivery')}
+                {t('expectedDelivery')}:
               </h3>
-              <p className="flex  gap-2 text-gray-600 flex-col">
+              <p className="flex  gap-2 text-gray-600">
                 <span className="flex items-center gap-1">
-
-                  {`${t('Home')} ${data?.deliveryTime?.home ?? "-"}`}
+                  {data?.sellInCountries?.deliveryTime}
                 </span>
-                <span className="flex items-center gap-1">
+                {/*   <span className="flex items-center gap-1">
 
                   {`${t('warehouse')} ${data?.deliveryTime?.warehouse ?? "-"}`}
-                </span>
-              </p>              <div className="relative group">
+                </span> */}
+              </p>              <div className="relative group items-center">
                 <FaInfoCircle className="text-gray-400 cursor-pointer" />
                 <div className="absolute bottom-full left-0 mb-2 hidden group-hover:block w-64 bg-white text-gray-700 text-sm border border-gray-200 rounded shadow-md p-2">
                   Vi strävar efter att leverera din produkt inom den angivna tidsramen, men leveranstider kan variera beroende på produktens tillgänglighet och ditt val av leveransmetod.

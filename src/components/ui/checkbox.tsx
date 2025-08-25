@@ -15,7 +15,8 @@ export const CheckBox = React.forwardRef<HTMLInputElement, CheckBoxProps>(
 					ref={ref}
 					{...rest}
 				/>
-				<span className="ms-4 -mt-0.5">{labelKey ? t(labelKey) : label}</span>
+				<span className="ms-4 -mt-0.5">  {(labelKey ? t(labelKey) : label)?.charAt(0).toUpperCase() +
+					(labelKey ? t(labelKey) : label)?.slice(1)}</span>
 			</label>
 		);
 	}

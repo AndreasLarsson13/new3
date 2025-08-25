@@ -99,7 +99,7 @@ const SearchProduct: React.FC<SearchProductProps> = ({ item, searchTerm }) => {
                 <span
                   key={idx}
                   className="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-700 border border-gray-200"
-                  style={{ backgroundColor: "#3BE49D", color: "white" }}
+                  style={{ backgroundColor: "#3BE49D", color: "black" }}
                 >
                   <HighlightedText text={prod} highlight={searchTerm} />
                 </span>
